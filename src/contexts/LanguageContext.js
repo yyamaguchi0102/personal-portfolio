@@ -1,4 +1,3 @@
-// src/contexts/LanguageContext.js
 import { createContext, useState, useContext } from "react";
 import { languages } from "../languages";
 
@@ -12,7 +11,9 @@ export const LanguageProvider = ({ children }) => {
   };
 
   return (
-    <LanguageContext.Provider value={{ language, text: languages[language], toggleLanguage }}>
+    <LanguageContext.Provider
+      value={{ language, text: languages[language], toggleLanguage }}
+    >
       {children}
     </LanguageContext.Provider>
   );

@@ -1,65 +1,73 @@
+import React from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import { useLanguage } from "../contexts/LanguageContext";
 
 const Header = () => {
-  const { theme, toggleTheme } = useTheme();
-  const { toggleLanguage, language } = useLanguage();
+  const { theme, setTheme } = useTheme();
+  const { language, toggleLanguage, text } = useLanguage();
 
-  const flagUrls = {
-    en: "https://flagsapi.com/US/flat/64.png",
-    jp: "https://flagsapi.com/JP/flat/64.png",
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-md transition-colors">
-      <nav className="container mx-auto p-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold dark:text-white">My Portfolio</h1>
-        <ul className="flex space-x-4">
-          <li>
-            <a href="#home" className="hover:text-blue-500 dark:hover:text-blue-400">
-              Home
-            </a>
-          </li>
-          <li>
-            <a href="#skills" className="hover:text-blue-500 dark:hover:text-blue-400">
-              Skills
-            </a>
-          </li>
-          <li>
-            <a href="#projects" className="hover:text-blue-500 dark:hover:text-blue-400">
-              Projects
-            </a>
-          </li>
-          <li>
-            <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400">
-              Contact
-            </a>
-          </li>
-        </ul>
+    <header
+      className={`w-full p-4 fixed top-0 left-0 z-50 ${
+        theme === "dark"
+          ? "bg-dark-background border-b border-dark-accent"
+          : "bg-light-background border-b border-light-accent"
+      }`}
+    >
+      <nav className="max-w-7xl mx-auto flex justify-between items-center">
+        <h1
+          className={`text-2xl font-bold ${
+            theme === "dark" ? "text-dark-accent" : "text-light-accent"
+          }`}
+        >
+          Yutaka Coding
+        </h1>
         <div className="flex items-center space-x-4">
-          {/* Language Toggle */}
-          <button
-            onClick={toggleLanguage}
-            className="flex items-center bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition"
-          >
-            <img
-              src={flagUrls[language]}
-              alt="Language Flag"
-              className="w-5 h-5 mr-2"
-            />
-            {language === "en" ? "English" : "日本語"}
-          </button>
-
-          {/* Theme Toggle */}
+          <ul className="flex space-x-4">
+            <li>
+              <a href="#home" className="hover:underline">
+                {text.header.home}
+              </a>
+            </li>
+            <li>
+              <a href="#skills" className="hover:underline">
+                {text.header.skills}
+              </a>
+            </li>
+            <li>
+              <a href="#projects" className="hover:underline">
+                {text.header.projects}
+              </a>
+            </li>
+            <li>
+              <a href="#contact" className="hover:underline">
+                {text.header.contact}
+              </a>
+            </li>
+          </ul>
           <button
             onClick={toggleTheme}
-            className="p-2 bg-gray-200 rounded hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 transition"
+            className={`px-4 py-2 rounded-lg text-sm ${
+              theme === "dark"
+                ? "bg-dark-accent text-dark-background hover:bg-dark-text"
+                : "bg-light-accent text-light-background hover:bg-light-text"
+            } transition`}
           >
-            {theme === "light" ? (
-              <span className="material-icons text-gray-900">Dark Mode</span>
-            ) : (
-              <span className="material-icons text-gray-100">Light Mode</span>
-            )}
+            Toggle Mood
+          </button>
+          <button
+            onClick={toggleLanguage}
+            className={`px-4 py-2 rounded-lg text-sm ${
+              theme === "dark"
+                ? "bg-dark-accent text-dark-background hover:bg-dark-text"
+                : "bg-light-accent text-light-background hover:bg-light-text"
+            } transition`}
+          >
+            {language === "en" ? "日本語" : "English"}
           </button>
         </div>
       </nav>

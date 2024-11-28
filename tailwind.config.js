@@ -1,20 +1,20 @@
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      keyframes: {
-        float: {
-          "0%, 100%": { transform: "translateY(-5px) rotate(-2deg)"},
-          "50%": { transform: "translateY(5px) rotate(2deg)" },
+      colors: {
+        light: {
+          background: "#fef9e7", // Bright, cheerful background
+          text: "#222222", // Dark gray for text
+          accent: "#ff8c42", // Vibrant orange for buttons/accents
         },
-      },
-      animation: {
-        float: "float 3s ease-in-out infinite",
+        dark: {
+          background: "#0d1117", // Terminal-style dark background
+          text: "#c9d1d9", // Light gray for text
+          accent: "#39ff14", // Neon green for accents
+        },
       },
     },
   },
   plugins: [],
-  darkMode: "class",
 };

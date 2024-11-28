@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -14,4 +14,66 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@keyframes drop {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.rain {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.rain div {
+  position: absolute;
+  width: 2px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.2);
+  animation: drop 1s infinite linear;
+}
+
+.rain div:nth-child(odd) {
+  animation-delay: 0.2s;
+  animation-duration: 1.5s;
+}
+
+.rain div:nth-child(even) {
+  animation-delay: 0.5s;
+}
+
+.rain div:nth-child(odd):nth-child(5n + 1) {
+  animation-duration: 1.2s;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-in-out;
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+.scroll-offset {
+  scroll-margin-top: 1rem; /* Adjust this value to match your navbar's height */
 }

@@ -1,23 +1,21 @@
-import { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useState, useContext } from "react";
 
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState("light");
-
-  // Toggle theme between 'light' and 'dark'
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-  };
-
-  // Apply the theme to the root HTML element
-  useEffect(() => {
-    document.documentElement.className = theme;
-  }, [theme]);
+  const [theme, setTheme] = useState("light"); // Default theme
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <div
+        className={`min-h-screen ${
+          theme === "light"
+            ? "bg-light-background text-light-text"
+            : "bg-dark-background text-dark-text"
+        }`}
+      >
+        {children}
+      </div>
     </ThemeContext.Provider>
   );
 };
