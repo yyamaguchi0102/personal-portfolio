@@ -63,7 +63,7 @@ const LoadingScreen = ({ onComplete }) => {
       ) : (
         <div className="text-center">
           {/* Typewriter Language Prompt */}
-          <div className="text-4xl font-bold mb-6"> {/* Adjust size here */}
+          <div className="text-4xl font-bold mb-6 h-16 flex items-center justify-center">
             <Typewriter
               words={languagePrompts}
               loop={true}
@@ -76,24 +76,39 @@ const LoadingScreen = ({ onComplete }) => {
           </div>
 
           {/* Language Selection Buttons */}
-          <div className="flex space-x-4 mt-6">
+          <div className="flex space-x-4 mt-4">
             <button
               onClick={() => handleLanguageSelection("en")}
-              className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition text-lg"
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg flex items-center space-x-2 hover:bg-blue-700 transition text-lg"
             >
-              English
+              <img
+                src="https://flagsapi.com/US/flat/32.png"
+                alt="US Flag"
+                className="w-6 h-6"
+              />
+              <span>English</span>
             </button>
             <button
               onClick={() => handleLanguageSelection("jp")}
-              className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-lg"
+              className="px-6 py-3 bg-red-500 text-white rounded-lg flex items-center space-x-2 hover:bg-red-600 transition text-lg"
             >
-              日本語
+              <img
+                src="https://flagsapi.com/JP/flat/32.png"
+                alt="Japanese Flag"
+                className="w-6 h-6"
+              />
+              <span>日本語</span>
             </button>
             <button
               onClick={() => handleLanguageSelection("ko")}
-              className="px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition text-lg"
+              className="px-6 py-3 bg-yellow-500 text-black rounded-lg flex items-center space-x-2 hover:bg-yellow-600 transition text-lg"
             >
-              한국어
+              <img
+                src="https://flagsapi.com/KR/flat/32.png"
+                alt="Korean Flag"
+                className="w-6 h-6"
+              />
+              <span>한국어</span>
             </button>
           </div>
         </div>
