@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import { useLanguage } from "../contexts/LanguageContext";
 
 const Header = () => {
   const { theme, setTheme } = useTheme();
-  const { language, toggleLanguage, text } = useLanguage();
+  const { language, toggleLanguage } = useLanguage();
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
 
   return (
@@ -29,23 +31,43 @@ const Header = () => {
         <div className="flex items-center space-x-4">
           <ul className="flex space-x-4">
             <li>
-              <a href="#home" className="hover:underline">
-                {text.header.home}
+              <a
+                href="#home"
+                className={`hover:underline ${
+                  theme === "dark" ? "text-dark-accent" : "text-light-accent"
+                }`}
+              >
+                Home
               </a>
             </li>
             <li>
-              <a href="#skills" className="hover:underline">
-                {text.header.skills}
+              <a
+                href="#skills"
+                className={`hover:underline ${
+                  theme === "dark" ? "text-dark-accent" : "text-light-accent"
+                }`}
+              >
+                Skills
               </a>
             </li>
             <li>
-              <a href="#projects" className="hover:underline">
-                {text.header.projects}
+              <a
+                href="#projects"
+                className={`hover:underline ${
+                  theme === "dark" ? "text-dark-accent" : "text-light-accent"
+                }`}
+              >
+                Projects
               </a>
             </li>
             <li>
-              <a href="#contact" className="hover:underline">
-                {text.header.contact}
+              <a
+                href="#contact"
+                className={`hover:underline ${
+                  theme === "dark" ? "text-dark-accent" : "text-light-accent"
+                }`}
+              >
+                Contact
               </a>
             </li>
           </ul>
@@ -59,16 +81,58 @@ const Header = () => {
           >
             Toggle Mood
           </button>
-          <button
-            onClick={toggleLanguage}
-            className={`px-4 py-2 rounded-lg text-sm ${
-              theme === "dark"
-                ? "bg-dark-accent text-dark-background hover:bg-dark-text"
-                : "bg-light-accent text-light-background hover:bg-light-text"
-            } transition`}
-          >
-            {language === "en" ? "日本語" : "English"}
-          </button>
+          {/* Language Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className={`px-4 py-2 rounded-lg text-sm ${
+                theme === "dark"
+                  ? "bg-dark-accent text-dark-background hover:bg-dark-text"
+                  : "bg-light-accent text-light-background hover:bg-light-text"
+              } transition`}
+            >
+              {language === "en"
+                ? "English"
+                : language === "jp"
+                ? "日本語"
+                : "한국어"}
+            </button>
+            {dropdownOpen && (
+              <div
+                className={`absolute right-0 mt-2 py-2 w-40 rounded-lg shadow-lg ${
+                  theme === "dark" ? "bg-dark-background" : "bg-light-background"
+                }`}
+              >
+                <button
+                  onClick={() => {
+                    toggleLanguage("en");
+                    setDropdownOpen(false);
+                  }}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-200"
+                >
+                  English
+                </button>
+                <button
+                  onClick={() => {
+                    toggleLanguage("jp");
+                    setDropdownOpen(false);
+                  }}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-200"
+                >
+                  日本語
+                </button>
+                <button
+                  onClick={() => {
+                    toggleLanguage("ko");
+                    setDropdownOpen(false);
+                  }}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-200"
+                >
+                  한국어
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </nav>
     </header>
