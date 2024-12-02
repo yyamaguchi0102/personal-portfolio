@@ -7,6 +7,7 @@ import Skills from "./components/Skills";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import LoadingScreen from "./components/LoadingScreen";
+import Services from "./components/Services";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,10 +21,23 @@ const App = () => {
           ) : (
             <>
               <Header />
-              <Home />
-              <Skills />
-              <Projects />
-              <Contact />
+              <div className="scroll-container">
+                <div className="scroll-section">
+                  <Home />
+                </div>
+                <div className="scroll-section">
+                  <Skills />
+                </div>
+                <div className="scroll-section">
+                  <Services />
+                </div>
+                <div className="scroll-section">
+                  <Projects />
+                </div>
+                <div className="scroll-section">
+                  <Contact />
+                </div>
+              </div>
             </>
           )}
         </div>

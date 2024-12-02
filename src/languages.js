@@ -4,12 +4,13 @@ export const languages = {
       home: "Home",
       skills: "Skills",
       projects: "Projects",
+      services: "Services",
       contact: "Contact",
     },
     home: {
       name: "Yutaka",
       typewriter: ["Full-Stack Developer", "ML Developer", "Translator"],
-      intro: "I’m a passionate Software Engineer and Translator.",
+      intro: "I’m a passionate Software Engineer and Language specialist providing tutoring and translation services.",
       staticPhrase: "I am a",
     },
     skills: {
@@ -24,24 +25,42 @@ export const languages = {
     projects: {
       title: "Projects",
       description: "Here are some of the projects I’ve worked on:",
+      technologiesUsed: "Technologies Used:",
       items: [
         {
           name: "Portfolio Website",
-          description: "A personal portfolio built with React and Tailwind CSS.",
+          description: "A personal portfolio built with React and Tailwind CSS. Multilanguage feature available currently for English, Japanese, and Korean.",
           demo: "Live Demo",
           repo: "GitHub Repo",
+          tech: ["React", "Tailwind CSS", "JavaScript"],
         },
         {
-          name: "Typing Speed Game",
-          description: "A game to test typing speed and accuracy.",
+          name: "To-Do List Application",
+          description: "A full-stack to-do list application built with React. Integrated with AI to predict the time required for task completion.",
           demo: "Live Demo",
           repo: "GitHub Repo",
+          tech: ["Java", "SpringBoot", "React", "JavaScript", "Tailwind CSS", "TensorFlow"],
         },
         {
-          name: "ML Project",
-          description: "A machine learning project focused on predictive analytics.",
+          name: "Housing Price Prediction Model",
+          description: "A housing price predictor model trained primarily using linear regression, later enhanced with more complex tree algorithms.",
           demo: "Live Demo",
           repo: "GitHub Repo",
+          tech: ["Python", "Scikit Learn", "NumPy", "Pandas", "Matplotlib"],
+        },
+      ],
+    },
+    services: {
+      title: "Services",
+      description: "I offer personalized tutoring and accurate translation services to cater to your needs.",
+      items: [
+        {
+          name: "Tutoring",
+          description: "One-on-one tutoring sessions tailored to your needs in programming, math, and language learning.",
+        },
+        {
+          name: "Translation",
+          description: "Professional translation services for Japanese, English, and Korean, ensuring precision and context.",
         },
       ],
     },
@@ -50,7 +69,10 @@ export const languages = {
       description: "Feel free to reach out to me via the form below:",
     },
     loadingScreen: {
-      languagePrompt: "Choose Your Language",
+      languagePrompt: "Select A Language",
+      moodPrompt: "Select A Theme",
+      moodBright: "Bright",
+      moodDark: "Dark",
     },
   },
   jp: {
@@ -58,12 +80,13 @@ export const languages = {
       home: "ホーム",
       skills: "スキル",
       projects: "プロジェクト",
+      services: "サービス",
       contact: "お問い合わせ",
     },
     home: {
       name: "ゆたか",
       typewriter: ["フルスタック開発者", "ML開発者", "翻訳者"],
-      intro: "私は情熱的なソフトウェアエンジニアであり翻訳者です。",
+      intro: "私は情熱的なソフトウェアエンジニアであり、翻訳や家庭教師などの言語サービス事業も行っております。",
       staticPhrase: "私は",
     },
     skills: {
@@ -78,24 +101,42 @@ export const languages = {
     projects: {
       title: "プロジェクト",
       description: "私が取り組んだプロジェクトの一部をご紹介します：",
+      technologiesUsed: "使用した技術:",
       items: [
         {
           name: "ポートフォリオウェブサイト",
-          description: "ReactとTailwind CSSで構築された個人ポートフォリオ。",
+          description: "ReactとTailwind CSSで構築された個人ポートフォリオ。只今日本語、英語、韓国語でご提供しております。",
           demo: "ライブデモ",
           repo: "GitHubリポジトリ",
+          tech: ["React", "Tailwind CSS", "JavaScript"],
         },
         {
-          name: "タイピング速度ゲーム",
-          description: "タイピング速度と正確さをテストするゲーム。",
+          name: "ToDoリストアプリ",
+          description: "Todoリストのフルスタックアプリケーション。マシーンラーニングを通して作業の予想所要時間を計算。",
           demo: "ライブデモ",
           repo: "GitHubリポジトリ",
+          tech: ["Java", "SpringBoot", "React", "JavaScript", "Tailwind CSS", "TensorFlow"],
         },
         {
-          name: "MLプロジェクト",
-          description: "予測分析に焦点を当てた機械学習プロジェクト。",
+          name: "不動産物価予想AI",
+          description: "PythonとScikit Learnで開発したマシーンラーニングモデル。",
           demo: "ライブデモ",
           repo: "GitHubリポジトリ",
+          tech: ["Python", "Scikit Learn", "NumPy", "Pandas", "Matplotlib"],
+        },
+      ],
+    },
+    services: {
+      title: "サービス",
+      description: "個別指導や正確な翻訳サービスを提供しております。",
+      items: [
+        {
+          name: "個別指導",
+          description: "プログラミング、数学、語学学習など、あなたのニーズに合わせた個別指導セッション。",
+        },
+        {
+          name: "翻訳",
+          description: "日本語、英語、韓国語のプロ翻訳サービス。正確さと文脈を重視。",
         },
       ],
     },
@@ -105,6 +146,9 @@ export const languages = {
     },
     loadingScreen: {
       languagePrompt: "言語を選択してください",
+      moodPrompt: "テーマを選択してください",
+      moodBright: "明るい",
+      moodDark: "暗い",
     },
   },
   ko: {
@@ -112,12 +156,13 @@ export const languages = {
       home: "홈",
       skills: "기술",
       projects: "프로젝트",
+      services: "서비스",
       contact: "연락처",
     },
     home: {
       name: "유타카",
       typewriter: ["풀스택 개발자", "ML 개발자", "번역가"],
-      intro: "저는 열정적인 소프트웨어 엔지니어이자 번역가입니다.",
+      intro: "저는 열정적인 소프트웨어 엔지니어이자 번역, 과외 등 언어서비스 사업을 하고 있습니다.",
       staticPhrase: "저는",
     },
     skills: {
@@ -132,24 +177,42 @@ export const languages = {
     projects: {
       title: "프로젝트",
       description: "제가 작업한 프로젝트는 다음과 같습니다:",
+      technologiesUsed: "사용한 기술:",
       items: [
         {
           name: "포트폴리오 웹사이트",
-          description: "React 및 Tailwind CSS로 구축된 개인 포트폴리오입니다.",
+          description: "React 및 Tailwind CSS로 구축된 개인 포트폴리오입니다. 한국어, 영어, 일본어로 사용 가능합니다.",
           demo: "라이브 데모",
           repo: "GitHub 저장소",
+          tech: ["React", "Tailwind CSS", "JavaScript"],
         },
         {
-          name: "타이핑 속도 게임",
-          description: "타이핑 속도와 정확성을 테스트하는 게임입니다.",
+          name: "ToDo 리스트 애플리케이션",
+          description: "작업 시간 예측을 위한 AI가 통합된 풀스택 To-Do 리스트 앱.",
           demo: "라이브 데모",
           repo: "GitHub 저장소",
+          tech: ["Java", "SpringBoot", "React", "JavaScript", "Tailwind CSS", "TensorFlow"],
         },
         {
-          name: "ML 프로젝트",
-          description: "예측 분석에 초점을 맞춘 머신러닝 프로젝트입니다.",
+          name: "부동산 가격 예측 모델",
+          description: "주로 선형 회귀를 사용하여 훈련된 부동산 가격 예측 모델.",
           demo: "라이브 데모",
           repo: "GitHub 저장소",
+          tech: ["Python", "Scikit Learn", "NumPy", "Pandas", "Matplotlib"],
+        },
+      ],
+    },
+    services: {
+      title: "서비스",
+      description: "맞춤형 과외 및 정밀 번역 서비스를 제공합니다.",
+      items: [
+        {
+          name: "과외",
+          description: "프로그래밍, 수학, 언어 학습에 대한 맞춤형 1:1 과외 세션.",
+        },
+        {
+          name: "번역",
+          description: "일본어, 영어, 한국어 전문 번역 서비스. 정확성과 문맥 중시.",
         },
       ],
     },
@@ -159,6 +222,9 @@ export const languages = {
     },
     loadingScreen: {
       languagePrompt: "언어를 선택하세요",
+      moodPrompt: "테마를 선택하세요",
+      moodBright: "밝음",
+      moodDark: "어두움",
     },
   },
 };

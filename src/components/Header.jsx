@@ -37,7 +37,11 @@ const Header = () => {
                   theme === "dark" ? "text-dark-accent" : "text-light-accent"
                 }`}
               >
-                Home
+                {language === "en"
+                  ? "Home"
+                  : language === "jp"
+                  ? "ホーム"
+                  : "홈"}
               </a>
             </li>
             <li>
@@ -47,7 +51,25 @@ const Header = () => {
                   theme === "dark" ? "text-dark-accent" : "text-light-accent"
                 }`}
               >
-                Skills
+                {language === "en"
+                  ? "Skills"
+                  : language === "jp"
+                  ? "スキル"
+                  : "기술"}
+              </a>
+            </li>
+            <li>
+              <a
+                href="#services"
+                className={`hover:underline ${
+                  theme === "dark" ? "text-dark-accent" : "text-light-accent"
+                }`}
+              >
+                {language === "en"
+                  ? "Services"
+                  : language === "jp"
+                  ? "サービス"
+                  : "서비스"}
               </a>
             </li>
             <li>
@@ -57,7 +79,11 @@ const Header = () => {
                   theme === "dark" ? "text-dark-accent" : "text-light-accent"
                 }`}
               >
-                Projects
+                {language === "en"
+                  ? "Projects"
+                  : language === "jp"
+                  ? "プロジェクト"
+                  : "프로젝트"}
               </a>
             </li>
             <li>
@@ -67,7 +93,11 @@ const Header = () => {
                   theme === "dark" ? "text-dark-accent" : "text-light-accent"
                 }`}
               >
-                Contact
+                {language === "en"
+                  ? "Contact"
+                  : language === "jp"
+                  ? "お問い合わせ"
+                  : "연락처"}
               </a>
             </li>
           </ul>
@@ -79,7 +109,11 @@ const Header = () => {
                 : "bg-light-accent text-light-background hover:bg-light-text"
             } transition`}
           >
-            Toggle Mood
+            {language === "en"
+              ? "Toggle Mood"
+              : language === "jp"
+              ? "テーマを変更"
+              : "테마 변경"}
           </button>
           {/* Language Dropdown */}
           <div className="relative">
