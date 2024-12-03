@@ -26,7 +26,7 @@ const Header = () => {
             theme === "dark" ? "text-dark-accent" : "text-light-accent"
           }`}
         >
-          Yutaka Coding
+          Yutaka Yamaguchi
         </h1>
         <div className="flex items-center space-x-4">
           <ul className="flex space-x-4">

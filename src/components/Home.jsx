@@ -32,7 +32,7 @@ const Home = () => {
         transition={{ duration: 1.2 }}
       >
         {/* Static Greeting */}
-        <h1 className="text-5xl font-bold mb-4">Hi, my name is {text.home.name}</h1>
+        <h1 className="text-5xl font-bold mb-4">{text.home.name}</h1>
 
         {/* Typewriter "I am a ..." */}
         <h2 className="text-3xl font-medium mt-2">

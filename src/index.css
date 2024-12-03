@@ -108,7 +108,7 @@ html {
   );
   background-size: 400% 400%;
   filter: blur(10px);
-  opacity: 0.7;
+  opacity: 3;
 }
 
 .dark-noise-overlay {

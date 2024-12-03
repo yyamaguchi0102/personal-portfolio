@@ -22,9 +22,9 @@ const Skills = () => {
   };
 
   const spokenLanguages = [
-    { name: "Japanese", level: text.skills.proficiency.native, icon: "https://img.icons8.com/color/48/japan.png" },
-    { name: "English", level: text.skills.proficiency.native, icon: "https://img.icons8.com/color/48/usa.png" },
-    { name: "Korean", level: text.skills.proficiency.fluent, icon: "https://img.icons8.com/color/48/south-korea.png" },
+    { name: text.skills.languages.japanese, level: text.skills.proficiency.native, icon: "https://img.icons8.com/color/48/japan.png" },
+    { name: text.skills.languages.english, level: text.skills.proficiency.native, icon: "https://img.icons8.com/color/48/usa.png" },
+    { name: text.skills.languages.korean, level: text.skills.proficiency.fluent, icon: "https://img.icons8.com/color/48/south-korea.png" },
   ];
 
   const programmingLanguages = [

@@ -8,7 +8,7 @@ export const languages = {
       contact: "Contact",
     },
     home: {
-      name: "Yutaka",
+      name: "Hi, My Name Is Yutaka",
       typewriter: ["Full-Stack Developer", "ML Developer", "Translator"],
       intro: "I’m a passionate Software Engineer and Language specialist providing tutoring and translation services.",
       staticPhrase: "I am a",
@@ -17,6 +17,11 @@ export const languages = {
       title: "Skills",
       description:
         "I excel in dissecting complex problems into manageable tasks, essential for crafting robust, maintainable code in large-scale projects. I'm driven by challenges, always seeking opportunities to enhance my skills. My self-directed learning approach empowers me to quickly grasp and adapt to new technologies autonomously. In addition to my technical abilities, I possess linguistic expertise in Japanese, English, and Korean, enabling me to navigate diverse cultural and professional landscapes. This unique blend of technical and linguistic skills allows me to communicate and collaborate effectively, bridging gaps between teams and ideas.",
+      languages: {
+        english: "English",
+        japanese: "Japanese",
+        korean: "Korean",
+      },
       proficiency: {
         native: "Native",
         fluent: "Fluent",
@@ -62,6 +67,10 @@ export const languages = {
           name: "Translation",
           description: "Professional translation services for Japanese, English, and Korean, ensuring precision and context.",
         },
+        {
+          name: "Trumpet Lessons",
+          description: "One on one trumpet lessons for students ranging from beginner to the highschool level.",
+        },
       ],
     },
     contact: {
@@ -84,7 +93,7 @@ export const languages = {
       contact: "お問い合わせ",
     },
     home: {
-      name: "ゆたか",
+      name: "こんにちは、ゆたかと申します。",
       typewriter: ["フルスタック開発者", "ML開発者", "翻訳者"],
       intro: "私は情熱的なソフトウェアエンジニアであり、翻訳や家庭教師などの言語サービス事業も行っております。",
       staticPhrase: "私は",
@@ -93,7 +102,12 @@ export const languages = {
       title: "スキル",
       description:
         "私は複雑な課題を細かいタスクに分解し、大規模プロジェクトにおいて信頼性が高く、保守性のあるコードを作成するスキルを持っています。新しい技術や挑戦に対して常に好奇心を持ち、自分のスキルを向上させることを楽しんでいます。また、日本語、英語、韓国語という3つの言語を駆使して、文化的にもプロフェッショナルな場面でも柔軟に対応することができます。このような技術的な能力と言語的な専門知識を活かし、チーム間やアイデア間の橋渡しをしながら、効果的なコミュニケーションと協力を実現することを目指しています。",
-      proficiency: {
+        languages: {
+          english: "英語",
+          japanese: "日本語",
+          korean: "韓国語",
+        },
+        proficiency: {
         native: "母国語",
         fluent: "流暢",
       },
@@ -138,6 +152,10 @@ export const languages = {
           name: "翻訳",
           description: "日本語、英語、韓国語のプロ翻訳サービス。正確さと文脈を重視。",
         },
+        {
+          name: "トランペットレッスン",
+          description: "オンライン",
+        },
       ],
     },
     contact: {
@@ -160,7 +178,7 @@ export const languages = {
       contact: "연락처",
     },
     home: {
-      name: "유타카",
+      name: "반가워요, 유타카입니다.",
       typewriter: ["풀스택 개발자", "ML 개발자", "번역가"],
       intro: "저는 열정적인 소프트웨어 엔지니어이자 번역, 과외 등 언어서비스 사업을 하고 있습니다.",
       staticPhrase: "저는",
@@ -169,6 +187,11 @@ export const languages = {
       title: "기술",
       description:
         "저는 복잡한 문제를 관리 가능한 작업으로 분해하여 대규모 프로젝트에서 견고하고 유지보수 가능한 코드를 작성하는 데 뛰어납니다. 새로운 기술에 대한 호기심과 도전을 통해 끊임없이 제 기술을 향상시키고 있습니다. 또한, 일본어, 영어, 한국어에 대한 언어 능력을 통해 다양한 문화적, 전문적 환경에서 유연하게 대응할 수 있습니다. 이러한 기술 및 언어 능력을 바탕으로 팀 간 또는 아이디어 간의 격차를 해소하고 효과적인 커뮤니케이션과 협업을 실현할 수 있습니다.",
+      languages: {
+        english: "영어",
+        japanese: "일봄어",
+        korean: "한국어",
+        },
       proficiency: {
         native: "모국어",
         fluent: "유창함",

@@ -84,9 +84,9 @@ const LoadingScreen = ({ onComplete }) => {
               loop={true}
               cursor
               cursorStyle="_"
-              typeSpeed={50}
-              deleteSpeed={30}
-              delaySpeed={1000}
+              typeSpeed={70}
+              deleteSpeed={50}
+              delaySpeed={1500}
             />
           </div>
           <div className="flex space-x-4 mt-4">
