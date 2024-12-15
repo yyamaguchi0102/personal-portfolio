@@ -97,18 +97,17 @@ html {
 }
 
 .animate-gradient-blur {
-  animation: gradient-blur-dark 20s ease infinite;
+  animation: gradient-blur-dark 5s ease infinite;
   background: linear-gradient(
     120deg,
-    #0f2027,
-    #203a43,
-    #2c5364,
-    #1e3c72,
-    #162447
+    #1e3a5f, /* Deep Indigo */
+    #40514e, /* Pine Green */ 
+    #283149, /* Midnight Blue */
+    #3b6978, /* Stormy Blue */ 
+    #11999e /* Teal */
   );
   background-size: 400% 400%;
-  filter: blur(10px);
-  opacity: 3;
+  opacity: 1;
 }
 
 .dark-noise-overlay {
@@ -122,11 +121,17 @@ html {
   pointer-events: none;
 }
 
-html, body {
+html, body, #root {
   scroll-behavior: smooth; /* Smooth scrolling between sections */
   height: 100%;
   margin: 0;
+  padding: 0;
   overflow: hidden; /* Prevent scrollbars */
+}
+
+body {
+  background-color: transparent; 
+  overflow: hidden; 
 }
 
 .scroll-container {
