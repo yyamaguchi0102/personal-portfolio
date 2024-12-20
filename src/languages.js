@@ -16,7 +16,7 @@ export const languages = {
     skills: {
       title: "Skills",
       description:
-        "I excel in dissecting complex problems into manageable tasks, essential for crafting robust, maintainable code in large-scale projects. I'm driven by challenges, always seeking opportunities to enhance my skills. My self-directed learning approach empowers me to quickly grasp and adapt to new technologies autonomously. In addition to my technical abilities, I possess linguistic expertise in Japanese, English, and Korean, enabling me to navigate diverse cultural and professional landscapes. This unique blend of technical and linguistic skills allows me to communicate and collaborate effectively, bridging gaps between teams and ideas.",
+        "I excel in dissecting complex problems into manageable tasks, essential for crafting robust, maintainable code in large-scale projects. In addition to my technical abilities, I possess linguistic expertise in Japanese, English, and Korean, enabling me to navigate diverse cultural and professional landscapes. This unique blend of technical and linguistic skills allows me to communicate and collaborate effectively, bridging gaps between teams and ideas.",
       languages: {
         english: "English",
         japanese: "Japanese",
@@ -38,6 +38,8 @@ export const languages = {
           demo: "Live Demo",
           repo: "GitHub Repo",
           tech: ["React", "Tailwind CSS", "JavaScript"],
+          demoUrl: "https://your-demo-url.com",
+          repoUrl: "https://github.com/yyamaguchi0102/personal-portfolio",
         },
         {
           name: "To-Do List Application",
@@ -45,6 +47,8 @@ export const languages = {
           demo: "Live Demo",
           repo: "GitHub Repo",
           tech: ["Java", "SpringBoot", "React", "JavaScript", "Tailwind CSS", "TensorFlow"],
+          demoUrl: "https://your-demo-url.com",
+          repoUrl: "https://github.com/yyamaguchi0102/todolist-springboot",
         },
         {
           name: "Housing Price Prediction Model",
@@ -52,7 +56,17 @@ export const languages = {
           demo: "Live Demo",
           repo: "GitHub Repo",
           tech: ["Python", "Scikit Learn", "NumPy", "Pandas", "Matplotlib"],
+          demoUrl: "https://your-demo-url.com",
+          repoUrl: "https://github.com/yyamaguchi0102/housing-price-prediction",
         },
+        {name: "Snake Game",
+          description: "A simple snake game utilizing java fx",
+          demo: "Live Demo",
+          repo: "GitHub Repo",
+          tech: ["JavaFX"],
+          demoUrl: "https://your-demo-url.com",
+          repoUrl: "https://github.com/yyamaguchi0102/personal-portfolio",
+        }
       ],
     },
     services: {
@@ -123,6 +137,8 @@ export const languages = {
           demo: "ライブデモ",
           repo: "GitHubリポジトリ",
           tech: ["React", "Tailwind CSS", "JavaScript"],
+          demoUrl: "https://your-demo-url.com",
+          repoUrl: "https://github.com/yyamaguchi0102/personal-portfolio",
         },
         {
           name: "ToDoリストアプリ",
@@ -130,6 +146,8 @@ export const languages = {
           demo: "ライブデモ",
           repo: "GitHubリポジトリ",
           tech: ["Java", "SpringBoot", "React", "JavaScript", "Tailwind CSS", "TensorFlow"],
+          demoUrl: "https://your-demo-url.com",
+          repoUrl: "https://github.com/yyamaguchi0102/todolist-springboot",
         },
         {
           name: "不動産物価予想AI",
@@ -137,7 +155,18 @@ export const languages = {
           demo: "ライブデモ",
           repo: "GitHubリポジトリ",
           tech: ["Python", "Scikit Learn", "NumPy", "Pandas", "Matplotlib"],
+          demoUrl: "https://your-demo-url.com",
+          repoUrl: "https://github.com/yyamaguchi0102/housing-price-prediction",
         },
+        {
+          name: "スネークゲーム",
+          description: "食べると長くなるシンプルなスネークゲーム。",
+          demo: "ライブデモ",
+          repo: "GitHubレポジトリs",
+          tech: ["JavaFX"],
+          demoUrl: "https://your-demo-url.com",
+          repoUrl: "https://github.com/yyamaguchi0102/personal-portfolio",
+        }
       ],
     },
     services: {
@@ -208,6 +237,8 @@ export const languages = {
           demo: "라이브 데모",
           repo: "GitHub 저장소",
           tech: ["React", "Tailwind CSS", "JavaScript"],
+          demoUrl: "https://your-demo-url.com",
+          repoUrl: "https://github.com/yyamaguchi0102/personal-portfolio",
         },
         {
           name: "ToDo 리스트 애플리케이션",
@@ -215,6 +246,8 @@ export const languages = {
           demo: "라이브 데모",
           repo: "GitHub 저장소",
           tech: ["Java", "SpringBoot", "React", "JavaScript", "Tailwind CSS", "TensorFlow"],
+          demoUrl: "https://your-demo-url.com",
+          repoUrl: "https://github.com/yyamaguchi0102/todolist-springboot",
         },
         {
           name: "부동산 가격 예측 모델",
@@ -222,7 +255,18 @@ export const languages = {
           demo: "라이브 데모",
           repo: "GitHub 저장소",
           tech: ["Python", "Scikit Learn", "NumPy", "Pandas", "Matplotlib"],
+          demoUrl: "https://your-demo-url.com",
+          repoUrl: "https://github.com/yyamaguchi0102/housing-price-prediction",
         },
+        {
+          name: "스네이크 게임",
+          description: "먹으면 커지는 신플한 게임。",
+          demo: "라이브 데모",
+          repo: "GitHub 저장소",
+          tech: ["JavaFX"],
+          demoUrl: "https://your-demo-url.com",
+          repoUrl: "https://github.com/yyamaguchi0102/personal-portfolio",
+        }
       ],
     },
     services: {

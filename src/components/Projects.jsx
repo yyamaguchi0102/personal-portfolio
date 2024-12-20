@@ -7,22 +7,14 @@ const Projects = () => {
   const { theme } = useTheme();
   const { text } = useLanguage();
 
-  const handleButtonClick = (url) => {
-    if (url) {
-      window.open(url, "_blank", "noopener noreferrer");
-    } else {
-      alert("Feature coming soon!");
-    }
-  };
-
   const containerVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        staggerChildren: 0.3, // Adjusted for slower reveal
-        duration: 0.8, // Slower overall animation
+        staggerChildren: 0.3,
+        duration: 0.8,
       },
     },
   };
@@ -33,7 +25,7 @@ const Projects = () => {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { duration: 1 }, // Slower per item animation
+      transition: { duration: 1 },
     },
   };
 
@@ -97,8 +89,10 @@ const Projects = () => {
               </div>
               {/* Buttons */}
               <div className="flex justify-between mt-6">
-                <button
-                  onClick={() => handleButtonClick(project.demoUrl)}
+                <a
+                  href={project.demoUrl || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`px-4 py-2 rounded-lg font-medium transition ${
                     theme === "light"
                       ? "bg-light-accent text-white hover:bg-blue-700"
@@ -106,9 +100,11 @@ const Projects = () => {
                   }`}
                 >
                   {project.demo}
-                </button>
-                <button
-                  onClick={() => handleButtonClick(project.repoUrl)}
+                </a>
+                <a
+                  href={project.repoUrl || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`px-4 py-2 rounded-lg font-medium transition ${
                     theme === "light"
                       ? "bg-light-accent text-white hover:bg-blue-700"
@@ -116,7 +112,7 @@ const Projects = () => {
                   }`}
                 >
                   {project.repo}
-                </button>
+                </a>
               </div>
             </motion.div>
           ))}
