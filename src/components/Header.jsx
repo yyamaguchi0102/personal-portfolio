@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import { useLanguage } from "../contexts/LanguageContext";
+import ResumeButton from "./ResumeButton";
 
 const Header = () => {
   const { theme, setTheme } = useTheme();
   const { language, toggleLanguage } = useLanguage();
-
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleTheme = () => {
@@ -26,7 +26,7 @@ const Header = () => {
             theme === "dark" ? "text-dark-accent" : "text-light-accent"
           }`}
         >
-          Yutaka Yamaguchi
+          Yutaka Coding
         </h1>
         <div className="flex items-center space-x-4">
           <ul className="flex space-x-4">
@@ -37,11 +37,7 @@ const Header = () => {
                   theme === "dark" ? "text-dark-accent" : "text-light-accent"
                 }`}
               >
-                {language === "en"
-                  ? "Home"
-                  : language === "jp"
-                  ? "ホーム"
-                  : "홈"}
+                Home
               </a>
             </li>
             <li>
@@ -51,25 +47,7 @@ const Header = () => {
                   theme === "dark" ? "text-dark-accent" : "text-light-accent"
                 }`}
               >
-                {language === "en"
-                  ? "Skills"
-                  : language === "jp"
-                  ? "スキル"
-                  : "기술"}
-              </a>
-            </li>
-            <li>
-              <a
-                href="#services"
-                className={`hover:underline ${
-                  theme === "dark" ? "text-dark-accent" : "text-light-accent"
-                }`}
-              >
-                {language === "en"
-                  ? "Services"
-                  : language === "jp"
-                  ? "サービス"
-                  : "서비스"}
+                Skills
               </a>
             </li>
             <li>
@@ -79,11 +57,7 @@ const Header = () => {
                   theme === "dark" ? "text-dark-accent" : "text-light-accent"
                 }`}
               >
-                {language === "en"
-                  ? "Projects"
-                  : language === "jp"
-                  ? "プロジェクト"
-                  : "프로젝트"}
+                Projects
               </a>
             </li>
             <li>
@@ -93,11 +67,7 @@ const Header = () => {
                   theme === "dark" ? "text-dark-accent" : "text-light-accent"
                 }`}
               >
-                {language === "en"
-                  ? "Contact"
-                  : language === "jp"
-                  ? "お問い合わせ"
-                  : "연락처"}
+                Contact
               </a>
             </li>
           </ul>
@@ -109,11 +79,7 @@ const Header = () => {
                 : "bg-light-accent text-light-background hover:bg-light-text"
             } transition`}
           >
-            {language === "en"
-              ? "Toggle Mood"
-              : language === "jp"
-              ? "テーマを変更"
-              : "테마 변경"}
+            Toggle Mood
           </button>
           {/* Language Dropdown */}
           <div className="relative">
@@ -167,6 +133,8 @@ const Header = () => {
               </div>
             )}
           </div>
+          {/* Resume Button */}
+          <ResumeButton />
         </div>
       </nav>
     </header>

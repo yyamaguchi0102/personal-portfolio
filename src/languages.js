@@ -6,6 +6,7 @@ export const languages = {
       projects: "Projects",
       services: "Services",
       contact: "Contact",
+      resume: "Resume",
     },
     home: {
       name: "Hi, My Name Is Yutaka",
@@ -105,6 +106,7 @@ export const languages = {
       projects: "プロジェクト",
       services: "サービス",
       contact: "お問い合わせ",
+      resume: "レジュメ",
     },
     home: {
       name: "こんにちは、ゆたかと申します。",
@@ -205,6 +207,7 @@ export const languages = {
       projects: "프로젝트",
       services: "서비스",
       contact: "연락처",
+      resume: "이력서",
     },
     home: {
       name: "반가워요, 유타카입니다.",
@@ -284,7 +287,7 @@ export const languages = {
       ],
     },
     contact: {
-      title: "연락처",
+      title: "문의",
       description: "아래 양식을 통해 저에게 연락하십시오:",
     },
     loadingScreen: {
