@@ -7,35 +7,60 @@ const Home = () => {
   const { text } = useLanguage();
   const { theme } = useTheme();
 
+  // Variants for container
   const containerVariants = {
     hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 1 } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        when: "beforeChildren", // Ensure parent animates before children
+        staggerChildren: 0.2, // Synchronize child animations
+      },
+    },
+  };
+
+  // Variants for child elements
+  const childVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8 },
+    },
   };
 
   return (
     <motion.section
       id="home"
-      className={`relative h-screen flex flex-col items-center justify-center transition-all duration-500 ${
+      className={`relative h-screen flex flex-col items-center justify-center transition-colors duration-500 ${
         theme === "light"
           ? "bg-light-background text-light-text"
           : "bg-dark-background text-dark-text"
       }`}
       initial="hidden"
-      viewport={{ once: false }}
       animate="visible"
       variants={containerVariants}
     >
       <motion.div
         className="text-center relative z-10"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.2 }}
+        variants={childVariants} // Sync child with parent
+        key={theme} // Re-render when the theme changes
       >
         {/* Static Greeting */}
-        <h1 className="text-5xl font-bold mb-4">{text.home.name}</h1>
+        <motion.h1
+          className="text-5xl font-bold mb-4"
+          variants={childVariants}
+        >
+          {text.home.name}
+        </motion.h1>
 
         {/* Typewriter "I am a ..." */}
-        <h2 className="text-3xl font-medium mt-2">
+        <motion.h2
+          className="text-3xl font-medium mt-2"
+          variants={childVariants}
+        >
           {text.home.staticPhrase}{" "}
           <span
             className={`font-bold ${
@@ -52,13 +77,21 @@ const Home = () => {
               delaySpeed={1500}
             />
           </span>
-        </h2>
+        </motion.h2>
 
         {/* Intro Paragraph */}
-        <p className="text-lg mt-4">{text.home.intro}</p>
+        <motion.p
+          className="text-lg mt-4"
+          variants={childVariants}
+        >
+          {text.home.intro}
+        </motion.p>
 
-        {/* Buttons */}
-        <div className="mt-8 flex flex-wrap justify-center space-x-4">
+        {/* Social Buttons */}
+        <motion.div
+          className="mt-8 flex flex-wrap justify-center space-x-4"
+          variants={childVariants}
+        >
           <a
             href="https://www.linkedin.com/in/your-linkedin"
             target="_blank"
@@ -95,7 +128,7 @@ const Home = () => {
           >
             Twitter
           </a>
-        </div>
+        </motion.div>
       </motion.div>
     </motion.section>
   );

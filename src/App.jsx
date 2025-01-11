@@ -8,7 +8,6 @@ import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import LoadingScreen from "./components/LoadingScreen";
 import Services from "./components/Services";
-import ParticlesBackground from "./components/ParticlesBackground"; // Import the particles background
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,9 +16,6 @@ const App = () => {
     <ThemeProvider>
       <LanguageProvider>
         <div className="font-sans relative">
-          {/* Add Particles Background */}
-          <ParticlesBackground />
-
           {isLoading ? (
             <LoadingScreen onComplete={() => setIsLoading(false)} />
           ) : (
