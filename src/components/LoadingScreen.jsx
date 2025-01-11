@@ -11,7 +11,6 @@ const LoadingScreen = ({ onComplete }) => {
   const [showMoodPrompt, setShowMoodPrompt] = useState(false);
 
   const messages = [
-    "Connecting to the mainframe...",
     "Initializing systems...",
     "Decrypting passwords...",
     "Access Granted...",
@@ -38,7 +37,7 @@ const LoadingScreen = ({ onComplete }) => {
     if (loadingStep < messages.length) {
       const timeout = setTimeout(() => {
         setLoadingStep((prev) => prev + 1);
-      }, 2000);
+      }, 1500);
       return () => clearTimeout(timeout);
     } else {
       setShowLanguagePrompt(true);

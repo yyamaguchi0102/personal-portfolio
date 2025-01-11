@@ -58,7 +58,7 @@ const Skills = () => {
             {text.skills.title}
           </h2>
           <span className={`text-4xl font-bold ${theme === "dark" ? "neon-text" : "text-light-accent"}`}>
-            {" {"}
+           
           </span>
         </motion.div>
         <motion.p
@@ -149,7 +149,7 @@ const Skills = () => {
           }`}
           variants={itemVariants}
         >
-          {" }"}
+          
         </motion.div>
       </div>
     </motion.section>

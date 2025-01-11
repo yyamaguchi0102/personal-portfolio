@@ -25,7 +25,7 @@ const Contact = () => {
       }`}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: false }}
+      viewport={{ once: true }}
       variants={containerVariants}
     >
       <div className="container mx-auto max-w-4xl">
