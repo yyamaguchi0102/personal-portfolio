@@ -17,7 +17,7 @@ const ResumeButton = () => {
       rel="noopener noreferrer"
       className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
         theme === "dark"
-          ? "bg-dark-accent text-black hover:bg-green-700"
+          ? "bg-dark-accent text-black hover:bg-gray-200"
           : "bg-light-accent text-white hover:bg-blue-700"
       }`}
     >

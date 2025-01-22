@@ -20,7 +20,7 @@ const Contact = () => {
   return (
     <motion.section
       id="contact"
-      className={`scroll-offset py-16 px-8 ${
+      className={`min-h-screen flex flex-col justify-center py-16 px-8 ${
         theme === "light" ? "bg-light-background text-light-text" : "bg-dark-background text-dark-text"
       }`}
       initial="hidden"

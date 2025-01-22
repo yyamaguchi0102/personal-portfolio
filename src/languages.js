@@ -13,6 +13,17 @@ export const languages = {
       typewriter: ["Full-Stack Developer", "ML Developer", "Translator"],
       intro: "I’m a passionate Software Engineer and Language specialist providing tutoring and translation services.",
       staticPhrase: "I am a",
+      buttons: {
+        linkedin: "LinkedIn",
+        github: "GitHub",
+        aboutMe: "About Me",
+      },
+      about: {
+        title: "About Me",
+        content:
+          "I am currently studying Computer Science and Quantum Physics with a concentration in Machine Learning. I’m bicultural, fluent in multiple languages, and passionate about software development and linguistics. Growing up in both Japan and America simultaneously has given me a unique perspective and a love for bridging gaps between people and technology.",
+        close: "Close",
+      },
     },
     skills: {
       title: "Skills",
@@ -113,6 +124,17 @@ export const languages = {
       typewriter: ["フルスタック開発者", "ML開発者", "翻訳者"],
       intro: "私は情熱的なソフトウェアエンジニアであり、翻訳や家庭教師などの言語サービス事業も行っております。",
       staticPhrase: "私は",
+      buttons: {
+        linkedin: "LinkedIn",
+        github: "GitHub",
+        aboutMe: "自己紹介",
+      },
+      about: {
+        title: "自己紹介",
+        content:
+          "私は現在、コンピュータサイエンスと量子物理学を専攻し、機械学習を集中して学んでいます。私はバイカルチャルで、多言語に堪能であり、ソフトウェア開発と言語学に情熱を持っています。日本とアメリカの両国で同時に育った経験は、私にユニークな視点を与え、人々と技術の間のギャップを埋めることへの愛着を育みました。",
+          close: "閉じる",
+      },
     },
     skills: {
       title: "スキル",
@@ -214,6 +236,17 @@ export const languages = {
       typewriter: ["풀스택 개발자", "ML 개발자", "번역가"],
       intro: "저는 열정적인 소프트웨어 엔지니어이자 번역, 과외 등 언어서비스 사업을 하고 있습니다.",
       staticPhrase: "저는",
+      buttons: {
+        linkedin: "LinkedIn",
+        github: "GitHub",
+        aboutMe: "자기소개",
+      },
+      about: {
+        title: "자기소래",
+        content:
+          "저는 현재 컴퓨터 과학과 양자 물리학을 전공하며, 기계 학습에 집중하고 있습니다. 저는 두 문화를 가진 사람으로, 여러 언어에 능통하며 소프트웨어 개발과 언어학에 열정을 가지고 있습니다. 일본과 미국에서 동시에 성장한 경험은 저에게 독특한 관점을 제공하며, 사람과 기술 간의 간극을 메우는 데 대한 애정을 키웠습니다.2",
+        close: "닫기",
+      },
     },
     skills: {
       title: "기술",

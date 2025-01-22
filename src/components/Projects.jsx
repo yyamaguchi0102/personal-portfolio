@@ -32,7 +32,7 @@ const Projects = () => {
   return (
     <motion.section
       id="projects"
-      className={`py-16 px-8 ${
+      className={`min-h-screen py-16 px-8 ${
         theme === "light" ? "bg-light-background text-light-text" : "bg-dark-background text-dark-text"
       }`}
       initial="hidden"
@@ -47,10 +47,7 @@ const Projects = () => {
         >
           {text.projects.title}
         </motion.h2>
-        <motion.p
-          className="text-center mb-12"
-          variants={itemVariants}
-        >
+        <motion.p className="text-center mb-12" variants={itemVariants}>
           {text.projects.description}
         </motion.p>
         <motion.div
@@ -60,7 +57,7 @@ const Projects = () => {
           {text.projects.items.map((project, index) => (
             <motion.div
               key={index}
-              className="p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl"
+              className="p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl"
               style={{
                 background: theme === "light" ? "rgba(255, 255, 255, 0.95)" : "rgba(32, 32, 32, 0.95)",
                 backdropFilter: "blur(8px)",
@@ -69,7 +66,6 @@ const Projects = () => {
             >
               <h3 className="text-2xl font-semibold mb-4">{project.name}</h3>
               <p className="mb-4">{project.description}</p>
-              {/* Technologies Used */}
               <div className="mt-4">
                 <h4 className="text-lg font-medium mb-2">
                   {text.projects.technologiesUsed}
@@ -87,7 +83,6 @@ const Projects = () => {
                   ))}
                 </div>
               </div>
-              {/* Buttons */}
               <div className="flex justify-between mt-6">
                 <a
                   href={project.demoUrl || "#"}

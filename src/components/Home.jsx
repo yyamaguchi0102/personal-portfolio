@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import React, { useState } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useTheme } from "../contexts/ThemeContext";
 import { Typewriter } from "react-simple-typewriter";
@@ -6,61 +6,28 @@ import { Typewriter } from "react-simple-typewriter";
 const Home = () => {
   const { text } = useLanguage();
   const { theme } = useTheme();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Variants for container
-  const containerVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        when: "beforeChildren", // Ensure parent animates before children
-        staggerChildren: 0.2, // Synchronize child animations
-      },
-    },
-  };
-
-  // Variants for child elements
-  const childVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8 },
-    },
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
   };
 
   return (
-    <motion.section
+    <section
       id="home"
-      className={`relative h-screen flex flex-col items-center justify-center transition-colors duration-500 ${
+      className={`relative h-screen flex flex-col items-center justify-center ${
         theme === "light"
           ? "bg-light-background text-light-text"
           : "bg-dark-background text-dark-text"
       }`}
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
+      style={{ transition: "background-color 0.5s, color 0.5s" }}
     >
-      <motion.div
-        className="text-center relative z-10"
-        variants={childVariants} // Sync child with parent
-        key={theme} // Re-render when the theme changes
-      >
+      <div className="text-center relative z-10">
         {/* Static Greeting */}
-        <motion.h1
-          className="text-5xl font-bold mb-4"
-          variants={childVariants}
-        >
-          {text.home.name}
-        </motion.h1>
+        <h1 className="text-5xl font-bold mb-4">{text.home.name}</h1>
 
         {/* Typewriter "I am a ..." */}
-        <motion.h2
-          className="text-3xl font-medium mt-2"
-          variants={childVariants}
-        >
+        <h2 className="text-3xl font-medium mt-2">
           {text.home.staticPhrase}{" "}
           <span
             className={`font-bold ${
@@ -77,21 +44,13 @@ const Home = () => {
               delaySpeed={1500}
             />
           </span>
-        </motion.h2>
+        </h2>
 
         {/* Intro Paragraph */}
-        <motion.p
-          className="text-lg mt-4"
-          variants={childVariants}
-        >
-          {text.home.intro}
-        </motion.p>
+        <p className="text-lg mt-4">{text.home.intro}</p>
 
-        {/* Social Buttons */}
-        <motion.div
-          className="mt-8 flex flex-wrap justify-center space-x-4"
-          variants={childVariants}
-        >
+        {/* Buttons */}
+        <div className="mt-8 flex flex-wrap justify-center space-x-4">
           <a
             href="https://www.linkedin.com/in/your-linkedin"
             target="_blank"
@@ -102,7 +61,7 @@ const Home = () => {
                 : "bg-dark-accent text-black hover:bg-green-700"
             }`}
           >
-            LinkedIn
+            {text.home.buttons.linkedin}
           </a>
           <a
             href="https://github.com/yyamaguchi0102"
@@ -114,23 +73,50 @@ const Home = () => {
                 : "bg-gray-800 text-white hover:bg-gray-900"
             }`}
           >
-            GitHub
+            {text.home.buttons.github}
           </a>
-          <a
-            href="https://twitter.com/your-twitter"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={toggleModal}
             className={`px-6 py-3 rounded-full font-semibold shadow-lg transform hover:scale-105 transition ${
               theme === "light"
                 ? "bg-blue-500 text-white hover:bg-blue-600"
                 : "bg-blue-400 text-white hover:bg-blue-500"
             }`}
           >
-            Twitter
-          </a>
-        </motion.div>
-      </motion.div>
-    </motion.section>
+            {text.home.buttons.aboutMe}
+          </button>
+        </div>
+      </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+          onClick={toggleModal} // Close modal when clicking outside
+        >
+          <div
+            className={`p-8 rounded-lg shadow-lg max-w-2xl text-center transition ${
+              theme === "light" ? "bg-white text-black" : "bg-gray-800 text-white"
+            }`}
+            onClick={(e) => e.stopPropagation()} // Prevent closing modal when clicking inside
+            style={{ fontSize: "1.25rem" }} // Increase font size
+          >
+            <h2 className="text-3xl font-bold mb-4">{text.home.about.title}</h2>
+            <p className="leading-relaxed">{text.home.about.content}</p>
+            <button
+              onClick={toggleModal}
+              className={`mt-6 px-4 py-2 rounded-lg text-sm font-medium ${
+                theme === "light"
+                  ? "bg-light-accent text-white hover:bg-orange-600"
+                  : "bg-dark-accent text-black hover:bg-blue-700"
+              }`}
+            >
+              {text.home.about.close}
+            </button>
+          </div>
+        </div>
+      )}
+    </section>
   );
 };
 
