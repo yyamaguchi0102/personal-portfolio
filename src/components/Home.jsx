@@ -52,7 +52,7 @@ const Home = () => {
         {/* Buttons */}
         <div className="mt-8 flex flex-wrap justify-center space-x-4">
           <a
-            href="https://www.linkedin.com/in/your-linkedin"
+            href="https://www.linkedin.com/in/yutaka-yamaguchi" 
             target="_blank"
             rel="noopener noreferrer"
             className={`px-6 py-3 rounded-full font-semibold shadow-lg transform hover:scale-105 transition ${
@@ -64,7 +64,7 @@ const Home = () => {
             {text.home.buttons.linkedin}
           </a>
           <a
-            href="https://github.com/yyamaguchi0102"
+            href="https://github.com/yyamaguchi0102?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
             className={`px-6 py-3 rounded-full font-semibold shadow-lg transform hover:scale-105 transition ${
