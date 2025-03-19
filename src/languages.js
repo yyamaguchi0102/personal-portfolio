@@ -232,8 +232,8 @@ export const languages = {
       resume: "이력서",
     },
     home: {
-      name: "반가워요, 유타카입니다.",
-      typewriter: ["풀스택 개발자", "ML 개발자", "번역가"],
+      name: "반가워요, 유타카입니다",
+      typewriter: ["풀스택 개발자입니다", "ML 개발자입니다", "번역가입니다"],
       intro: "저는 열정적인 소프트웨어 엔지니어이자 번역, 과외 등 언어서비스 사업을 하고 있습니다.",
       staticPhrase: "저는",
       buttons: {
@@ -326,8 +326,8 @@ export const languages = {
     loadingScreen: {
       languagePrompt: "언어를 선택하세요",
       moodPrompt: "테마를 선택하세요",
-      moodBright: "밝음",
-      moodDark: "어두움",
+      moodBright: "라이트모드",
+      moodDark: "다크모드",
     },
   },
 };

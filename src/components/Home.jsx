@@ -92,14 +92,14 @@ const Home = () => {
       {isModalOpen && (
         <div
           className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-          onClick={toggleModal} // Close modal when clicking outside
+          onClick={toggleModal} 
         >
           <div
             className={`p-8 rounded-lg shadow-lg max-w-2xl text-center transition ${
               theme === "light" ? "bg-white text-black" : "bg-gray-800 text-white"
             }`}
-            onClick={(e) => e.stopPropagation()} // Prevent closing modal when clicking inside
-            style={{ fontSize: "1.25rem" }} // Increase font size
+            onClick={(e) => e.stopPropagation()} 
+            style={{ fontSize: "1.25rem" }} 
           >
             <h2 className="text-3xl font-bold mb-4">{text.home.about.title}</h2>
             <p className="leading-relaxed">{text.home.about.content}</p>
