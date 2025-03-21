@@ -2,10 +2,12 @@ import React from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import { motion } from "framer-motion";
+import { languages } from "../languages.js";
 
 const Contact = () => {
   const { theme } = useTheme();
-  const { text } = useLanguage();
+  const { language } = useLanguage();
+  const currentLanguage = languages[language];
 
   const containerVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -20,9 +22,7 @@ const Contact = () => {
   return (
     <motion.section
       id="contact"
-      className={`min-h-screen flex flex-col justify-center py-16 px-8 ${
-        theme === "light" ? "bg-light-background text-light-text" : "bg-dark-background text-dark-text"
-      }`}
+      className="min-h-screen flex flex-col justify-center py-24 px-8 relative"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
@@ -31,17 +31,17 @@ const Contact = () => {
       <div className="container mx-auto max-w-4xl">
         {/* Title */}
         <motion.h2
-          className={`text-3xl font-bold text-center mb-8 ${
+          className={`text-3xl font-bold text-center mb-6 ${
             theme === "light" ? "text-light-accent" : "text-dark-accent"
           }`}
           variants={itemVariants}
         >
-          {text.contact.title}
+          {currentLanguage.contact.title}
         </motion.h2>
 
         {/* Description */}
         <motion.p className="text-center mb-8" variants={itemVariants}>
-          {text.contact.description}
+          {currentLanguage.contact.description}
         </motion.p>
 
         {/* Form */}

@@ -2,148 +2,464 @@ import React, { useState, useEffect } from "react";
 import { Typewriter } from "react-simple-typewriter";
 import { useTheme } from "../contexts/ThemeContext";
 import { useLanguage } from "../contexts/LanguageContext";
+import { motion, AnimatePresence } from "framer-motion";
+import { languages } from "../languages";
 
 const LoadingScreen = ({ onComplete }) => {
   const { setTheme } = useTheme();
-  const { text, toggleLanguage } = useLanguage(); // Use language text and toggle function
-  const [loadingStep, setLoadingStep] = useState(0);
-  const [showLanguagePrompt, setShowLanguagePrompt] = useState(false);
+  const { setLanguage } = useLanguage();
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const [showLanguagePrompt, setShowLanguagePrompt] = useState(true);
   const [showMoodPrompt, setShowMoodPrompt] = useState(false);
 
-  const messages = [
-    "Initializing systems...",
-    "Decrypting passwords...",
-    "Access Granted...",
-  ];
+  // Get text for the current selected language
+  const currentLanguageText = languages[selectedLanguage];
 
   const languagePrompts = [
     "Select A Language",
     "言語を選択してください",
     "언어를 선택하세요",
   ];
+  
+  // Generate random particles for background
+  const [particles, setParticles] = useState([]);
+  
+  useEffect(() => {
+    const count = 30;
+    const newParticles = Array.from({ length: count }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 4 + 1,
+      opacity: Math.random() * 0.3 + 0.1,
+      speedX: (Math.random() - 0.5) * 0.3,
+      speedY: (Math.random() - 0.5) * 0.3,
+      delay: Math.random() * 5,
+      duration: Math.random() * 10 + 15
+    }));
+    
+    setParticles(newParticles);
+  }, []);
 
-  const handleLanguageSelection = (language) => {
-    toggleLanguage(language); // Set the selected language
-    setShowLanguagePrompt(false);
-    setShowMoodPrompt(true); // Show mood selection
+  const handleLanguageSelection = (lang) => {
+    setSelectedLanguage(lang);
+    setLanguage(lang);
+    
+    // Use a timeout to create a smooth transition
+    setTimeout(() => {
+      setShowLanguagePrompt(false);
+      setShowMoodPrompt(true);
+    }, 300);
   };
 
   const handleMoodSelection = (mood) => {
     setTheme(mood);
-    setTimeout(onComplete, 1000); // Proceed to the main app
+    setTimeout(onComplete, 1000);
   };
 
-  useEffect(() => {
-    if (loadingStep < messages.length) {
-      const timeout = setTimeout(() => {
-        setLoadingStep((prev) => prev + 1);
-      }, 1500);
-      return () => clearTimeout(timeout);
-    } else {
-      setShowLanguagePrompt(true);
-    }
-    // eslint-disable-next-line
-  }, [loadingStep]);
+  // Button hover variants
+  const buttonVariants = {
+    initial: { scale: 1 },
+    hover: { 
+      scale: 1.05,
+      boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)",
+      transition: { type: "spring", stiffness: 400, damping: 10 }
+    },
+    tap: { scale: 0.97 }
+  };
+  
+  // Card variants for staggered entrance
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.1,
+        duration: 0.5,
+        type: "spring",
+        stiffness: 200,
+        damping: 20
+      }
+    })
+  };
 
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center bg-black text-green-500 font-mono relative overflow-hidden">
-      {/* Background Glow */}
-      <div className="absolute inset-0 animate-gradient-blur"></div>
+    <div className="w-full h-screen flex flex-col justify-center items-center bg-gradient-to-br from-slate-900 to-gray-900 text-white relative overflow-hidden">
+      {/* Animated Particles Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {particles.map((particle) => (
+          <motion.div
+            key={particle.id}
+            className="absolute rounded-full bg-indigo-500"
+            style={{
+              width: `${particle.size}px`,
+              height: `${particle.size}px`,
+              opacity: particle.opacity,
+              left: `${particle.x}%`,
+              top: `${particle.y}%`,
+              filter: `blur(${particle.size > 3 ? '1px' : '0'})`,
+            }}
+            animate={{
+              x: [0, particle.speedX * 100, 0],
+              y: [0, particle.speedY * 100, 0],
+              scale: [1, particle.size > 3 ? 1.2 : 1, 1],
+            }}
+            transition={{
+              duration: particle.duration,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+              delay: particle.delay
+            }}
+          />
+        ))}
+      </div>
+      
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0">
+        <motion.div 
+          className="absolute w-[700px] h-[700px] rounded-full blur-3xl opacity-10 bg-indigo-500 -top-64 -right-64"
+          animate={{ 
+            y: [0, 50, -30, 0],
+            x: [0, -30, 20, 0],
+            scale: [1, 1.1, 0.9, 1],
+            rotate: [0, 5, -5, 0],
+          }}
+          transition={{ 
+            duration: 20, 
+            repeat: Infinity,
+            repeatType: "loop",
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute w-[700px] h-[700px] rounded-full blur-3xl opacity-10 bg-violet-500 -bottom-64 -left-64"
+          animate={{ 
+            y: [0, -50, 30, 0],
+            x: [0, 30, -20, 0],
+            scale: [1, 0.9, 1.1, 1],
+            rotate: [0, -5, 5, 0],
+          }}
+          transition={{ 
+            duration: 25, 
+            repeat: Infinity,
+            repeatType: "loop",
+            ease: "easeInOut",
+            delay: 1
+          }}
+        />
+      </div>
 
-      {!showLanguagePrompt && !showMoodPrompt ? (
-        <>
-          {/* Typewriter Loading Messages */}
-          <div className="text-xl z-10">
-            <Typewriter
-              words={messages}
-              cursor
-              loop={false}
-              typeSpeed={50}
-              deleteSpeed={30}
-            />
-          </div>
-
-          {/* Progress Bar */}
-          <div className="mt-4 w-64 h-1 bg-gray-600 z-10">
-            <div
-              className="h-full bg-green-500"
-              style={{
-                width: `${(loadingStep / messages.length) * 100}%`,
-                transition: "width 2s",
+      <AnimatePresence mode="wait">
+        {showLanguagePrompt ? (
+          <motion.div 
+            key="language-prompt"
+            className="text-center z-10 px-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+          >
+            {/* Language Selection */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ 
+                opacity: 1, 
+                scale: 1,
+                transition: { 
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 25
+                }
               }}
-            />
-          </div>
-        </>
-      ) : showLanguagePrompt ? (
-        <div className="text-center z-10">
-          {/* Language Selection */}
-          <div className="text-4xl font-bold mb-6 h-16 flex items-center justify-center">
-            <Typewriter
-              words={languagePrompts}
-              loop={true}
-              cursor
-              cursorStyle="_"
-              typeSpeed={70}
-              deleteSpeed={50}
-              delaySpeed={1500}
-            />
-          </div>
-          <div className="flex space-x-4 mt-4">
-            <button
-              onClick={() => handleLanguageSelection("en")}
-              className="px-6 py-3 bg-gray-700 text-white rounded-lg flex items-center space-x-2 hover:bg-gray-600 transition-all duration-300 transform hover:scale-105 shadow-md"
             >
-              <img
-                src="https://flagsapi.com/US/flat/32.png"
-                alt="US Flag"
-                className="w-6 h-6"
-              />
-              <span>English</span>
-            </button>
-            <button
-              onClick={() => handleLanguageSelection("jp")}
-              className="px-6 py-3 bg-gray-700 text-white rounded-lg flex items-center space-x-2 hover:bg-gray-600 transition-all duration-300 transform hover:scale-105 shadow-md"
+              <div className="relative text-4xl font-bold mb-12 h-16 flex items-center justify-center">
+                <motion.div 
+                  className="absolute inset-0 -z-10 blur-lg opacity-20 bg-indigo-500 rounded-full"
+                  animate={{ 
+                    scale: [1, 1.05, 1],
+                    opacity: [0.2, 0.3, 0.2]
+                  }}
+                  transition={{ 
+                    duration: 3,
+                    repeat: Infinity
+                  }}
+                />
+                <Typewriter
+                  words={languagePrompts}
+                  loop={true}
+                  cursor
+                  cursorStyle="_"
+                  typeSpeed={70}
+                  deleteSpeed={50}
+                  delaySpeed={1500}
+                />
+              </div>
+            </motion.div>
+            
+            <motion.div 
+              className="flex flex-wrap justify-center gap-6 mt-8"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+              }}
+              initial="hidden"
+              animate="visible"
             >
-              <img
-                src="https://flagsapi.com/JP/flat/32.png"
-                alt="Japanese Flag"
-                className="w-6 h-6"
-              />
-              <span>日本語</span>
-            </button>
-            <button
-              onClick={() => handleLanguageSelection("ko")}
-              className="px-6 py-3 bg-gray-700 text-white rounded-lg flex items-center space-x-2 hover:bg-gray-600 transition-all duration-300 transform hover:scale-105 shadow-md"
+              <motion.button
+                custom={0}
+                variants={cardVariants}
+                whileHover="hover"
+                whileTap="tap"
+                onClick={() => handleLanguageSelection("en")}
+                className="group relative px-8 py-4 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg shadow-indigo-900/20 hover:shadow-indigo-500/20 transition-all duration-300"
+              >
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-r from-indigo-500/0 to-violet-500/0 rounded-2xl -z-10"
+                  animate={{
+                    background: ["linear-gradient(to right, rgba(99, 102, 241, 0.0), rgba(139, 92, 246, 0.0))", 
+                                  "linear-gradient(to right, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1))",
+                                  "linear-gradient(to right, rgba(99, 102, 241, 0.0), rgba(139, 92, 246, 0.0))"]
+                  }}
+                  transition={{ 
+                    duration: 2, 
+                    repeat: Infinity,
+                    repeatType: "reverse" 
+                  }}
+                />
+                <div className="relative flex items-center space-x-3">
+                  <motion.img
+                    src="https://flagsapi.com/US/flat/32.png"
+                    alt="US Flag"
+                    className="w-8 h-8"
+                    whileHover={{ rotate: [0, -5, 5, 0] }}
+                    transition={{ duration: 0.5 }}
+                  />
+                  <span className="text-lg font-medium">English</span>
+                </div>
+              </motion.button>
+              
+              <motion.button
+                custom={1}
+                variants={cardVariants}
+                whileHover="hover"
+                whileTap="tap"
+                onClick={() => handleLanguageSelection("jp")}
+                className="group relative px-8 py-4 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg shadow-indigo-900/20 hover:shadow-indigo-500/20 transition-all duration-300"
+              >
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-r from-rose-500/0 to-pink-500/0 rounded-2xl -z-10"
+                  animate={{
+                    background: ["linear-gradient(to right, rgba(244, 63, 94, 0.0), rgba(219, 39, 119, 0.0))", 
+                                  "linear-gradient(to right, rgba(244, 63, 94, 0.1), rgba(219, 39, 119, 0.1))",
+                                  "linear-gradient(to right, rgba(244, 63, 94, 0.0), rgba(219, 39, 119, 0.0))"]
+                  }}
+                  transition={{ 
+                    duration: 2, 
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    delay: 0.3
+                  }}
+                />
+                <div className="relative flex items-center space-x-3">
+                  <motion.img
+                    src="https://flagsapi.com/JP/flat/32.png"
+                    alt="Japanese Flag"
+                    className="w-8 h-8"
+                    whileHover={{ rotate: [0, -5, 5, 0] }}
+                    transition={{ duration: 0.5 }}
+                  />
+                  <span className="text-lg font-medium">日本語</span>
+                </div>
+              </motion.button>
+              
+              <motion.button
+                custom={2}
+                variants={cardVariants}
+                whileHover="hover"
+                whileTap="tap"
+                onClick={() => handleLanguageSelection("ko")}
+                className="group relative px-8 py-4 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg shadow-indigo-900/20 hover:shadow-indigo-500/20 transition-all duration-300"
+              >
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-r from-sky-500/0 to-blue-500/0 rounded-2xl -z-10"
+                  animate={{
+                    background: ["linear-gradient(to right, rgba(14, 165, 233, 0.0), rgba(59, 130, 246, 0.0))", 
+                                  "linear-gradient(to right, rgba(14, 165, 233, 0.1), rgba(59, 130, 246, 0.1))",
+                                  "linear-gradient(to right, rgba(14, 165, 233, 0.0), rgba(59, 130, 246, 0.0))"]
+                  }}
+                  transition={{ 
+                    duration: 2, 
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    delay: 0.6
+                  }}
+                />
+                <div className="relative flex items-center space-x-3">
+                  <motion.img
+                    src="https://flagsapi.com/KR/flat/32.png"
+                    alt="Korean Flag"
+                    className="w-8 h-8"
+                    whileHover={{ rotate: [0, -5, 5, 0] }}
+                    transition={{ duration: 0.5 }}
+                  />
+                  <span className="text-lg font-medium">한국어</span>
+                </div>
+              </motion.button>
+            </motion.div>
+          </motion.div>
+        ) : (
+          <motion.div 
+            key="mood-prompt"
+            className="text-center z-10 px-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ 
+              duration: 0.6, 
+              type: "spring",
+              stiffness: 150,
+              damping: 20
+            }}
+          >
+            {/* Theme Selection */}
+            <motion.h1 
+              className="text-4xl font-bold mb-12"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ 
+                opacity: 1, 
+                y: 0,
+                transition: { 
+                  delay: 0.2,
+                  duration: 0.6,
+                  type: "spring"
+                }
+              }}
             >
-              <img
-                src="https://flagsapi.com/KR/flat/32.png"
-                alt="Korean Flag"
-                className="w-6 h-6"
-              />
-              <span>한국어</span>
-            </button>
-          </div>
-        </div>
-      ) : (
-        <div className="text-center z-10">
-          {/* Mood Selection */}
-          <h1 className="text-4xl font-bold mb-8">{text.loadingScreen.moodPrompt}</h1>
-          <div className="flex space-x-4">
-            <button
-              onClick={() => handleMoodSelection("light")}
-              className="px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-all duration-300 transform hover:scale-105 shadow-md"
+              <motion.span
+                className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 to-violet-300"
+                animate={{ 
+                  backgroundPosition: ["0% center", "100% center", "0% center"],
+                }}
+                transition={{ 
+                  duration: 5, 
+                  repeat: Infinity,
+                  repeatType: "loop" 
+                }}
+              >
+                {currentLanguageText.loadingScreen.moodPrompt}
+              </motion.span>
+            </motion.h1>
+            
+            <motion.div 
+              className="flex flex-wrap justify-center gap-8"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: { 
+                  opacity: 1,
+                  transition: { 
+                    staggerChildren: 0.2,
+                    delayChildren: 0.3
+                  } 
+                }
+              }}
+              initial="hidden"
+              animate="visible"
             >
-              {text.loadingScreen.moodBright}
-            </button>
-            <button
-              onClick={() => handleMoodSelection("dark")}
-              className="px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-all duration-300 transform hover:scale-105 shadow-md"
-            >
-              {text.loadingScreen.moodDark}
-            </button>
-          </div>
-        </div>
-      )}
+              <motion.div
+                variants={cardVariants}
+                custom={0}
+              >
+                <motion.button
+                  variants={buttonVariants}
+                  initial="initial"
+                  whileHover="hover"
+                  whileTap="tap"
+                  onClick={() => handleMoodSelection("light")}
+                  className="group relative px-10 py-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg shadow-rose-900/10 hover:shadow-rose-500/20 transition-all duration-300"
+                >
+                  <motion.div 
+                    className="absolute inset-0 rounded-2xl overflow-hidden -z-10"
+                    animate={{ 
+                      background: ["linear-gradient(120deg, rgba(244,63,94,0.05) 0%, rgba(238,164,16,0.05) 100%)", 
+                                  "linear-gradient(120deg, rgba(244,63,94,0.1) 0%, rgba(238,164,16,0.1) 100%)",
+                                  "linear-gradient(120deg, rgba(244,63,94,0.05) 0%, rgba(238,164,16,0.05) 100%)"]
+                    }}
+                    transition={{ 
+                      duration: 3, 
+                      repeat: Infinity,
+                      repeatType: "reverse" 
+                    }}
+                  />
+                  <div className="relative flex flex-col items-center space-y-3">
+                    <motion.span 
+                      className="text-4xl"
+                      animate={{ 
+                        rotate: [0, 10, -10, 0],
+                        scale: [1, 1.1, 1]
+                      }}
+                      transition={{ 
+                        duration: 5, 
+                        repeat: Infinity,
+                        repeatType: "loop" 
+                      }}
+                    >
+                      ☀️
+                    </motion.span>
+                    <span className="text-lg font-medium">{currentLanguageText.loadingScreen.moodBright}</span>
+                  </div>
+                </motion.button>
+              </motion.div>
+              
+              <motion.div
+                variants={cardVariants}
+                custom={1}
+              >
+                <motion.button
+                  variants={buttonVariants}
+                  initial="initial"
+                  whileHover="hover"
+                  whileTap="tap"
+                  onClick={() => handleMoodSelection("dark")}
+                  className="group relative px-10 py-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg shadow-indigo-900/10 hover:shadow-indigo-500/20 transition-all duration-300"
+                >
+                  <motion.div 
+                    className="absolute inset-0 rounded-2xl overflow-hidden -z-10"
+                    animate={{ 
+                      background: ["linear-gradient(120deg, rgba(99,102,241,0.05) 0%, rgba(139,92,246,0.05) 100%)", 
+                                  "linear-gradient(120deg, rgba(99,102,241,0.1) 0%, rgba(139,92,246,0.1) 100%)",
+                                  "linear-gradient(120deg, rgba(99,102,241,0.05) 0%, rgba(139,92,246,0.05) 100%)"]
+                    }}
+                    transition={{ 
+                      duration: 3, 
+                      repeat: Infinity,
+                      repeatType: "reverse" 
+                    }}
+                  />
+                  <div className="relative flex flex-col items-center space-y-3">
+                    <motion.span 
+                      className="text-4xl"
+                      animate={{ 
+                        rotate: [0, -5, 5, 0],
+                        scale: [1, 1.1, 1]
+                      }}
+                      transition={{ 
+                        duration: 6, 
+                        repeat: Infinity,
+                        repeatType: "loop" 
+                      }}
+                    >
+                      🌙
+                    </motion.span>
+                    <span className="text-lg font-medium">{currentLanguageText.loadingScreen.moodDark}</span>
+                  </div>
+                </motion.button>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

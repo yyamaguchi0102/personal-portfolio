@@ -4,18 +4,18 @@ module.exports = {
     extend: {
       colors: {
         light: {
-          background: "#fef9e7", // Bright, cheerful background
-          text: "#222222", // Dark gray for text
-          accent: "#ff8c42", // Vibrant orange for buttons/accents
+          background: "#fff1f2", // Rose tinted background
+          text: "#1f2937", // Dark gray for text
+          accent: "#f43f5e", // Rose/pink for buttons/accents
         },
         dark: {
-          background: "#2a2a2a", // Softer black, slightly warmer tone
-          text: "#FFFFE0", // Brighter gray for better readability
-          accent: "#FFFFE0", // Soft blue accent for a clean modern look
-          card: "#242424", // Darker gray for cards to subtly stand out
-          border: "#3a3a3a", // Slightly darker gray for subtle borders
-          hover: "#2563eb", // Rich blue for hover states
-          muted: "#bbbbbb", // Softer gray for less prominent text
+          background: "#0f172a", // Deep navy blue for a modern dark theme
+          text: "#e2e8f0", // Soft white for excellent readability
+          accent: "#6366f1", // Indigo for vibrant accents
+          card: "#1e293b", // Slightly lighter navy for card backgrounds
+          border: "#334155", // Subtle border color
+          hover: "#818cf8", // Bright indigo for interactive elements
+          muted: "#94a3b8", // Muted slate for secondary text
         },
       },
     },

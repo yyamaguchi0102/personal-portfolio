@@ -50,7 +50,7 @@ export const languages = {
           demo: "Live Demo",
           repo: "GitHub Repo",
           tech: ["React", "Tailwind CSS", "JavaScript"],
-          demoUrl: "https://your-demo-url.com",
+          demoUrl: "#",
           repoUrl: "https://github.com/yyamaguchi0102/personal-portfolio",
         },
         {
@@ -59,7 +59,7 @@ export const languages = {
           demo: "Live Demo",
           repo: "GitHub Repo",
           tech: ["Java", "SpringBoot", "React", "JavaScript", "Tailwind CSS", "TensorFlow"],
-          demoUrl: "https://your-demo-url.com",
+          demoUrl: "#",
           repoUrl: "https://github.com/yyamaguchi0102/todolist-springboot",
         },
         {
@@ -68,7 +68,7 @@ export const languages = {
           demo: "Live Demo",
           repo: "GitHub Repo",
           tech: ["Python", "Scikit Learn", "NumPy", "Pandas", "Matplotlib"],
-          demoUrl: "https://your-demo-url.com",
+          demoUrl: "#",
           repoUrl: "https://github.com/yyamaguchi0102/housing-price-prediction",
         },
         {name: "Snake Game",
@@ -76,7 +76,7 @@ export const languages = {
           demo: "Live Demo",
           repo: "GitHub Repo",
           tech: ["JavaFX"],
-          demoUrl: "https://your-demo-url.com",
+          demoUrl: "#",
           repoUrl: "https://github.com/yyamaguchi0102/personal-portfolio",
         }
       ],

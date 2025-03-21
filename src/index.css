@@ -2,6 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+}
+
+.light-theme::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #f43f5e, #ec4899);
+  border-radius: 8px;
+}
+
+.dark-theme::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #6366f1, #8b5cf6);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  filter: brightness(110%);
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -9,6 +34,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: transparent; 
+  overflow-x: hidden; /* Allow vertical scrolling */
 }
 
 code {
@@ -36,10 +63,11 @@ code {
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 6rem; /* Accounts for fixed header */
 }
 
 .scroll-offset {
-  scroll-margin-top: 1rem; /* Adjust this value to match your navbar's height */
+  scroll-margin-top: 6rem; /* Adjust to match your navbar's height plus some spacing */
 }
 
 @keyframes gradient-blur-dark {
@@ -90,22 +118,22 @@ html, body, #root {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* Prevent scrollbars */
-}
-
-body {
-  background-color: transparent; 
-  overflow: hidden; 
+  overflow-x: hidden; /* Prevent horizontal scrollbars */
+  overflow-y: auto; /* Allow vertical scrolling */
 }
 
 .scroll-container {
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity; /* Change from mandatory to proximity for better UX */
   overflow-y: auto;
   height: 100vh;
   width: 100%;
+  position: relative;
 }
 
-.scroll-offset {
-  scroll-margin-top: 4rem; /* Adjust this to match the height of your fixed header */
+.scroll-section {
+  scroll-margin-top: 6rem; /* Ensures sections scroll to proper position */
+  min-height: 100vh; /* Ensure each section takes at least full viewport height */
+  position: relative;
+  width: 100%;
 }
 

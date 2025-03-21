@@ -7,15 +7,7 @@ export const ThemeProvider = ({ children }) => {
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
-      <div
-        className={`${
-          theme === "light"
-            ? "bg-light-background text-light-text"
-            : "bg-dark-background text-dark-text"
-        }`}
-      >
-        {children}
-      </div>
+      {children}
     </ThemeContext.Provider>
   );
 };
