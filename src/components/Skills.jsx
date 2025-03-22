@@ -221,9 +221,8 @@ const Skills = () => {
 
   return (
     <motion.section
-      id="skills"
       ref={ref}
-      className="scroll-offset py-24 px-8 relative"
+      className="scroll-offset py-24 pt-16 px-8 relative"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }} 
@@ -260,7 +259,7 @@ const Skills = () => {
             className={`text-2xl font-semibold mb-4 ${theme === "dark" ? "text-indigo-400" : "text-rose-500"}`}
             variants={itemVariants}
           >
-            Spoken Languages
+            {currentLanguage.skills.sections.spokenLanguages}
           </motion.h3>
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
@@ -301,7 +300,7 @@ const Skills = () => {
             className={`text-2xl font-semibold mb-4 ${theme === "dark" ? "text-indigo-400" : "text-rose-500"}`}
             variants={itemVariants}
           >
-            Programming Stack
+            {currentLanguage.skills.sections.programmingStack}
           </motion.h3>
           <motion.div
             className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"

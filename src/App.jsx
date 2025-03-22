@@ -11,6 +11,7 @@ import LoadingScreen from "./components/LoadingScreen";
 import Services from "./components/Services";
 import PageTransition from "./components/PageTransition";
 import ScrollToTop from "./components/ScrollToTop";
+import Footer from "./components/Footer";
 import { motion, useScroll, useSpring } from "framer-motion";
 
 // Scroll progress indicator component
@@ -192,6 +193,82 @@ const AnimatedBackground = ({ theme }) => {
   );
 };
 
+// Mouse-following beam effect component
+const MouseFollowingBeam = ({ theme }) => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      // Get mouse position relative to the viewport
+      const { clientX, clientY } = e;
+      setMousePosition({ x: clientX, y: clientY });
+    };
+    
+    window.addEventListener('mousemove', handleMouseMove);
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+  
+  return (
+    <motion.div
+      className="fixed top-0 left-0 w-full h-full pointer-events-none z-10"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+    >
+      {/* Outer subtle glow */}
+      <motion.div
+        className={`absolute rounded-full ${
+          theme === "light"
+            ? "bg-gradient-to-r from-rose-400/20 via-pink-500/20 to-rose-400/20"
+            : "bg-gradient-to-r from-indigo-500/20 via-violet-600/20 to-indigo-500/20"
+        }`}
+        style={{
+          width: '350px',  
+          height: '350px',
+          filter: 'blur(80px)',
+        }}
+        animate={{ 
+          left: mousePosition.x - 175,
+          top: mousePosition.y - 175,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 500,
+          damping: 30,
+          mass: 0.5
+        }}
+      />
+      
+      {/* Core of the beam - softer center */}
+      <motion.div
+        className={`absolute rounded-full ${
+          theme === "light"
+            ? "bg-gradient-to-r from-rose-300/20 via-pink-400/20 to-rose-300/20"
+            : "bg-gradient-to-r from-indigo-400/20 via-violet-500/20 to-indigo-400/20"
+        }`}
+        style={{
+          width: '120px',
+          height: '120px',
+          filter: 'blur(30px)',
+          opacity: 0.6,
+        }}
+        animate={{ 
+          left: mousePosition.x - 60,
+          top: mousePosition.y - 60,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 800,
+          damping: 30,
+          mass: 0.2
+        }}
+      />
+    </motion.div>
+  );
+};
+
 // Wrapper component to apply theme
 const AppContent = () => {
   const { theme } = useTheme();
@@ -220,38 +297,64 @@ const AppContent = () => {
         <PageTransition>
           <div className={`min-h-screen relative overflow-hidden transition-colors duration-500
             ${theme === "light"
-              ? "bg-gradient-to-br from-rose-50 via-white to-amber-50 text-gray-900"
+              ? "bg-gradient-to-br from-gray-100 via-gray-50 to-stone-100 text-gray-900"
               : "bg-gradient-to-br from-slate-900 via-gray-900 to-indigo-900 text-white"
             }`}
-            style={{ scrollPaddingTop: '80px' }}
+            style={{ scrollPaddingTop: '100px' }}
           >
             <ScrollProgress />
             <ParticleBackground theme={theme} />
             <AnimatedBackground theme={theme} />
+            <MouseFollowingBeam theme={theme} />
             
             <div className={`absolute inset-0 ${theme === "light" 
-              ? "bg-gradient-to-b from-white/0 via-white/20 to-white/50"
+              ? "bg-gradient-to-b from-gray-100/0 via-gray-100/20 to-gray-100/50"
               : "bg-gradient-to-b from-slate-900/0 via-slate-900/20 to-slate-900/50"} 
               pointer-events-none z-[1]`}
             />
             
             <Header />
-            <div className="scroll-container relative z-10">
-              <div className="scroll-section">
+            <div 
+              className="scroll-container relative z-10"
+              style={{
+                scrollSnapType: 'y proximity',
+                scrollBehavior: 'smooth',
+                height: '100vh',
+                overflowY: 'auto',
+                overflowX: 'hidden'
+              }}
+            >
+              <div id="home" className="scroll-section" style={{ scrollSnapAlign: 'start' }}>
                 <Home />
               </div>
-              <div className="scroll-section">
+              <div id="skills" className="scroll-section" style={{ scrollSnapAlign: 'start' }}>
                 <Skills />
               </div>
-              <div className="scroll-section">
+              <div id="services" className="scroll-section" style={{ scrollSnapAlign: 'start' }}>
                 <Services />
               </div>
-              <div className="scroll-section">
+              <div id="projects" className="scroll-section" style={{ scrollSnapAlign: 'start' }}>
                 <Projects />
               </div>
-              <div className="scroll-section">
+              <div id="contact" className="scroll-section" style={{ scrollSnapAlign: 'start' }}>
                 <Contact />
               </div>
+              <Footer style={{ scrollSnapAlign: 'start' }} />
+            </div>
+            
+            {/* Section transition overlay */}
+            <div className="fixed inset-0 pointer-events-none z-0">
+              {theme === "light" ? (
+                <>
+                  <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-gray-50/70 to-transparent" />
+                  <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-gray-50/70 to-transparent" />
+                </>
+              ) : (
+                <>
+                  <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-slate-900/70 to-transparent" />
+                  <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-slate-900/70 to-transparent" />
+                </>
+              )}
             </div>
           </div>
         </PageTransition>

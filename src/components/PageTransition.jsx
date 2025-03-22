@@ -109,12 +109,9 @@ const PageTransition = ({ children }) => {
                 transition: { duration: 0.2, delay: 0.3 }
               }}
             >
+              {/* Animated Logo - Language Neutral */}
               <motion.div 
-                className={`text-6xl font-bold ${
-                  theme === 'light' 
-                    ? 'text-rose-600' // Darker text for light mode
-                    : 'text-white'
-                } text-opacity-90`}
+                className="relative flex items-center justify-center"
                 initial={{ filter: "blur(8px)", opacity: 0, scale: 1.5 }}
                 animate={{ 
                   filter: "blur(0px)", 
@@ -129,7 +126,87 @@ const PageTransition = ({ children }) => {
                   transition: { duration: 0.3 } 
                 }}
               >
-                Welcome
+                <motion.div 
+                  className={`w-24 h-24 rounded-full flex items-center justify-center
+                    ${theme === 'light'
+                      ? 'bg-gradient-to-br from-rose-400 to-pink-500'
+                      : 'bg-gradient-to-br from-indigo-500 to-violet-600'
+                    }`}
+                  animate={{ 
+                    rotate: [0, 10, -10, 0],
+                    scale: [1, 1.05, 0.95, 1]
+                  }}
+                  transition={{ 
+                    duration: 4, 
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <motion.div 
+                    className={`text-4xl font-bold ${
+                      theme === 'light' ? 'text-white' : 'text-white'
+                    }`}
+                    animate={{ 
+                      scale: [1, 1.2, 1],
+                      rotateY: [0, 180, 360],
+                    }}
+                    transition={{ 
+                      duration: 3,
+                      ease: "easeInOut",
+                      repeat: Infinity
+                    }}
+                  >
+                    YY
+                  </motion.div>
+                </motion.div>
+                
+                {/* Orbiting Elements */}
+                <motion.div
+                  className={`absolute w-6 h-6 rounded-full
+                    ${theme === 'light' ? 'bg-amber-400' : 'bg-blue-400'}`}
+                  animate={{
+                    x: [0, 50, 0, -50, 0],
+                    y: [50, 0, -50, 0, 50],
+                    scale: [1, 1.2, 1, 1.2, 1],
+                  }}
+                  transition={{
+                    duration: 5,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                />
+                
+                <motion.div
+                  className={`absolute w-4 h-4 rounded-full
+                    ${theme === 'light' ? 'bg-rose-300' : 'bg-violet-400'}`}
+                  animate={{
+                    x: [0, -40, 0, 40, 0],
+                    y: [-40, 0, 40, 0, -40],
+                    scale: [1, 0.8, 1, 0.8, 1],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "linear",
+                    delay: 0.5
+                  }}
+                />
+                
+                <motion.div
+                  className={`absolute w-3 h-3 rounded-full
+                    ${theme === 'light' ? 'bg-blue-400' : 'bg-indigo-300'}`}
+                  animate={{
+                    x: [30, 0, -30, 0, 30],
+                    y: [0, 30, 0, -30, 0],
+                    scale: [0.8, 1, 0.8, 1, 0.8],
+                  }}
+                  transition={{
+                    duration: 3.5,
+                    repeat: Infinity,
+                    ease: "linear",
+                    delay: 1
+                  }}
+                />
               </motion.div>
               
               {/* Pulsing Glow Effect */}
@@ -139,7 +216,7 @@ const PageTransition = ({ children }) => {
                 }`}
                 animate={{
                   opacity: [0.2, 0.4, 0.2],
-                  scale: [0.9, 1.1, 0.9],
+                  scale: [0.9, 1.3, 0.9],
                 }}
                 transition={{
                   duration: 2,

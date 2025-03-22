@@ -21,7 +21,6 @@ const Contact = () => {
 
   return (
     <motion.section
-      id="contact"
       className="min-h-screen flex flex-col justify-center py-24 px-8 relative"
       initial="hidden"
       whileInView="visible"
@@ -48,7 +47,7 @@ const Contact = () => {
         <motion.form className="space-y-6" variants={containerVariants}>
           <motion.input
             type="text"
-            placeholder="Your Name"
+            placeholder={currentLanguage.contact.namePlaceholder}
             className={`w-full p-4 rounded-lg border ${
               theme === "light" ? "bg-white border-gray-300" : "bg-gray-800 border-gray-600 text-gray-100"
             }`}
@@ -56,14 +55,14 @@ const Contact = () => {
           />
           <motion.input
             type="email"
-            placeholder="Your Email"
+            placeholder={currentLanguage.contact.emailPlaceholder}
             className={`w-full p-4 rounded-lg border ${
               theme === "light" ? "bg-white border-gray-300" : "bg-gray-800 border-gray-600 text-gray-100"
             }`}
             variants={itemVariants}
           />
           <motion.textarea
-            placeholder="Your Message"
+            placeholder={currentLanguage.contact.messagePlaceholder}
             rows="5"
             className={`w-full p-4 rounded-lg border ${
               theme === "light" ? "bg-white border-gray-300" : "bg-gray-800 border-gray-600 text-gray-100"
@@ -81,7 +80,7 @@ const Contact = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Send
+            {currentLanguage.contact.sendButton}
           </motion.button>
         </motion.form>
       </div>

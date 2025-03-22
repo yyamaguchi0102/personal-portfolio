@@ -63,11 +63,11 @@ code {
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 6rem; /* Accounts for fixed header */
+  scroll-padding-top: 100px; /* Accounts for fixed header */
 }
 
 .scroll-offset {
-  scroll-margin-top: 6rem; /* Adjust to match your navbar's height plus some spacing */
+  scroll-margin-top: 100px; /* Adjust to match your navbar's height plus some spacing */
 }
 
 @keyframes gradient-blur-dark {
@@ -131,9 +131,40 @@ html, body, #root {
 }
 
 .scroll-section {
-  scroll-margin-top: 6rem; /* Ensures sections scroll to proper position */
+  scroll-margin-top: 100px; /* Ensures sections scroll to proper position */
   min-height: 100vh; /* Ensure each section takes at least full viewport height */
   position: relative;
   width: 100%;
+  margin-top: -1px; /* Create seamless connection between sections */
+  border-top: 1px solid transparent; /* Add invisible border to prevent content jumps */
+  padding-top: 1px; /* Offset for the border */
+}
+
+/* Add additional styling to ensure smooth section transitions */
+section {
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+}
+
+/* Smooth component transitions */
+.min-h-screen {
+  min-height: 100vh;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Improve the transition between sections */
+.transition-colors {
+  transition-property: background-color, color, border-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 700ms;
+}
+
+/* Improve the blur effect performance */
+.backdrop-blur-md {
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 

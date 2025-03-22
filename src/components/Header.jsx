@@ -53,6 +53,8 @@ const Header = () => {
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
   
   // Get current language data
   const currentLanguage = languages[language];
@@ -65,15 +67,64 @@ const Header = () => {
     { id: 'contact', name: currentLanguage.header.contact, href: '#contact' },
   ];
 
+  // Add intersection observer to track which section is currently visible
+  useEffect(() => {
+    const sectionIds = navItems.map(item => item.id);
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { 
+        rootMargin: "-100px 0px -50% 0px", 
+        threshold: 0.1 
+      }
+    );
+    
+    sectionIds.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
+    
+    return () => {
+      sectionIds.forEach((id) => {
+        const element = document.getElementById(id);
+        if (element) observer.unobserve(element);
+      });
+    };
+  }, [navItems]);
+
   // Add scroll event listener
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
+      const currentScrollPos = window.scrollY;
+      const scrollThreshold = 70; // Increased threshold for more natural feel
+      
+      // Set scrolled state for styling
+      setScrolled(currentScrollPos > 10);
+      
+      // Only apply hide/show logic after passing the threshold
+      if (currentScrollPos > scrollThreshold) {
+        // Show header when scrolling up, hide when scrolling down
+        setVisible(prevScrollPos > currentScrollPos);
+      } else {
+        // Always show header near the top of the page
+        setVisible(true);
+      }
+      
+      // Update previous scroll position with a small delay to prevent jitter
+      setTimeout(() => {
+        setPrevScrollPos(currentScrollPos);
+      }, 10);
     };
     
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [prevScrollPos]);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
@@ -92,30 +143,31 @@ const Header = () => {
       setIsMobileMenuOpen(false);
     }
     
-    // Scroll to the section
-    const element = document.getElementById(section);
-    if (element) {
-      // Use smooth scrolling with a slight offset for the header
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
+    // Simple and reliable approach to scroll to the section
+    document.getElementById(section)?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+    
+    // Add a small delay and adjust window scroll to compensate for fixed header
+    setTimeout(() => {
+      window.scrollBy({
+        top: -100,
+        behavior: 'smooth'
       });
-    }
+    }, 100);
   };
 
   return (
-    <header 
-      className={`sticky top-0 w-full z-30 transition-all duration-300 
-        ${scrolled 
-          ? theme === "light" 
-            ? "bg-white/90 backdrop-blur-md shadow-sm" 
-            : "bg-gray-900/90 backdrop-blur-md border-b border-gray-800"
-          : ""
+    <motion.header 
+      className={`fixed w-full z-30 transition-all duration-300
+        ${theme === "light" 
+          ? "bg-white/90 backdrop-blur-md shadow-sm" 
+          : "bg-gray-900/90 backdrop-blur-md border-b border-gray-800"
         }`}
+      initial={{ y: 0 }}
+      animate={{ y: visible ? 0 : -100 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
@@ -154,6 +206,25 @@ const Header = () => {
           
           {/* Actions */}
           <div className="flex items-center space-x-3">
+            {/* Resume Button - Moved to the left of theme toggle */}
+            <motion.a
+              href="https://docs.google.com/document/d/11GSYyV8riF_J5v3ewUiMieyqCJpkYWa6/edit?usp=sharing&ouid=100239401016507998095&rtpof=true&sd=true"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`hidden md:flex items-center px-3 py-1.5 rounded-lg font-medium transition-colors duration-200 ${
+                theme === "light"
+                  ? "bg-rose-500 text-white hover:bg-rose-600"
+                  : "bg-indigo-500 text-white hover:bg-indigo-600"
+              }`}
+            >
+              <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 8a1 1 0 10-2 0v6.5a.5.5 0 01-.5.5H3.5a.5.5 0 01-.5-.5V8a1 1 0 10-2 0v6.5A2.5 2.5 0 003.5 17h10a2.5 2.5 0 002.5-2.5V8z" />
+              </svg>
+              {currentLanguage.header.resume}
+            </motion.a>
+            
             {/* Theme Toggle */}
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -333,12 +404,36 @@ const Header = () => {
                     isMobileMenuOpen={true}
                   />
                 ))}
+                
+                {/* Resume Button (Mobile) */}
+                <motion.li
+                  className="relative mt-2"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <a 
+                    href="https://docs.google.com/document/d/11GSYyV8riF_J5v3ewUiMieyqCJpkYWa6/edit?usp=sharing&ouid=100239401016507998095&rtpof=true&sd=true"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex items-center py-2 px-3 text-base font-medium ${
+                      theme === "light" 
+                        ? "text-rose-600"
+                        : "text-indigo-400"
+                    }`}
+                  >
+                    <svg className="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 8a1 1 0 10-2 0v6.5a.5.5 0 01-.5.5H3.5a.5.5 0 01-.5-.5V8a1 1 0 10-2 0v6.5A2.5 2.5 0 003.5 17h10a2.5 2.5 0 002.5-2.5V8z" />
+                    </svg>
+                    {currentLanguage.header.resume}
+                  </a>
+                </motion.li>
               </motion.ul>
             </motion.nav>
           )}
         </AnimatePresence>
       </div>
-    </header>
+    </motion.header>
   );
 };
 
