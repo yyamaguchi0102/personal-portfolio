@@ -41,13 +41,17 @@ const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const controls = useAnimation();
   
+  // Reset animations when language changes
   useEffect(() => {
+    // Reset and restart animations
+    controls.stop();
+    controls.set({ opacity: 0, y: -50 });
     controls.start({
       opacity: 1,
       y: 0,
       transition: { duration: 0.8 }
     });
-  }, [controls]);
+  }, [controls, language]); // Add language as a dependency
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -55,56 +59,19 @@ const Home = () => {
 
   return (
     <section
-      className="relative min-h-screen flex items-center justify-center overflow-hidden py-28 pb-32"
+      className="relative min-h-screen flex items-center justify-center overflow-visible py-28 pb-32"
     >
-      {/* Background Element */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <motion.div 
-          className={`absolute top-20 -right-64 w-[40rem] h-[40rem] rounded-full opacity-15 blur-3xl
-            ${theme === "light" 
-              ? "bg-gradient-to-br from-rose-200 to-pink-300" 
-              : "bg-gradient-to-br from-indigo-900/30 to-violet-800/30"
-            }`}
-          animate={{
-            scale: [1, 1.05, 1],
-            rotate: [0, 5, 0],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div 
-          className={`absolute -bottom-32 -left-32 w-[30rem] h-[30rem] rounded-full opacity-10 blur-3xl
-            ${theme === "light" 
-              ? "bg-gradient-to-tr from-blue-200 to-sky-300" 
-              : "bg-gradient-to-tr from-blue-900/30 to-sky-800/30"
-            }`}
-          animate={{
-            scale: [1, 1.08, 1],
-            rotate: [0, -6, 0],
-          }}
-          transition={{
-            duration: 18,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "easeInOut",
-            delay: 1,
-          }}
-        />
-      </div>
-
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative">
         {/* Main content - centered with wider max-width */}
         <motion.div
+          key={`home-content-${language}`} // Add key based on language to force remount
           className="text-center max-w-4xl mx-auto"
           initial={{ opacity: 0, y: -50 }}
           animate={controls}
         >
           <FloatingElement delay={0.2} duration={6} y={8}>
             <motion.div 
+              key={`home-title-${language}`} // Add key to force remount when language changes
               className="text-5xl sm:text-6xl font-bold mb-6 leading-tight inline-block"
               initial={{ opacity: 0, y: 30, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -127,6 +94,7 @@ const Home = () => {
           </FloatingElement>
 
           <motion.h2 
+            key={`home-subtitle-${language}`} // Add key to force remount when language changes
             className={`text-2xl sm:text-3xl font-medium mb-6
               ${theme === "light" ? "text-gray-700" : "text-gray-300"}`}
             initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
@@ -158,6 +126,7 @@ const Home = () => {
           </motion.h2>
 
           <motion.p 
+            key={`home-intro-${language}`} // Add key to force remount when language changes
             className={`text-lg mb-8 leading-relaxed max-w-2xl mx-auto
               ${theme === "light" ? "text-gray-600" : "text-gray-400"}`}
             initial={{ opacity: 0, y: 15 }}
@@ -172,6 +141,7 @@ const Home = () => {
           </motion.p>
 
           <motion.div 
+            key={`home-buttons-${language}`} // Add key to force remount when language changes
             className="flex flex-wrap justify-center gap-4 mt-8"
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}

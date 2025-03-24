@@ -133,11 +133,12 @@ const Skills = () => {
 
   const programmingLanguages = [
     { name: "Java", icon: "https://img.icons8.com/color/48/java-coffee-cup-logo.png", tools: ["SpringBoot", "Maven"] },
-    { name: "Python", icon: "https://img.icons8.com/color/48/python.png", tools: ["Pandas", "NumPy", "MongoDB", "TensorFlow", "PyCharm"] },
+    { name: "Python", icon: "https://img.icons8.com/color/48/python.png", tools: ["Pandas", "NumPy", "TensorFlow", "PyCharm"] },
     { name: "Kotlin", icon: "https://img.icons8.com/color/48/kotlin.png", tools: ["Ktor"] },
-    { name: "SQL", icon: "https://img.icons8.com/color/48/sql.png", tools: ["MySQL", "NoSQL"] },
+    { name: "Databases", icon: "https://img.icons8.com/color/48/sql.png", tools: ["MySQL", "PostgreSQL", "MongoDB"] },
     { name: "JavaScript", icon: "https://img.icons8.com/color/48/javascript.png", tools: ["React.js", "Node.js"] },
     { name: "TypeScript", icon: "https://img.icons8.com/color/48/typescript.png", tools: ["Angular"] },
+    { name: "C", icon: "https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg", tools: [""] },
   ];
 
   const handleLanguageTileClick = (index) => {

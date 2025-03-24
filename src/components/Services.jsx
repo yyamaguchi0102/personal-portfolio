@@ -1,14 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import { useLanguage } from "../contexts/LanguageContext";
-import { languages } from "../languages";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaChalkboardTeacher, FaLanguage, FaTrumpet } from 'react-icons/fa';
 import { MdOutlineClose } from 'react-icons/md';
 
 const Services = () => {
   const { theme } = useTheme();
-  const { currentLanguage } = useLanguage();
+  const { language, text } = useLanguage();
+  
   const [hoveredCard, setHoveredCard] = useState(null);
   const [activeModal, setActiveModal] = useState(null);
 
@@ -58,12 +58,13 @@ const Services = () => {
     }
   };
 
-  // Modal animation variants
+  // Enhanced modal animation variants
   const modalVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
+    hidden: { opacity: 0, scale: 0.9, y: 20 },
     visible: { 
       opacity: 1, 
       scale: 1,
+      y: 0,
       transition: { 
         type: "spring",
         stiffness: 300,
@@ -72,10 +73,51 @@ const Services = () => {
     },
     exit: {
       opacity: 0,
-      scale: 0.8,
+      scale: 0.9,
+      y: 10,
       transition: {
-        duration: 0.2
+        duration: 0.3,
+        ease: "easeInOut"
       }
+    }
+  };
+
+  // Enhanced backdrop animation
+  const backdropVariants = {
+    hidden: { opacity: 0, backdropFilter: "blur(0px)" },
+    visible: { 
+      opacity: 1, 
+      backdropFilter: "blur(8px)",
+      transition: { duration: 0.4 }
+    },
+    exit: { 
+      opacity: 0,
+      backdropFilter: "blur(0px)",
+      transition: { duration: 0.3 }
+    }
+  };
+
+  // Inner content animation
+  const contentVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        delay: 0.2,
+        staggerChildren: 0.1,
+        delayChildren: 0.3,
+      }
+    }
+  };
+
+  // List item animation
+  const listItemVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      transition: { duration: 0.3 }
     }
   };
 
@@ -94,10 +136,13 @@ const Services = () => {
     setActiveModal(null);
   };
 
-  const services = currentLanguage.services.items;
+  // Ensure services exists with a fallback empty array
+  const services = text?.services?.items || [];
 
   // Map service name to icon key for details lookup
   const getServiceIconKey = (serviceName) => {
+    if (!serviceName) return "tutoring"; // Default fallback
+    
     if (serviceName.includes("Tutoring") || serviceName.includes("個別指導") || serviceName.includes("과외")) {
       return "tutoring";
     } else if (serviceName.includes("Translation") || serviceName.includes("翻訳") || serviceName.includes("번역")) {
@@ -106,6 +151,31 @@ const Services = () => {
       return "trumpet";
     }
     return "tutoring"; // default fallback
+  };
+
+  // Get service icon
+  const getServiceIcon = (serviceName) => {
+    const key = getServiceIconKey(serviceName);
+    return serviceIcons[key] || serviceIcons.tutoring;
+  };
+  
+  // Service features animation
+  const featureIcons = {
+    checkmark: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+      </svg>
+    ),
+    price: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    ),
+    time: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    )
   };
 
   return (
@@ -157,7 +227,7 @@ const Services = () => {
               ${theme === "light" ? "text-rose-600" : "text-indigo-400"}`}
             variants={headerVariants}
           >
-            {currentLanguage.services.title}
+            {text?.services?.title}
             <motion.div 
               className={`h-1 mt-1 ${theme === "light" ? "bg-rose-500" : "bg-indigo-500"}`}
               initial={{ width: 0 }}
@@ -172,7 +242,7 @@ const Services = () => {
               ${theme === "light" ? "text-gray-700" : "text-gray-300"}`}
             variants={headerVariants}
           >
-            {currentLanguage.services.description}
+            {text?.services?.description}
           </motion.p>
         </motion.div>
 
@@ -238,7 +308,7 @@ const Services = () => {
                 whileHover={{ x: 5 }}
                 onClick={() => openServiceModal(index)}
               >
-                {currentLanguage.services.learnMore}
+                {text?.services?.learnMore}
                 <svg className="w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
@@ -249,130 +319,315 @@ const Services = () => {
         
         {/* Service Detail Modals */}
         <AnimatePresence>
-          {activeModal !== null && (
+          {activeModal !== null && services[activeModal] && (
             <motion.div
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+              initial="hidden"
+              animate="visible"
+              exit="exit"
               onClick={closeModal}
             >
+              {/* Semi-transparent backdrop that preserves background elements */}
               <motion.div 
-                className={`relative max-w-lg w-full rounded-2xl p-8 mx-auto overflow-hidden ${
+                className={`absolute inset-0 ${
                   theme === "light" 
-                    ? "bg-white shadow-xl border border-gray-200" 
-                    : "bg-gray-800 shadow-xl border border-gray-700"
+                    ? "bg-gray-50/70" 
+                    : "bg-slate-900/70"
                 }`}
+                variants={backdropVariants}
+                onClick={closeModal}
+              >
+                {/* Recreate background elements to maintain visual consistency */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                  <motion.div 
+                    className={`absolute w-[700px] h-[700px] rounded-full blur-3xl opacity-10
+                      ${theme === "light" ? "bg-rose-400" : "bg-indigo-500"}
+                      -top-64 -right-64`}
+                    animate={{ 
+                      y: [0, 30, -20, 0],
+                      x: [0, -20, 10, 0],
+                      scale: [1, 1.05, 0.95, 1],
+                    }}
+                    transition={{ 
+                      duration: 20, 
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                  <motion.div 
+                    className={`absolute w-[700px] h-[700px] rounded-full blur-3xl opacity-10
+                      ${theme === "light" ? "bg-amber-400" : "bg-violet-500"}
+                      -bottom-64 -left-64`}
+                    animate={{ 
+                      y: [0, -30, 20, 0],
+                      x: [0, 20, -10, 0],
+                      scale: [1, 0.95, 1.05, 1],
+                    }}
+                    transition={{ 
+                      duration: 25, 
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  />
+                </div>
+                
+                {/* Add noise texture overlay to match main app */}
+                <div 
+                  className="absolute inset-0 bg-repeat opacity-5 pointer-events-none"
+                  style={{ 
+                    backgroundImage: `url("https://www.transparenttextures.com/patterns/asfalt-light.png")` 
+                  }}
+                />
+                
+                {/* Dynamic gradient overlay */}
+                <div className={`absolute inset-0 ${
+                  theme === "light" 
+                    ? "bg-gradient-to-b from-gray-100/0 via-gray-100/10 to-gray-100/30" 
+                    : "bg-gradient-to-b from-slate-900/0 via-slate-900/10 to-slate-900/30"
+                } pointer-events-none`} />
+              </motion.div>
+              
+              {/* Modal container with enhanced styling */}
+              <motion.div 
+                className={`relative max-w-2xl w-full rounded-xl p-0 mx-auto overflow-hidden
+                  ${theme === "light" 
+                    ? "bg-white/95 shadow-xl border border-gray-200/50" 
+                    : "bg-slate-800/95 shadow-xl border border-gray-700/30"
+                  } z-[101]`}
                 variants={modalVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
                 onClick={(e) => e.stopPropagation()}
               >
-                {/* Close button */}
-                <button 
-                  className={`absolute top-4 right-4 p-1 rounded-full ${
-                    theme === "light" 
-                      ? "text-gray-500 hover:bg-gray-100" 
-                      : "text-gray-400 hover:bg-gray-700"
-                  }`}
-                  onClick={closeModal}
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-                
-                {/* Service icon and title */}
-                <div className="flex items-center mb-6">
-                  <div className={`p-3 rounded-full mr-4 ${
-                    theme === "light" 
-                      ? "bg-rose-100 text-rose-500" 
-                      : "bg-indigo-900/30 text-indigo-400"
-                  }`}>
-                    {serviceIcons[services[activeModal].name]}
-                  </div>
-                  <h3 className={`text-2xl font-bold ${
-                    theme === "light" ? "text-gray-800" : "text-white"
-                  }`}>
-                    {services[activeModal].name}
-                  </h3>
-                </div>
-                
-                {/* Service full description */}
-                <p className={`mb-6 ${
-                  theme === "light" ? "text-gray-600" : "text-gray-300"
+                {/* Modal header with improved gradient and better integration */}
+                <div className={`p-6 relative overflow-hidden ${
+                  theme === "light" 
+                    ? "bg-gradient-to-r from-indigo-500 to-violet-500 text-white" 
+                    : "bg-gradient-to-r from-indigo-600 to-violet-600 text-white"
                 }`}>
-                  {services[activeModal].description}
-                </p>
-                
-                {/* Service bullet points */}
-                <div className="mb-6">
-                  <h4 className={`text-lg font-semibold mb-3 ${
-                    theme === "light" ? "text-gray-800" : "text-gray-200"
-                  }`}>
-                    {currentLanguage.services.whatIncluded}
-                  </h4>
-                  <ul className="space-y-2">
-                    <li className="flex items-start">
-                      <span className={`mr-2 mt-1 ${
-                        theme === "light" ? "text-rose-500" : "text-indigo-400"
-                      }`}>•</span>
-                      <span>{currentLanguage.services.details[getServiceIconKey(services[activeModal].name)].point1}</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className={`mr-2 mt-1 ${
-                        theme === "light" ? "text-rose-500" : "text-indigo-400"
-                      }`}>•</span>
-                      <span>{currentLanguage.services.details[getServiceIconKey(services[activeModal].name)].point2}</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className={`mr-2 mt-1 ${
-                        theme === "light" ? "text-rose-500" : "text-indigo-400"
-                      }`}>•</span>
-                      <span>{currentLanguage.services.details[getServiceIconKey(services[activeModal].name)].point3}</span>
-                    </li>
-                  </ul>
+                  {/* Background grain texture for header */}
+                  <div 
+                    className="absolute inset-0 bg-repeat mix-blend-overlay opacity-10"
+                    style={{ 
+                      backgroundImage: `url("https://www.transparenttextures.com/patterns/asfalt-light.png")` 
+                    }}
+                  />
+                  
+                  {/* Decorative circles */}
+                  <motion.div 
+                    className="absolute right-0 top-0 w-32 h-32 rounded-full bg-white/10 -mt-10 -mr-10"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.3, duration: 0.5 }}
+                  />
+                  <motion.div 
+                    className="absolute left-20 bottom-0 w-16 h-16 rounded-full bg-white/5 -mb-8"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.4, duration: 0.5 }}
+                  />
+                  
+                  <div className="flex items-center relative z-10">
+                    <motion.div 
+                      className="p-3 bg-white/20 rounded-lg mr-4"
+                      initial={{ rotate: -10, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      transition={{ delay: 0.2, duration: 0.3 }}
+                    >
+                      {getServiceIcon(services[activeModal].name)}
+                    </motion.div>
+                    <motion.h3 
+                      className="text-2xl font-bold"
+                      initial={{ x: -20, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: 0.3, duration: 0.3 }}
+                    >
+                      {services[activeModal].name}
+                    </motion.h3>
+                  </div>
+                  
+                  {/* Close button with improved hover effect */}
+                  <motion.button 
+                    className="absolute top-4 right-4 p-2 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition-colors z-10"
+                    onClick={closeModal}
+                    whileHover={{ rotate: 90 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </motion.button>
                 </div>
                 
-                {/* Pricing */}
-                <div className="mb-6">
-                  <h4 className={`text-lg font-semibold mb-2 ${
-                    theme === "light" ? "text-gray-800" : "text-gray-200"
-                  }`}>
-                    {currentLanguage.services.pricing}
-                  </h4>
-                  <p className={theme === "light" ? "text-gray-600" : "text-gray-300"}>
-                    {currentLanguage.services.details[getServiceIconKey(services[activeModal].name)].pricing}
-                  </p>
-                </div>
-                
-                {/* Availability */}
-                <div className="mb-8">
-                  <h4 className={`text-lg font-semibold mb-2 ${
-                    theme === "light" ? "text-gray-800" : "text-gray-200"
-                  }`}>
-                    {currentLanguage.services.availability}
-                  </h4>
-                  <p className={theme === "light" ? "text-gray-600" : "text-gray-300"}>
-                    {currentLanguage.services.details[getServiceIconKey(services[activeModal].name)].availability}
-                  </p>
-                </div>
-                
-                {/* CTA Button */}
-                <motion.a 
-                  href="#contact"
-                  onClick={closeModal}
-                  className={`inline-block w-full py-3 px-6 text-center rounded-lg font-medium 
-                    ${theme === "light" 
-                      ? "bg-rose-500 text-white hover:bg-rose-600" 
-                      : "bg-indigo-500 text-white hover:bg-indigo-600"
-                    } transition-colors`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                {/* Modal content with animations */}
+                <motion.div 
+                  className="p-6"
+                  variants={contentVariants}
+                  initial="hidden"
+                  animate="visible"
                 >
-                  {currentLanguage.services.getStarted}
-                </motion.a>
+                  {/* Service full description */}
+                  <motion.p 
+                    className={`mb-6 ${
+                      theme === "light" ? "text-slate-600" : "text-slate-300"
+                    }`}
+                    variants={listItemVariants}
+                  >
+                    {services[activeModal].description}
+                  </motion.p>
+                  
+                  {/* Service features */}
+                  <motion.div 
+                    className="mb-6"
+                    variants={listItemVariants}
+                  >
+                    <h4 className={`text-lg font-semibold mb-4 ${
+                      theme === "light" ? "text-slate-800" : "text-white"
+                    }`}>
+                      {text?.services?.whatIncluded}
+                    </h4>
+                    <div className="space-y-3">
+                      {text?.services?.details[getServiceIconKey(services[activeModal].name)] && (
+                        <>
+                          <motion.div 
+                            className={`flex items-start p-3 rounded-lg ${
+                              theme === "light" ? "bg-slate-50" : "bg-slate-700/30"
+                            }`}
+                            variants={listItemVariants}
+                            whileHover={{ scale: 1.01, x: 3 }}
+                          >
+                            <span className={`mr-3 ${
+                              theme === "light" ? "text-indigo-600" : "text-indigo-400"
+                            }`}>
+                              {featureIcons.checkmark}
+                            </span>
+                            <span className={theme === "light" ? "text-slate-700" : "text-slate-200"}>
+                              {text?.services?.details[getServiceIconKey(services[activeModal].name)].point1}
+                            </span>
+                          </motion.div>
+                          
+                          <motion.div 
+                            className={`flex items-start p-3 rounded-lg ${
+                              theme === "light" ? "bg-slate-50" : "bg-slate-700/30"
+                            }`}
+                            variants={listItemVariants}
+                            whileHover={{ scale: 1.01, x: 3 }}
+                          >
+                            <span className={`mr-3 ${
+                              theme === "light" ? "text-indigo-600" : "text-indigo-400"
+                            }`}>
+                              {featureIcons.checkmark}
+                            </span>
+                            <span className={theme === "light" ? "text-slate-700" : "text-slate-200"}>
+                              {text?.services?.details[getServiceIconKey(services[activeModal].name)].point2}
+                            </span>
+                          </motion.div>
+                          
+                          <motion.div 
+                            className={`flex items-start p-3 rounded-lg ${
+                              theme === "light" ? "bg-slate-50" : "bg-slate-700/30"
+                            }`}
+                            variants={listItemVariants}
+                            whileHover={{ scale: 1.01, x: 3 }}
+                          >
+                            <span className={`mr-3 ${
+                              theme === "light" ? "text-indigo-600" : "text-indigo-400"
+                            }`}>
+                              {featureIcons.checkmark}
+                            </span>
+                            <span className={theme === "light" ? "text-slate-700" : "text-slate-200"}>
+                              {text?.services?.details[getServiceIconKey(services[activeModal].name)].point3}
+                            </span>
+                          </motion.div>
+                        </>
+                      )}
+                    </div>
+                  </motion.div>
+                  
+                  {/* Service details with fluid animation */}
+                  <motion.div 
+                    className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8"
+                    variants={listItemVariants}
+                  >
+                    {/* Pricing */}
+                    <motion.div 
+                      className={`p-4 rounded-lg relative overflow-hidden group ${
+                        theme === "light" ? "bg-indigo-50" : "bg-indigo-900/20"
+                      }`}
+                      whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                    >
+                      <motion.div 
+                        className="absolute inset-0 bg-gradient-to-r from-indigo-200/0 to-indigo-200/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        animate={{ 
+                          backgroundImage: theme === "light" 
+                            ? ["linear-gradient(to right, rgba(199,210,254,0), rgba(199,210,254,0))", "linear-gradient(to right, rgba(199,210,254,0), rgba(199,210,254,0.3))", "linear-gradient(to right, rgba(199,210,254,0), rgba(199,210,254,0))"]
+                            : ["linear-gradient(to right, rgba(79,70,229,0), rgba(79,70,229,0))", "linear-gradient(to right, rgba(79,70,229,0), rgba(79,70,229,0.1))", "linear-gradient(to right, rgba(79,70,229,0), rgba(79,70,229,0))"]
+                        }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                      />
+                      <h4 className={`text-lg font-semibold mb-2 flex items-center relative z-10 ${
+                        theme === "light" ? "text-slate-800" : "text-white"
+                      }`}>
+                        {featureIcons.price}
+                        <span className="ml-2">{text?.services?.pricing}</span>
+                      </h4>
+                      <p className={`relative z-10 ${theme === "light" ? "text-slate-600" : "text-slate-300"}`}>
+                        {text?.services?.details[getServiceIconKey(services[activeModal].name)]?.pricing}
+                      </p>
+                    </motion.div>
+                    
+                    {/* Availability */}
+                    <motion.div 
+                      className={`p-4 rounded-lg relative overflow-hidden group ${
+                        theme === "light" ? "bg-violet-50" : "bg-violet-900/20"
+                      }`}
+                      whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                    >
+                      <motion.div 
+                        className="absolute inset-0 bg-gradient-to-r from-violet-200/0 to-violet-200/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        animate={{ 
+                          backgroundImage: theme === "light" 
+                            ? ["linear-gradient(to right, rgba(221,214,254,0), rgba(221,214,254,0))", "linear-gradient(to right, rgba(221,214,254,0), rgba(221,214,254,0.3))", "linear-gradient(to right, rgba(221,214,254,0), rgba(221,214,254,0))"]
+                            : ["linear-gradient(to right, rgba(124,58,237,0), rgba(124,58,237,0))", "linear-gradient(to right, rgba(124,58,237,0), rgba(124,58,237,0.1))", "linear-gradient(to right, rgba(124,58,237,0), rgba(124,58,237,0))"]
+                        }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                      />
+                      <h4 className={`text-lg font-semibold mb-2 flex items-center relative z-10 ${
+                        theme === "light" ? "text-slate-800" : "text-white"
+                      }`}>
+                        {featureIcons.time}
+                        <span className="ml-2">{text?.services?.availability}</span>
+                      </h4>
+                      <p className={`relative z-10 ${theme === "light" ? "text-slate-600" : "text-slate-300"}`}>
+                        {text?.services?.details[getServiceIconKey(services[activeModal].name)]?.availability}
+                      </p>
+                    </motion.div>
+                  </motion.div>
+                  
+                  {/* CTA Button with enhanced hover effect */}
+                  <motion.a 
+                    href="#contact"
+                    onClick={closeModal}
+                    className={`relative inline-block w-full py-3.5 px-6 text-center rounded-lg font-medium overflow-hidden
+                      ${theme === "light" 
+                        ? "bg-indigo-600 text-white hover:bg-indigo-700" 
+                        : "bg-indigo-500 text-white hover:bg-indigo-600"
+                      } transition-colors duration-200 shadow-md`}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <motion.span 
+                      className="absolute inset-0 w-full h-full bg-white/0"
+                      whileHover={{
+                        background: [
+                          "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%)",
+                          "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%)",
+                          "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%)",
+                        ]
+                      }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    />
+                    <span className="relative z-10">{text?.services?.getStarted}</span>
+                  </motion.a>
+                </motion.div>
               </motion.div>
             </motion.div>
           )}
@@ -396,7 +651,7 @@ const Services = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
           >
-            {currentLanguage.services.contactButton}
+            {text?.services?.contactButton}
             <svg className="w-5 h-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
             </svg>

@@ -94,36 +94,44 @@ const Projects = () => {
 
   const handleDemoClick = (e) => {
     e.preventDefault();
+    e.stopPropagation(); // Stop event propagation to prevent card click
     
-    // Clear any existing timeout
+    // Clear any existing timeout and prevent showing popup if already visible
     if (popupTimeoutRef.current) {
       clearTimeout(popupTimeoutRef.current);
     }
     
-    setPopupMessage("Live Demo Coming Soon!");
-    setShowPopup(true);
-    popupTimeoutRef.current = setTimeout(() => {
-      setShowPopup(false);
-      popupTimeoutRef.current = null;
-    }, 2000);
-  };
-
-  const handleRepoClick = (project, e) => {
-    e.preventDefault();
-    
-    // Check if the project has a repo URL defined
-    if (!project.repoUrl || project.repoUrl === "#" || project.repoUrl === "") {
-      // Clear any existing timeout
-      if (popupTimeoutRef.current) {
-        clearTimeout(popupTimeoutRef.current);
-      }
-      
-      setPopupMessage("Repository Coming Soon!");
+    // Only show the popup if it's not already visible
+    if (!showPopup) {
+      setPopupMessage("Live Demo Coming Soon!");
       setShowPopup(true);
       popupTimeoutRef.current = setTimeout(() => {
         setShowPopup(false);
         popupTimeoutRef.current = null;
       }, 2000);
+    }
+  };
+
+  const handleRepoClick = (project, e) => {
+    e.preventDefault();
+    e.stopPropagation(); // Stop event propagation to prevent card click
+    
+    // Check if the project has a repo URL defined
+    if (!project.repoUrl || project.repoUrl === "#" || project.repoUrl === "") {
+      // Clear any existing timeout and prevent showing popup if already visible
+      if (popupTimeoutRef.current) {
+        clearTimeout(popupTimeoutRef.current);
+      }
+      
+      // Only show the popup if it's not already visible
+      if (!showPopup) {
+        setPopupMessage("Repository Coming Soon!");
+        setShowPopup(true);
+        popupTimeoutRef.current = setTimeout(() => {
+          setShowPopup(false);
+          popupTimeoutRef.current = null;
+        }, 2000);
+      }
       return;
     }
     
@@ -294,7 +302,7 @@ const Projects = () => {
                   {/* Action buttons with updated hover colors */}
                   <div className="flex justify-between mt-8 pt-4 border-t border-gray-200/30">
                     <motion.button
-                      onClick={handleDemoClick}
+                      onClick={(e) => handleDemoClick(e)}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       className={`px-4 py-2 rounded-lg mr-2 transition-colors duration-300 ${

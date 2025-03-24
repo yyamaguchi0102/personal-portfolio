@@ -36,6 +36,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: transparent; 
   overflow-x: hidden; /* Allow vertical scrolling */
+  position: relative;
 }
 
 code {
@@ -120,14 +121,21 @@ html, body, #root {
   padding: 0;
   overflow-x: hidden; /* Prevent horizontal scrollbars */
   overflow-y: auto; /* Allow vertical scrolling */
+  min-height: 100vh; /* Ensure full viewport height */
+}
+
+#root {
+  position: relative;
+  isolation: isolate; /* Create stacking context */
 }
 
 .scroll-container {
-  scroll-snap-type: y proximity; /* Change from mandatory to proximity for better UX */
+  /* Remove scroll snap */
   overflow-y: auto;
   height: 100vh;
   width: 100%;
   position: relative;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 .scroll-section {
@@ -138,13 +146,15 @@ html, body, #root {
   margin-top: -1px; /* Create seamless connection between sections */
   border-top: 1px solid transparent; /* Add invisible border to prevent content jumps */
   padding-top: 1px; /* Offset for the border */
+  overflow: visible; /* Allow content to overflow but not break layout */
 }
 
 /* Add additional styling to ensure smooth section transitions */
 section {
   position: relative;
-  z-index: 1;
   overflow: visible;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 /* Smooth component transitions */

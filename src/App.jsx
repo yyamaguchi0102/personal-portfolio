@@ -295,66 +295,84 @@ const AppContent = () => {
         <LoadingScreen onComplete={() => setIsLoading(false)} />
       ) : (
         <PageTransition>
-          <div className={`min-h-screen relative overflow-hidden transition-colors duration-500
-            ${theme === "light"
-              ? "bg-gradient-to-br from-gray-100 via-gray-50 to-stone-100 text-gray-900"
-              : "bg-gradient-to-br from-slate-900 via-gray-900 to-indigo-900 text-white"
+          {/* Main background fixed to viewport - will stay consistent across sections */}
+          <div 
+            className={`fixed inset-0 w-full h-full transition-colors duration-500 z-0
+              ${theme === "light"
+                ? "bg-gradient-to-br from-gray-100 via-gray-50 to-stone-100"
+                : "bg-gradient-to-br from-slate-900 via-gray-900 to-indigo-900"
+              }`}
+          />
+
+          {/* Global background elements - stay fixed on page */}
+          <div className="fixed inset-0 overflow-hidden pointer-events-none z-1">
+            <ParticleBackground theme={theme} />
+            <AnimatedBackground theme={theme} />
+            <div className={`absolute inset-0 ${theme === "light" 
+              ? "bg-gradient-to-b from-gray-100/0 via-gray-100/20 to-gray-100/50"
+              : "bg-gradient-to-b from-slate-900/0 via-slate-900/20 to-slate-900/50"} 
+              pointer-events-none`}
+            />
+            
+            {/* Noise texture overlay */}
+            <div 
+              className="absolute inset-0 bg-repeat opacity-5 pointer-events-none"
+              style={{ 
+                backgroundImage: `url("https://www.transparenttextures.com/patterns/asfalt-light.png")` 
+              }}
+            />
+            
+            {/* Section transition overlay */}
+            {theme === "light" ? (
+              <>
+                <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-gray-50/70 to-transparent" />
+                <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-gray-50/70 to-transparent" />
+              </>
+            ) : (
+              <>
+                <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-slate-900/70 to-transparent" />
+                <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-slate-900/70 to-transparent" />
+              </>
+            )}
+          </div>
+
+          {/* Mouse-following beam needs to be on top of sections */}
+          <MouseFollowingBeam theme={theme} />
+
+          {/* Application container with transparent background */}
+          <div className={`relative min-h-screen z-[5] ${
+              theme === "light" ? "text-gray-900" : "text-white"
             }`}
             style={{ scrollPaddingTop: '100px' }}
           >
             <ScrollProgress />
-            <ParticleBackground theme={theme} />
-            <AnimatedBackground theme={theme} />
-            <MouseFollowingBeam theme={theme} />
-            
-            <div className={`absolute inset-0 ${theme === "light" 
-              ? "bg-gradient-to-b from-gray-100/0 via-gray-100/20 to-gray-100/50"
-              : "bg-gradient-to-b from-slate-900/0 via-slate-900/20 to-slate-900/50"} 
-              pointer-events-none z-[1]`}
-            />
             
             <Header />
             <div 
-              className="scroll-container relative z-10"
+              className="scroll-container relative z-[5]"
               style={{
-                scrollSnapType: 'y proximity',
                 scrollBehavior: 'smooth',
                 height: '100vh',
                 overflowY: 'auto',
                 overflowX: 'hidden'
               }}
             >
-              <div id="home" className="scroll-section" style={{ scrollSnapAlign: 'start' }}>
+              <div id="home" className="scroll-section relative z-[5]" style={{ scrollSnapAlign: 'none' }}>
                 <Home />
               </div>
-              <div id="skills" className="scroll-section" style={{ scrollSnapAlign: 'start' }}>
+              <div id="skills" className="scroll-section relative z-[5]" style={{ scrollSnapAlign: 'none' }}>
                 <Skills />
               </div>
-              <div id="services" className="scroll-section" style={{ scrollSnapAlign: 'start' }}>
+              <div id="services" className="scroll-section relative z-[5]" style={{ scrollSnapAlign: 'none' }}>
                 <Services />
               </div>
-              <div id="projects" className="scroll-section" style={{ scrollSnapAlign: 'start' }}>
+              <div id="projects" className="scroll-section relative z-[5]" style={{ scrollSnapAlign: 'none' }}>
                 <Projects />
               </div>
-              <div id="contact" className="scroll-section" style={{ scrollSnapAlign: 'start' }}>
+              <div id="contact" className="scroll-section relative z-[5]" style={{ scrollSnapAlign: 'none' }}>
                 <Contact />
               </div>
               <Footer style={{ scrollSnapAlign: 'start' }} />
-            </div>
-            
-            {/* Section transition overlay */}
-            <div className="fixed inset-0 pointer-events-none z-0">
-              {theme === "light" ? (
-                <>
-                  <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-gray-50/70 to-transparent" />
-                  <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-gray-50/70 to-transparent" />
-                </>
-              ) : (
-                <>
-                  <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-slate-900/70 to-transparent" />
-                  <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-slate-900/70 to-transparent" />
-                </>
-              )}
             </div>
           </div>
         </PageTransition>
