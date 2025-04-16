@@ -62,6 +62,15 @@ export const languages = {
           repoUrl: "https://github.com/yyamaguchi0102/personal-portfolio",
         },
         {
+          name: "Dr. Teragotchi",
+          description: "A virtual pet companion app that helps users track emotional wellbeing through conversation, gamifying the process with diaries and by evolving the pet based on interaction.",
+          demo: "Live Demo",
+          repo: "GitHub Repo",
+          tech: ["Python", "FastAPI", "Flutter", "Dart", "PostgreSQL"],
+          demoUrl: "", // add later
+          repoUrl: "https://github.com/yyamaguchi0102/housing-price-prediction",
+        },
+        {
           name: "To-Do List Application",
           description: "A full-stack to-do list application built with React. Integrated with AI to predict the time required for task completion.",
           demo: "Live Demo",
@@ -73,25 +82,17 @@ export const languages = {
         {
           name: "Housing Price Prediction Model",
           description: "A housing price predictor model trained primarily using linear regression, later enhanced with more complex tree algorithms.",
-          demo: "Live Demo",
+          demo: "Documentation",
           repo: "GitHub Repo",
           tech: ["Python", "Scikit Learn", "NumPy", "Pandas", "Matplotlib"],
-          demoUrl: "#",
+          demoUrl: "https://docs.google.com/document/d/1ZUk4w8LS8LoEOf7R64r68EDDkIuuD8RNeJBdxPFnLzQ/edit?tab=t.0#heading=h.8s5u8xwyce8",
           repoUrl: "https://github.com/yyamaguchi0102/housing-price-prediction",
         },
-        {name: "Snake Game",
-          description: "A simple snake game utilizing java fx",
-          demo: "Live Demo",
-          repo: "GitHub Repo",
-          tech: ["JavaFX"],
-          demoUrl: "#",
-          repoUrl: "https://github.com/yyamaguchi0102/personal-portfolio",
-        }
       ],
     },
     services: {
       title: "Services",
-      description: "I offer personalized tutoring and accurate translation services to cater to your needs.",
+      description: "I offer a multitude of services to cater to your needs.",
       learnMore: "Learn more",
       whatIncluded: "What's included",
       pricing: "Pricing",
@@ -104,21 +105,21 @@ export const languages = {
           point2: "Flexible scheduling to accommodate your time zone",
           point3: "Focus on practical skills and real-world application",
           pricing: "Starting at $50 per hour, with package discounts available",
-          availability: "Weekdays and evenings, by appointment"
+          availability: "Flexible Online Lessons and Weekend In-Person Lessons"
         },
         translation: {
           point1: "Professional translation between English, Japanese, and Korean",
           point2: "Context-sensitive translations that preserve tone and meaning",
-          point3: "Technical, business, and creative content expertise",
-          pricing: "Starting at $0.15 per word, depending on complexity and urgency",
-          availability: "7-day turnaround for standard projects, expedited service available"
+          point3: "Technical, business, law, and creative content expertise",
+          pricing: "Starting at $0.30 per word, depending on language, complexity, and urgency",
+          availability: "Note that this is a side project, so my availability is limited. Contact me to discuss your project and timeline."
         },
         trumpet: {
           point1: "From beginner to advanced techniques and music theory",
           point2: "Performance preparation and audition coaching",
-          point3: "Development of proper technique and sound production",
-          pricing: "Starting at $45 per 45-minute lesson",
-          availability: "Afternoons and weekends, both online and in-person"
+          point3: "Jazz Improvisatino Expertise, Classical Training, and Composition.",
+          pricing: "Starting at $30 per half an hour lessons, depending on skill, location, and availability.",
+          availability: "Flexible Online Lessons and Weekend In-Person Lessons"
         }
       },
       items: [
@@ -222,32 +223,32 @@ export const languages = {
           repoUrl: "https://github.com/yyamaguchi0102/personal-portfolio",
         },
         {
-          name: "ToDoリストアプリ",
-          description: "Todoリストのフルスタックアプリケーション。マシーンラーニングを通して作業の予想所要時間を計算。",
-          demo: "ライブデモ",
-          repo: "GitHubリポジトリ",
-          tech: ["Java", "SpringBoot", "React", "JavaScript", "Tailwind CSS", "TensorFlow"],
-          demoUrl: "", // add later
-          repoUrl: "https://github.com/yyamaguchi0102/todolist-springboot",
-        },
-        {
-          name: "不動産物価予想AI",
-          description: "PythonとScikit Learnで開発したマシーンラーニングモデル。",
-          demo: "ライブデモ",
+          name: "Dr. Teragotchi",
+          description: "",
+          demo: "ドキュメンテーション",
           repo: "GitHubリポジトリ",
           tech: ["Python", "Scikit Learn", "NumPy", "Pandas", "Matplotlib"],
           demoUrl: "", // add later
           repoUrl: "https://github.com/yyamaguchi0102/housing-price-prediction",
         },
         {
-          name: "スネークゲーム",
-          description: "食べると長くなるシンプルなスネークゲーム。",
+          name: "ToDoリストアプリ",
+          description: "Todoリストのフルスタックアプリケーション。マシーンラーニングを通して作業の予想所要時間を計算。",
           demo: "ライブデモ",
-          repo: "GitHubレポジトリs",
-          tech: ["JavaFX"],
+          repo: "GitHubリポジトリ",
+          tech: ["Java", "SpringBoot", "React", "JavaScript", "Tailwind CSS", "TensorFlow"],
+          demoUrl: "https://docs.google.com/document/d/1ZUk4w8LS8LoEOf7R64r68EDDkIuuD8RNeJBdxPFnLzQ/edit?tab=t.0#heading=h.8s5u8xwyce8", // add later
+          repoUrl: "https://github.com/yyamaguchi0102/todolist-springboot",
+        },
+        {
+          name: "不動産物価予想AI",
+          description: "PythonとScikit Learnで開発したマシーンラーニングモデル。",
+          demo: "ドキュメンテーション",
+          repo: "GitHubリポジトリ",
+          tech: ["Python", "Scikit Learn", "NumPy", "Pandas", "Matplotlib"],
           demoUrl: "", // add later
-          repoUrl: "https://github.com/yyamaguchi0102/personal-portfolio",
-        }
+          repoUrl: "https://github.com/yyamaguchi0102/housing-price-prediction",
+        },
       ],
     },
     services: {
@@ -340,7 +341,7 @@ export const languages = {
         aboutMe: "자기소개",
       },
       about: {
-        title: "자기소래",
+        title: "자기소개",
         content:
           "저는 현재 컴퓨터 과학과 양자 물리학을 전공하며, 기계 학습에 집중하고 있습니다. 저는 두 문화를 가진 사람으로, 여러 언어에 능통하며 소프트웨어 개발과 언어학에 열정을 가지고 있습니다. 일본과 미국에서 동시에 성장한 경험은 저에게 독특한 관점을 제공하며, 사람과 기술 간의 간극을 메우는 데 대한 애정을 키웠습니다.2",
         close: "닫기",
@@ -394,21 +395,12 @@ export const languages = {
         {
           name: "부동산 가격 예측 모델",
           description: "주로 선형 회귀를 사용하여 훈련된 부동산 가격 예측 모델.",
-          demo: "라이브 데모",
+          demo: "도큐멘테이션",
           repo: "GitHub 저장소",
           tech: ["Python", "Scikit Learn", "NumPy", "Pandas", "Matplotlib"],
-          demoUrl: "", // add later
+          demoUrl: "https://docs.google.com/document/d/1ZUk4w8LS8LoEOf7R64r68EDDkIuuD8RNeJBdxPFnLzQ/edit?tab=t.0#heading=h.8s5u8xwyce8", // add later
           repoUrl: "https://github.com/yyamaguchi0102/housing-price-prediction",
         },
-        {
-          name: "스네이크 게임",
-          description: "먹으면 커지는 신플한 게임。",
-          demo: "라이브 데모",
-          repo: "GitHub 저장소",
-          tech: ["JavaFX"],
-          demoUrl: "", // add later
-          repoUrl: "https://github.com/yyamaguchi0102/personal-portfolio",
-        }
       ],
     },
     services: {

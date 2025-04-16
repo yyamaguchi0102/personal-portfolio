@@ -4,6 +4,7 @@ import { useTheme } from "../contexts/ThemeContext";
 import { Typewriter } from "react-simple-typewriter";
 import { motion, useAnimation, AnimatePresence, useSpring } from "framer-motion";
 import { languages } from "../languages.js";
+import ReactDOM from "react-dom";
 
 const FloatingElement = ({ children, delay = 0, duration = 4, y = 15 }) => {
   return (
@@ -34,6 +35,11 @@ const Perspective3DText = ({ children }) => {
   );
 };
 
+// Modal Portal to render content to document.body
+const Portal = ({ children }) => {
+  return ReactDOM.createPortal(children, document.body);
+};
+
 const Home = () => {
   const { language } = useLanguage();
   const { theme } = useTheme();
@@ -53,15 +59,48 @@ const Home = () => {
     });
   }, [controls, language]); // Add language as a dependency
 
+  // Manage scroll lock when modal is open
+  useEffect(() => {
+    const scrollContainer = document.querySelector('.scroll-container');
+    if (isModalOpen) {
+      // Disable scrolling
+      if (scrollContainer) scrollContainer.style.overflow = 'hidden';
+    } else {
+      // Re-enable scrolling
+      if (scrollContainer) scrollContainer.style.overflow = 'auto';
+    }
+    
+    // Cleanup function to ensure scrolling is re-enabled
+    return () => {
+      if (scrollContainer) scrollContainer.style.overflow = 'auto';
+    };
+  }, [isModalOpen]);
+
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
+    
+    // If opening the modal, scroll to top of the home section
+    if (!isModalOpen) {
+      const homeSection = document.getElementById('home');
+      if (homeSection) {
+        const scrollContainer = document.querySelector('.scroll-container');
+        if (scrollContainer) {
+          setTimeout(() => {
+            scrollContainer.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+            });
+          }, 100);
+        }
+      }
+    }
   };
 
   return (
     <section
-      className="relative min-h-screen flex items-center justify-center overflow-visible py-28 pb-32"
+      className="relative min-h-screen flex items-center justify-center overflow-visible pt-28 pb-32"
     >
-      <div className="container mx-auto px-4 relative">
+      <div className="container mx-auto px-4 relative flex items-center justify-center min-h-[80vh]">
         {/* Main content - centered with wider max-width */}
         <motion.div
           key={`home-content-${language}`} // Add key based on language to force remount
@@ -268,55 +307,77 @@ const Home = () => {
       {/* Modal */}
       <AnimatePresence>
         {isModalOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-md z-50"
-            onClick={toggleModal}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0, rotateX: 5, y: 30 }}
-              animate={{ scale: 1, opacity: 1, rotateX: 0, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, rotateX: 5, y: 30 }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className={`p-8 rounded-2xl shadow-xl max-w-2xl w-full mx-4
-                ${theme === "light" 
-                  ? "bg-white/90 border border-gray-200/50" 
-                  : "bg-gray-800/90 border border-gray-700/50"
-                } backdrop-blur-lg`}
-              onClick={(e) => e.stopPropagation()}
+          <Portal>
+            {/* Fullscreen backdrop with high z-index */}
+            <div 
+              className="fixed inset-0 w-screen h-screen bg-black/80 backdrop-blur-md"
+              style={{ 
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                zIndex: 9999 
+              }}
+              onClick={toggleModal}
+            />
+            
+            {/* Modal Content */}
+            <div
+              className="fixed inset-0 w-screen h-screen flex items-center justify-center"
+              style={{ 
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                zIndex: 10000 
+              }}
+              onClick={toggleModal}
             >
-              <div className="relative">
-                <div className={`absolute -left-3 top-0 h-full w-1 rounded-full 
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0, y: 30 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.9, opacity: 0, y: 30 }}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                className={`p-8 rounded-2xl shadow-xl max-w-2xl w-full mx-4 my-auto max-h-[80vh] overflow-y-auto
                   ${theme === "light" 
-                    ? "bg-gradient-to-b from-rose-500 to-pink-600" 
-                    : "bg-gradient-to-b from-indigo-500 to-violet-600"
-                  }`} 
-                />
-                <h2 className={`text-3xl font-bold mb-6 ml-2
-                  ${theme === "light" ? "text-gray-900" : "text-white"}`}>
-                  {currentLanguage.home.about.title}
-                </h2>
-              </div>
-              <p className={`leading-relaxed mb-6
-                ${theme === "light" ? "text-gray-600" : "text-gray-300"}`}>
-                {currentLanguage.home.about.content}
-              </p>
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={toggleModal}
-                className={`px-6 py-3 rounded-xl font-medium
-                  ${theme === "light"
-                    ? "bg-gradient-to-r from-rose-500 to-pink-600 text-white"
-                    : "bg-gradient-to-r from-indigo-500 to-violet-600 text-white"
+                    ? "bg-white border border-gray-200/50" 
+                    : "bg-gray-800 border border-gray-700/50"
                   }`}
+                onClick={(e) => e.stopPropagation()}
               >
-                {currentLanguage.home.about.close}
-              </motion.button>
-            </motion.div>
-          </motion.div>
+                <div className="relative">
+                  <div className={`absolute -left-3 top-0 h-full w-1 rounded-full 
+                    ${theme === "light" 
+                      ? "bg-gradient-to-b from-rose-500 to-pink-600" 
+                      : "bg-gradient-to-b from-indigo-500 to-violet-600"
+                    }`} 
+                  />
+                  <h2 className={`text-3xl font-bold mb-6 ml-2
+                    ${theme === "light" ? "text-gray-900" : "text-white"}`}>
+                    {currentLanguage.home.about.title}
+                  </h2>
+                </div>
+                <p className={`leading-relaxed mb-6
+                  ${theme === "light" ? "text-gray-600" : "text-gray-300"}`}>
+                  {currentLanguage.home.about.content}
+                </p>
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={toggleModal}
+                  className={`px-6 py-3 rounded-xl font-medium
+                    ${theme === "light"
+                      ? "bg-gradient-to-r from-rose-500 to-pink-600 text-white"
+                      : "bg-gradient-to-r from-indigo-500 to-violet-600 text-white"
+                    }`}
+                >
+                  {currentLanguage.home.about.close}
+                </motion.button>
+              </motion.div>
+            </div>
+          </Portal>
         )}
       </AnimatePresence>
     </section>

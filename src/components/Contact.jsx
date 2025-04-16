@@ -73,8 +73,8 @@ const Contact = () => {
             type="submit"
             className={`w-full p-4 rounded-lg font-bold ${
               theme === "light"
-                ? "bg-light-accent text-white hover:bg-orange-600"
-                : "bg-dark-accent text-black hover:bg-green-700"
+                ? "bg-light-accent text-white hover:bg-red-600"
+                : "bg-dark-accent text-black hover:bg-blue-700"
             } transition`}
             variants={itemVariants}
             whileHover={{ scale: 1.05 }}

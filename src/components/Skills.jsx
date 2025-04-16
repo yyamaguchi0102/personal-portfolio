@@ -133,11 +133,12 @@ const Skills = () => {
 
   const programmingLanguages = [
     { name: "Java", icon: "https://img.icons8.com/color/48/java-coffee-cup-logo.png", tools: ["SpringBoot", "Maven"] },
-    { name: "Python", icon: "https://img.icons8.com/color/48/python.png", tools: ["Pandas", "NumPy", "TensorFlow", "PyCharm"] },
-    { name: "Kotlin", icon: "https://img.icons8.com/color/48/kotlin.png", tools: ["Ktor"] },
+    { name: "Python", icon: "https://img.icons8.com/color/48/python.png", tools: ["Pandas", "FastAPI", "NumPy", "TensorFlow", "PyCharm"] },
+    { name: "Dart", icon: "https://img.icons8.com/?size=100&id=7AFcZ2zirX6Y&format=png&color=000000", tools: ["Flutter", "AngularDart"] },
+    { name: "Kotlin", icon: "https://img.icons8.com/color/48/kotlin.png", tools: ["Ktor", "SpringBoot"] },
     { name: "Databases", icon: "https://img.icons8.com/color/48/sql.png", tools: ["MySQL", "PostgreSQL", "MongoDB"] },
-    { name: "JavaScript", icon: "https://img.icons8.com/color/48/javascript.png", tools: ["React.js", "Node.js"] },
-    { name: "TypeScript", icon: "https://img.icons8.com/color/48/typescript.png", tools: ["Angular"] },
+    { name: "JavaScript", icon: "https://img.icons8.com/color/48/javascript.png", tools: ["React.js", "Node.js", "React Native"] },
+    { name: "TypeScript", icon: "https://img.icons8.com/color/48/typescript.png", tools: ["Angular", "React.ts"] },
     { name: "C", icon: "https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg", tools: [""] },
   ];
 

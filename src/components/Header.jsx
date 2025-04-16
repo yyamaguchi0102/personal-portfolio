@@ -100,31 +100,22 @@ const Header = () => {
 
   // Add scroll event listener
   useEffect(() => {
+    const scrollContainer = document.querySelector('.scroll-container');
+    if (!scrollContainer) return;
+
     const handleScroll = () => {
-      const currentScrollPos = window.scrollY;
-      const scrollThreshold = 70; // Increased threshold for more natural feel
+      const currentScrollPos = scrollContainer.scrollTop;
       
       // Set scrolled state for styling
       setScrolled(currentScrollPos > 10);
       
-      // Only apply hide/show logic after passing the threshold
-      if (currentScrollPos > scrollThreshold) {
-        // Show header when scrolling up, hide when scrolling down
-        setVisible(prevScrollPos > currentScrollPos);
-      } else {
-        // Always show header near the top of the page
-        setVisible(true);
-      }
-      
-      // Update previous scroll position with a small delay to prevent jitter
-      setTimeout(() => {
-        setPrevScrollPos(currentScrollPos);
-      }, 10);
+      // Always show header
+      setVisible(true);
     };
     
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [prevScrollPos]);
+    scrollContainer.addEventListener('scroll', handleScroll);
+    return () => scrollContainer.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
@@ -143,31 +134,28 @@ const Header = () => {
       setIsMobileMenuOpen(false);
     }
     
-    // Simple and reliable approach to scroll to the section
-    document.getElementById(section)?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
+    const scrollContainer = document.querySelector('.scroll-container');
+    const targetSection = document.getElementById(section);
     
-    // Add a small delay and adjust window scroll to compensate for fixed header
-    setTimeout(() => {
-      window.scrollBy({
-        top: -100,
+    if (scrollContainer && targetSection) {
+      const headerOffset = 100; // Height of the fixed header
+      const elementPosition = targetSection.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + scrollContainer.scrollTop - headerOffset;
+      
+      scrollContainer.scrollTo({
+        top: offsetPosition,
         behavior: 'smooth'
       });
-    }, 100);
+    }
   };
 
   return (
-    <motion.header 
+    <header 
       className={`fixed w-full z-30 transition-all duration-300
         ${theme === "light" 
-          ? "bg-white/90 backdrop-blur-md shadow-sm" 
-          : "bg-gray-900/90 backdrop-blur-md border-b border-gray-800"
+          ? "bg-white/80 backdrop-blur-sm shadow-xs" 
+          : "bg-gray-900/80 backdrop-blur-sm border-b border-gray-800/50"
         }`}
-      initial={{ y: 0 }}
-      animate={{ y: visible ? 0 : -100 }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
@@ -433,7 +421,7 @@ const Header = () => {
           )}
         </AnimatePresence>
       </div>
-    </motion.header>
+    </header>
   );
 };
 

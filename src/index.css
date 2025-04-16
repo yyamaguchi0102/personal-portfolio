@@ -4,26 +4,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 
 /* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
+.scroll-container::-webkit-scrollbar {
+  width: 8px;
 }
 
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(4px);
+.scroll-container::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.light-theme::-webkit-scrollbar-thumb {
+.light-theme .scroll-container::-webkit-scrollbar-thumb {
   background: linear-gradient(to bottom, #f43f5e, #ec4899);
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
-.dark-theme::-webkit-scrollbar-thumb {
+.dark-theme .scroll-container::-webkit-scrollbar-thumb {
   background: linear-gradient(to bottom, #6366f1, #8b5cf6);
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover {
+.scroll-container::-webkit-scrollbar-thumb:hover {
   filter: brightness(110%);
 }
 
@@ -130,7 +129,7 @@ html, body, #root {
 }
 
 .scroll-container {
-  /* Remove scroll snap */
+  /* Remove scroll snap for more natural scrolling */
   overflow-y: auto;
   height: 100vh;
   width: 100%;
@@ -143,10 +142,10 @@ html, body, #root {
   min-height: 100vh; /* Ensure each section takes at least full viewport height */
   position: relative;
   width: 100%;
-  margin-top: -1px; /* Create seamless connection between sections */
-  border-top: 1px solid transparent; /* Add invisible border to prevent content jumps */
-  padding-top: 1px; /* Offset for the border */
-  overflow: visible; /* Allow content to overflow but not break layout */
+  display: flex;
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  padding: 100px 0; /* Add padding to account for header */
 }
 
 /* Add additional styling to ensure smooth section transitions */
@@ -155,6 +154,10 @@ section {
   overflow: visible;
   will-change: transform;
   backface-visibility: hidden;
+  width: 100%;
+  max-width: 1200px; /* Limit maximum width for better readability */
+  margin: 0 auto; /* Center the section content */
+  padding: 0 1rem; /* Add some padding on the sides */
 }
 
 /* Smooth component transitions */

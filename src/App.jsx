@@ -16,29 +16,34 @@ import { motion, useScroll, useSpring } from "framer-motion";
 
 // Scroll progress indicator component
 const ScrollProgress = () => {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
   const { theme } = useTheme();
   const [isVisible, setIsVisible] = useState(false);
+  const [progress, setProgress] = useState(0);
   
   useEffect(() => {
+    const scrollContainer = document.querySelector('.scroll-container');
+    if (!scrollContainer) return;
+
     const handleScroll = () => {
-      setIsVisible(window.scrollY > 50);
+      const scrollTop = scrollContainer.scrollTop;
+      const scrollHeight = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+      const currentProgress = scrollTop / scrollHeight;
+      setProgress(currentProgress);
+      setIsVisible(scrollTop > 0); // Show immediately when scrolling starts
     };
     
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    // Initial check
+    handleScroll();
+    
+    scrollContainer.addEventListener('scroll', handleScroll);
+    return () => scrollContainer.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <motion.div
-      className="fixed top-0 left-0 right-0 h-1.5 z-50 origin-left"
+      className="fixed top-0 left-0 right-0 h-2 z-[100] origin-left"
       style={{ 
-        scaleX,
+        scaleX: progress,
         opacity: isVisible ? 1 : 0,
         background: theme === "light" 
           ? "linear-gradient(to right, #f43f5e, #ec4899)" 
@@ -354,25 +359,30 @@ const AppContent = () => {
                 scrollBehavior: 'smooth',
                 height: '100vh',
                 overflowY: 'auto',
-                overflowX: 'hidden'
+                overflowX: 'hidden',
+                scrollbarWidth: 'thin',
+                scrollPaddingTop: '120px',  
+                scrollbarColor: theme === 'light' 
+                  ? '#f43f5e transparent' 
+                  : '#6366f1 transparent'
               }}
             >
-              <div id="home" className="scroll-section relative z-[5]" style={{ scrollSnapAlign: 'none' }}>
+              <div id="home" className="scroll-section">
                 <Home />
               </div>
-              <div id="skills" className="scroll-section relative z-[5]" style={{ scrollSnapAlign: 'none' }}>
+              <div id="skills" className="scroll-section">
                 <Skills />
               </div>
-              <div id="services" className="scroll-section relative z-[5]" style={{ scrollSnapAlign: 'none' }}>
+              <div id="services" className="scroll-section">
                 <Services />
               </div>
-              <div id="projects" className="scroll-section relative z-[5]" style={{ scrollSnapAlign: 'none' }}>
+              <div id="projects" className="scroll-section">
                 <Projects />
               </div>
-              <div id="contact" className="scroll-section relative z-[5]" style={{ scrollSnapAlign: 'none' }}>
+              <div id="contact" className="scroll-section">
                 <Contact />
               </div>
-              <Footer style={{ scrollSnapAlign: 'start' }} />
+              <Footer />
             </div>
           </div>
         </PageTransition>
