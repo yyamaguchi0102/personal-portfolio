@@ -158,6 +158,7 @@ section {
   max-width: 1200px; /* Limit maximum width for better readability */
   margin: 0 auto; /* Center the section content */
   padding: 0 1rem; /* Add some padding on the sides */
+  scroll-margin-top: 6rem; /* Adjust this value to match your header height */
 }
 
 /* Smooth component transitions */

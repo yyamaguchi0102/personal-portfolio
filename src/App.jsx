@@ -13,6 +13,7 @@ import PageTransition from "./components/PageTransition";
 import ScrollToTop from "./components/ScrollToTop";
 import Footer from "./components/Footer";
 import { motion, useScroll, useSpring } from "framer-motion";
+import './index.css';
 
 // Scroll progress indicator component
 const ScrollProgress = () => {
@@ -387,6 +388,11 @@ const AppContent = () => {
           </div>
         </PageTransition>
       )}
+      <style jsx global>{`
+        section {
+          scroll-margin-top: 6rem; /* Adjust this value to match your header height */
+        }
+      `}</style>
     </div>
   );
 };
