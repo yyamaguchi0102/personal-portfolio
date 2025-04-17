@@ -125,25 +125,18 @@ const Header = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const handleNavClick = (e, section) => {
+  const handleNavClick = (e, targetId) => {
     e.preventDefault();
-    setActiveSection(section);
     
-    // Close mobile menu if open
-    if (isMobileMenuOpen) {
-      setIsMobileMenuOpen(false);
-    }
-    
-    const scrollContainer = document.querySelector('.scroll-container');
-    const targetSection = document.getElementById(section);
-    
-    if (scrollContainer && targetSection) {
-      const headerOffset = 100; // Height of the fixed header
-      const elementPosition = targetSection.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + scrollContainer.scrollTop - headerOffset;
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      // Get the target's position and adjust for header height
+      const headerHeight = 120; // Same as scroll-margin-top
+      const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
       
-      scrollContainer.scrollTo({
-        top: offsetPosition,
+      // Scroll to the adjusted position
+      window.scrollTo({
+        top: targetPosition,
         behavior: 'smooth'
       });
     }

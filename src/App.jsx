@@ -349,7 +349,7 @@ const AppContent = () => {
           <div className={`relative min-h-screen z-[5] ${
               theme === "light" ? "text-gray-900" : "text-white"
             }`}
-            style={{ scrollPaddingTop: '100px' }}
+            style={{ scrollPaddingTop: '120px' }}
           >
             <ScrollProgress />
             
@@ -390,7 +390,7 @@ const AppContent = () => {
       )}
       <style jsx global>{`
         section {
-          scroll-margin-top: 6rem; /* Adjust this value to match your header height */
+          scroll-margin-top: 120px; /* Increased from 6rem to 120px */
         }
       `}</style>
     </div>
