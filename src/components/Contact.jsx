@@ -21,17 +21,17 @@ const Contact = () => {
 
   return (
     <motion.section
-      className="min-h-screen flex flex-col justify-center py-24 px-8 relative"
+      className="py-24 px-8 w-full mx-auto max-w-7xl flex flex-col items-center justify-center"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
       variants={containerVariants}
     >
-      <div className="container mx-auto max-w-4xl">
+      <div className="w-full max-w-4xl mx-auto">
         {/* Title */}
         <motion.h2
           className={`text-3xl font-bold text-center mb-6 ${
-            theme === "light" ? "text-light-accent" : "text-dark-accent"
+            theme === "light" ? "text-rose-500" : "text-indigo-400"
           }`}
           variants={itemVariants}
         >
@@ -39,7 +39,7 @@ const Contact = () => {
         </motion.h2>
 
         {/* Description */}
-        <motion.p className="text-center mb-8" variants={itemVariants}>
+        <motion.p className="text-center mb-8 max-w-2xl mx-auto" variants={itemVariants}>
           {currentLanguage.contact.description}
         </motion.p>
 
@@ -73,8 +73,8 @@ const Contact = () => {
             type="submit"
             className={`w-full p-4 rounded-lg font-bold ${
               theme === "light"
-                ? "bg-light-accent text-white hover:bg-red-600"
-                : "bg-dark-accent text-black hover:bg-blue-700"
+                ? "bg-rose-500 text-white hover:bg-rose-600"
+                : "bg-indigo-500 text-white hover:bg-indigo-600"
             } transition`}
             variants={itemVariants}
             whileHover={{ scale: 1.05 }}

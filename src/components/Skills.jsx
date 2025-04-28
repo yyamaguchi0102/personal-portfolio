@@ -1,78 +1,310 @@
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import React, { useState, useRef } from "react";
+import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion";
 import { useTheme } from "../contexts/ThemeContext";
 import { useLanguage } from "../contexts/LanguageContext";
-import { useState, useRef, useEffect } from "react";
 import { languages } from "../languages.js";
 
-const TiltCard = ({ children, speed = 25 }) => {
-  const cardRef = useRef(null);
-  const [tiltStyle, setTiltStyle] = useState({
-    transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
-    transition: 'all 0.3s cubic-bezier(0.03, 0.98, 0.52, 0.99) 0s',
-  });
-  const [glarePosition, setGlarePosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
-    
-    const card = cardRef.current;
-    const cardRect = card.getBoundingClientRect();
-    const cardCenterX = cardRect.left + cardRect.width / 2;
-    const cardCenterY = cardRect.top + cardRect.height / 2;
-    
-    // Calculate cursor position relative to card center
-    const cursorX = e.clientX;
-    const cursorY = e.clientY;
-    
-    // Calculate rotation values - reduced intensity
-    const rotateY = ((cursorX - cardCenterX) / (cardRect.width / 2)) * (speed / 10);
-    const rotateX = -((cursorY - cardCenterY) / (cardRect.height / 2)) * (speed / 10);
-    
-    // Update glare position based on cursor
-    const glareX = ((cursorX - cardRect.left) / cardRect.width) * 100;
-    const glareY = ((cursorY - cardRect.top) / cardRect.height) * 100;
-    
-    setGlarePosition({ x: glareX, y: glareY });
-    
-    // Apply transformation - smaller scale effect
-    setTiltStyle({
-      transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`,
-      transition: 'all 0.3s cubic-bezier(0.03, 0.98, 0.52, 0.99) 0s',
-    });
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    setTiltStyle({
-      transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
-      transition: 'all 0.3s cubic-bezier(0.03, 0.98, 0.52, 0.99) 0s',
-    });
-  };
-
+// Skill Tag Component with 3D hover effect
+const SkillTag = ({ name, icon, delay, index }) => {
+  const { theme } = useTheme();
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const rotateX = useTransform(mouseY, [-30, 30], [5, -5]);
+  const rotateY = useTransform(mouseX, [-30, 30], [-5, 5]);
+  
+  function handleMouseMove(e) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set(e.clientX - rect.left - rect.width / 2);
+    mouseY.set(e.clientY - rect.top - rect.height / 2);
+  }
+  
+  function handleMouseLeave() {
+    mouseX.set(0);
+    mouseY.set(0);
+  }
+  
   return (
-    <div
-      ref={cardRef}
+    <motion.div
+      className={`group inline-flex items-center px-4 py-2 m-1.5 rounded-full 
+        backdrop-blur-sm transition-all duration-300
+        ${theme === "light" 
+          ? "bg-white/70 hover:bg-white/90 shadow-sm border border-gray-100" 
+          : "bg-gray-800/70 hover:bg-gray-800/90 border border-gray-700"
+        } cursor-pointer relative overflow-hidden`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ 
+        opacity: 1, 
+        y: 0,
+        transition: { 
+          duration: 0.4, 
+          delay: delay * 0.05 + (index * 0.02),
+          ease: [0.23, 1, 0.32, 1]
+        }
+      }}
+      style={{ 
+        rotateX: rotateX, 
+        rotateY: rotateY,
+        perspective: "1000px",
+        transformStyle: "preserve-3d",
+        z: 1
+      }}
+      whileHover={{ 
+        scale: 1.05,
+        z: 10,
+        transition: { duration: 0.2 } 
+      }}
       onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      style={tiltStyle}
-      className="relative h-full w-full"
     >
-      {children}
-      {isHovered && (
-        <div
-          className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl opacity-20"
-          style={{
-            background: `radial-gradient(circle at ${glarePosition.x}% ${glarePosition.y}%, rgba(255, 255, 255, 0.8) 0%, transparent 50%)`,
-          }}
-        />
+      {/* Subtle glow effect */}
+      <div 
+        className={`absolute inset-0 z-0 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-300
+          ${theme === "light" ? "bg-blue-200" : "bg-blue-900"}`}
+      ></div>
+      
+      {icon && (
+        <div className={`relative z-10 mr-2.5 p-1 rounded-full flex items-center justify-center
+          ${theme === "light" ? "bg-gray-50" : "bg-gray-700"}`}
+        >
+          <img 
+            src={icon} 
+            alt={`${name} icon`} 
+            className="w-4 h-4 object-contain transform transition-transform duration-300 group-hover:scale-110" 
+          />
+        </div>
       )}
-    </div>
+      <span className={`relative z-10 font-medium ${theme === "light" ? "text-gray-800" : "text-gray-200"}`}>
+        {name}
+      </span>
+    </motion.div>
+  );
+};
+
+// Language Card Component
+const LanguageCard = ({ language, emoji, level, icon, index }) => {
+  const { theme } = useTheme();
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const rotateX = useTransform(mouseY, [-50, 50], [7, -7]);
+  const rotateY = useTransform(mouseX, [-50, 50], [-7, 7]);
+  
+  function handleMouseMove(e) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set(e.clientX - rect.left - rect.width / 2);
+    mouseY.set(e.clientY - rect.top - rect.height / 2);
+  }
+  
+  function handleMouseLeave() {
+    mouseX.set(0);
+    mouseY.set(0);
+  }
+  
+  return (
+    <motion.div
+      className={`flex items-center p-4 rounded-xl overflow-hidden relative
+        backdrop-blur-sm transition-all duration-200
+        ${theme === "light" 
+          ? "bg-white/80 border border-gray-100/80" 
+          : "bg-gray-800/80 border border-gray-700/80"
+        }`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ 
+        opacity: 1, 
+        y: 0,
+        transition: { 
+          duration: 0.6, 
+          delay: index * 0.1,
+          ease: [0.23, 1, 0.32, 1]
+        }
+      }}
+      style={{ 
+        rotateX: rotateX, 
+        rotateY: rotateY,
+        perspective: "1000px",
+        transformStyle: "preserve-3d"
+      }}
+      whileHover={{ 
+        scale: 1.03,
+        boxShadow: theme === "light" 
+          ? "0 10px 30px -10px rgba(0, 0, 0, 0.1)" 
+          : "0 10px 30px -10px rgba(0, 0, 0, 0.3)",
+        transition: { duration: 0.2 } 
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="flex items-center">
+        <div className="text-3xl mr-4 transform translate-z-20">{emoji}</div>
+        <div>
+          <h3 className={`font-medium text-lg mb-1 ${theme === "light" ? "text-gray-800" : "text-white"}`}>
+            {language}
+          </h3>
+          <span 
+            className={`text-xs px-3 py-1 rounded-full
+              ${theme === "light" 
+                ? "bg-rose-100 text-rose-700" 
+                : "bg-indigo-900 text-indigo-300"
+              }`}
+          >
+            {level}
+          </span>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+// Technology icon with animated hover effect
+const TechIcon = ({ icon, name }) => {
+  const { theme } = useTheme();
+  const [hovered, setHovered] = useState(false);
+  
+  // Fallback icon for missing icons
+  const fallbackIcon = "https://img.icons8.com/fluency/48/code--v1.png";
+  const [imgSrc, setImgSrc] = useState(icon);
+  
+  const handleError = () => {
+    setImgSrc(fallbackIcon);
+  };
+  
+  return (
+    <motion.div
+      className="flex flex-col items-center mx-3 my-2"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <motion.div 
+        className={`w-12 h-12 rounded-full flex items-center justify-center mb-2
+          ${theme === "light" 
+            ? "bg-white/90 shadow-sm border border-gray-100" 
+            : "bg-gray-800/90 shadow-md border border-gray-700"}`}
+        whileHover={{ scale: 1.1, rotate: 360 }}
+        transition={{ duration: 0.5 }}
+      >
+        <img 
+          src={imgSrc} 
+          alt={name}
+          className="w-6 h-6 object-contain" 
+          onError={handleError}
+        />
+      </motion.div>
+      <span className={`text-xs font-medium ${theme === "light" ? "text-gray-600" : "text-gray-300"}`}>
+        {name}
+      </span>
+    </motion.div>
+  );
+};
+
+// Domain Section Component - style similar to the image shared
+const SkillDomain = ({ title, description, technologies, iconUrl, achievements }) => {
+  const { theme } = useTheme();
+  
+  return (
+    <motion.div 
+      className="mb-16 relative"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7 }}
+      viewport={{ once: true, margin: "-100px" }}
+    >
+      {/* Visual connector line */}
+      <div className={`absolute left-7 top-14 bottom-0 w-0.5 ${
+        theme === "light" ? "bg-gradient-to-b from-rose-300 to-indigo-300" : "bg-gradient-to-b from-rose-600/30 to-indigo-600/30"
+      }`}></div>
+      
+      <div className="mb-8 pl-16 relative">
+        <div className="flex items-center mb-4">
+          {iconUrl && (
+            <div className={`absolute left-0 h-14 w-14 rounded-xl flex items-center justify-center
+              ${theme === "light" 
+                ? "bg-white shadow-sm border border-gray-100" 
+                : "bg-gray-800 border border-gray-700"}`}>
+              <img 
+                src={iconUrl} 
+                alt={title} 
+                className="w-7 h-7 object-contain" 
+              />
+            </div>
+          )}
+          <h3 className={`text-3xl font-bold ${
+            theme === "light" ? "text-gray-800" : "text-white"
+          }`}>
+            {title}
+          </h3>
+        </div>
+        
+        {description && (
+          <p className={`text-lg mb-6 max-w-4xl ${
+            theme === "light" ? "text-gray-600" : "text-gray-300"
+          }`}>
+            {description}
+          </p>
+        )}
+        
+        {/* Achievement Bullet Points */}
+        {achievements && achievements.length > 0 && (
+          <ul className="mb-6 space-y-2.5 max-w-4xl">
+            {achievements.map((achievement, index) => (
+              <li 
+                key={index}
+                className={`flex items-start ${
+                  theme === "light" ? "text-gray-600" : "text-gray-300"
+                }`}
+              >
+                <span className={`mr-2.5 mt-1 text-sm ${
+                  theme === "light" ? "text-amber-500" : "text-amber-400"
+                }`}>
+                  ✦
+                </span>
+                <span className="text-base">{achievement}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      
+      {/* Technologies Section */}
+      <div className={`ml-16 p-8 rounded-2xl ${
+        theme === "light" 
+          ? "bg-gradient-to-br from-white to-gray-50/80 shadow-sm border border-gray-100" 
+          : "bg-gradient-to-br from-gray-900/90 to-gray-800/70 border border-gray-800"
+      } backdrop-blur-sm`}>
+        {technologies.map((category, i) => (
+          <div key={i} className={`mb-8 last:mb-0 ${i > 0 ? 'pt-6 border-t border-dashed ' + (theme === 'light' ? 'border-gray-200' : 'border-gray-700') : ''}`}>
+            <div className="flex items-center mb-4">
+              <div className={`h-10 w-10 rounded-lg flex items-center justify-center mr-3
+                ${theme === "light" 
+                  ? "bg-white shadow-sm border border-gray-100" 
+                  : "bg-gray-800 shadow-md border border-gray-700"}`}>
+                <img 
+                  src={category.icon} 
+                  alt={category.title} 
+                  className="w-5 h-5 object-contain" 
+                />
+              </div>
+              <h4 className={`text-xl font-semibold ${
+                theme === "light" ? "text-gray-700" : "text-gray-200"
+              }`}>
+                {category.title}
+              </h4>
+            </div>
+            
+            <div className="flex flex-wrap mx-auto">
+              {category.skills.map((skill, j) => (
+                <TechIcon 
+                  key={`${category.title}-${skill.name}`}
+                  icon={skill.icon}
+                  name={skill.name}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </motion.div>
   );
 };
 
@@ -81,263 +313,223 @@ const Skills = () => {
   const { language } = useLanguage();
   const currentLanguage = languages[language];
   
-  const [clickedLanguageIndex, setClickedLanguageIndex] = useState(null);
-  const [clickedProgrammingIndex, setClickedProgrammingIndex] = useState(null);
+  // AI & Data Science categories
+  const aiDataScienceCategories = [
+    {
+      title: "Python & Libraries",
+      icon: "https://img.icons8.com/color/48/python.png",
+      skills: [
+        { name: "Python", icon: "https://img.icons8.com/color/48/python.png" },
+        { name: "TensorFlow", icon: "https://img.icons8.com/color/48/tensorflow.png" },
+        { name: "PyTorch", icon: "https://img.icons8.com/color/48/pytorch.png" },
+        { name: "NumPy", icon: "https://img.icons8.com/color/48/numpy.png" },
+        { name: "Pandas", icon: "https://img.icons8.com/color/48/pandas.png" },
+      ]
+    },
+    {
+      title: "Machine Learning",
+      icon: "https://img.icons8.com/color/48/brain.png",
+      skills: [
+        { name: "Computer Vision", icon: "https://img.icons8.com/color/48/cctv.png" },
+        { name: "NLP", icon: "https://img.icons8.com/color/48/chatbot.png" },
+        { name: "Time Series", icon: "https://img.icons8.com/color/48/combo-chart.png" },
+        { name: "Recommendations", icon: "https://img.icons8.com/color/48/rating.png" },
+        { name: "Scikit-Learn", icon: "https://img.icons8.com/color/48/analytics.png" },
+      ]
+    },
+    {
+      title: "Data Tools",
+      icon: "https://img.icons8.com/color/48/data-configuration.png",
+      skills: [
+        { name: "SQL", icon: "https://img.icons8.com/color/48/sql.png" },
+        { name: "Jupyter", icon: "https://img.icons8.com/color/48/jupyter.png" },
+        { name: "Matplotlib", icon: "https://img.icons8.com/color/48/line-chart.png" },
+        { name: "Spark", icon: "https://img.icons8.com/color/48/apache-spark.png" },
+      ]
+    }
+  ];
 
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  // Full Stack Development categories
+  const fullStackCategories = [
+    {
+      title: "Frontend",
+      icon: "https://img.icons8.com/color/48/web-design.png",
+      skills: [
+        { name: "JavaScript", icon: "https://img.icons8.com/color/48/javascript.png" },
+        { name: "TypeScript", icon: "https://img.icons8.com/color/48/typescript.png" },
+        { name: "React", icon: "https://img.icons8.com/color/48/react-native.png" },
+        { name: "Angular", icon: "https://img.icons8.com/color/48/angularjs.png" },
+        { name: "HTML5", icon: "https://img.icons8.com/color/48/html-5.png" },
+        { name: "CSS3", icon: "https://img.icons8.com/color/48/css3.png" },
+      ]
+    },
+    {
+      title: "Backend",
+      icon: "https://img.icons8.com/color/48/backend-development.png",
+      skills: [
+        { name: "Node.js", icon: "https://img.icons8.com/color/48/nodejs.png" },
+        { name: "Java", icon: "https://img.icons8.com/color/48/java-coffee-cup-logo.png" },
+        { name: "Spring Boot", icon: "https://img.icons8.com/color/48/spring-logo.png" },
+        { name: "Flask", icon: "https://img.icons8.com/color/48/flask.png" },
+        { name: "FastAPI", icon: "https://img.icons8.com/color/48/fastapi.png" },
+        { name: "Django", icon: "https://img.icons8.com/color/48/django.png" },
+      ]
+    },
+    {
+      title: "Mobile & Low Level",
+      icon: "https://img.icons8.com/color/48/touchscreen-smartphone.png",
+      skills: [
+        { name: "Flutter", icon: "https://img.icons8.com/color/48/flutter.png" },
+        { name: "Dart", icon: "https://img.icons8.com/color/48/dart.png" },
+        { name: "Kotlin", icon: "https://img.icons8.com/color/48/kotlin.png" },
+        { name: "Swift", icon: "https://img.icons8.com/color/48/swift.png" },
+        { name: "C", icon: "https://img.icons8.com/color/48/c-programming.png" },
+        { name: "Embedded", icon: "https://img.icons8.com/color/48/electronics.png" },
+      ]
+    },
+    {
+      title: "Databases & DevOps",
+      icon: "https://img.icons8.com/color/48/database.png",
+      skills: [
+        { name: "PostgreSQL", icon: "https://img.icons8.com/color/48/postgresql.png" },
+        { name: "MongoDB", icon: "https://img.icons8.com/color/48/mongodb.png" },
+        { name: "MySQL", icon: "https://img.icons8.com/color/48/mysql-logo.png" },
+        { name: "Redis", icon: "https://img.icons8.com/color/48/redis.png" },
+        { name: "Docker", icon: "https://img.icons8.com/color/48/docker.png" },
+        { name: "AWS", icon: "https://img.icons8.com/color/48/amazon-web-services.png" },
+      ]
+    }
+  ];
+  
+  // Languages
+  const spokenLanguages = [
+    { 
+      language: currentLanguage.skills.languages.japanese, 
+      level: currentLanguage.skills.proficiency.native, 
+      emoji: "🇯🇵",
+      icon: "https://img.icons8.com/color/48/japan.png"
+    },
+    { 
+      language: currentLanguage.skills.languages.english, 
+      level: currentLanguage.skills.proficiency.native, 
+      emoji: "🇺🇸",
+      icon: "https://img.icons8.com/color/48/usa.png"
+    },
+    { 
+      language: currentLanguage.skills.languages.korean, 
+      level: currentLanguage.skills.proficiency.fluent, 
+      emoji: "🇰🇷",
+      icon: "https://img.icons8.com/color/48/south-korea.png"
+    }
+  ];
 
-  const containerVariants = {
-    hidden: { opacity: 0, y: 30 },
+  // Animation variants
+  const headerVariants = {
+    hidden: { opacity: 0, y: -20 },
     visible: { 
       opacity: 1, 
       y: 0, 
-      transition: { 
-        duration: 0.8, 
-        staggerChildren: 0.3,
-        delayChildren: 0.2,
-        ease: "easeOut" 
-      } 
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.95 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      scale: 1,
-      transition: { 
-        duration: 0.7,
-        type: "spring",
-        stiffness: 50,
-        damping: 15
-      } 
-    },
-    hover: {
-      scale: 1.02,
-      y: -5,
-      transition: { duration: 0.3, ease: "easeOut" }
-    },
-    tap: {
-      scale: 0.98,
-      transition: { duration: 0.1 }
+      transition: { duration: 0.5 }
     }
   };
 
-  const spokenLanguages = [
-    { name: currentLanguage.skills.languages.japanese, level: currentLanguage.skills.proficiency.native, icon: "https://img.icons8.com/color/48/japan.png" },
-    { name: currentLanguage.skills.languages.english, level: currentLanguage.skills.proficiency.native, icon: "https://img.icons8.com/color/48/usa.png" },
-    { name: currentLanguage.skills.languages.korean, level: currentLanguage.skills.proficiency.fluent, icon: "https://img.icons8.com/color/48/south-korea.png" },
-  ];
-
-  const programmingLanguages = [
-    { name: "Java", icon: "https://img.icons8.com/color/48/java-coffee-cup-logo.png", tools: ["SpringBoot", "Maven"] },
-    { name: "Python", icon: "https://img.icons8.com/color/48/python.png", tools: ["Pandas", "FastAPI", "NumPy", "TensorFlow", "PyCharm"] },
-    { name: "Dart", icon: "https://img.icons8.com/?size=100&id=7AFcZ2zirX6Y&format=png&color=000000", tools: ["Flutter", "AngularDart"] },
-    { name: "Kotlin", icon: "https://img.icons8.com/color/48/kotlin.png", tools: ["Ktor", "SpringBoot"] },
-    { name: "Databases", icon: "https://img.icons8.com/color/48/sql.png", tools: ["MySQL", "PostgreSQL", "MongoDB"] },
-    { name: "JavaScript", icon: "https://img.icons8.com/color/48/javascript.png", tools: ["React.js", "Node.js", "React Native"] },
-    { name: "TypeScript", icon: "https://img.icons8.com/color/48/typescript.png", tools: ["Angular", "React.ts"] },
-    { name: "C", icon: "https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg", tools: [""] },
-  ];
-
-  const handleLanguageTileClick = (index) => {
-    setClickedLanguageIndex(index);
-    setTimeout(() => setClickedLanguageIndex(null), 600);
-  };
-
-  const handleProgrammingTileClick = (index) => {
-    setClickedProgrammingIndex(index);
-    setTimeout(() => setClickedProgrammingIndex(null), 600);
-  };
-
-  const SkillTile = ({ item, index, isLanguage = false }) => (
-    <motion.div
-      className={`relative rounded-2xl cursor-pointer overflow-hidden h-full
-        ${theme === "light" 
-          ? "bg-white/80 shadow-[0_10px_25px_rgba(0,0,0,0.07)]" 
-          : "bg-dark-card/80 shadow-[0_10px_25px_rgba(0,0,0,0.15)]"
-        } backdrop-blur-sm border border-opacity-20
-        ${theme === "light" ? "border-gray-200/50" : "border-gray-700/50"}`}
-      variants={itemVariants}
-      whileHover="hover"
-      whileTap="tap"
-      onClick={() => isLanguage ? handleLanguageTileClick(index) : handleProgrammingTileClick(index)}
-    >
-      <TiltCard>
-        <div className="p-6 relative z-10">
-          <div className={`w-12 h-12 mx-auto mb-3 rounded-full p-2 
-            ${theme === "light" 
-              ? "bg-gradient-to-br from-gray-50 to-white shadow-inner" 
-              : "bg-gradient-to-br from-dark-card to-dark-background shadow-inner"
-            }`}>
-            <img 
-              src={item.icon} 
-              alt={`${item.name} icon`} 
-              className={`w-full h-full object-contain transition-transform duration-300
-                ${(isLanguage ? clickedLanguageIndex === index : clickedProgrammingIndex === index) ? "scale-105" : ""}`}
-            />
-          </div>
-          <h4 className={`text-lg font-semibold mb-2 text-center
-            ${theme === "dark" ? "text-dark-text" : "text-gray-800"}`}>
-            {item.name}
-          </h4>
-          {isLanguage ? (
-            <p className={`text-xs font-medium text-center
-              ${theme === "dark" ? "text-dark-muted" : "text-gray-600"}`}>
-              {item.level}
-            </p>
-          ) : (
-            item.tools && (
-              <div className="flex flex-wrap justify-center gap-1 mt-2">
-                {item.tools.map((tool, idx) => (
-                  <span
-                    key={idx}
-                    className={`px-2 py-0.5 text-xs rounded-full font-medium
-                      ${theme === "dark" 
-                        ? "bg-dark-border/50 text-dark-text" 
-                        : "bg-gray-100 text-gray-700"
-                      }`}
-                  >
-                    {tool}
-                  </span>
-                ))}
-              </div>
-            )
-          )}
-        </div>
-      </TiltCard>
-      <motion.div 
-        className={`absolute inset-0 rounded-xl opacity-0 transition-all duration-300
-          ${theme === "dark" 
-            ? "bg-gradient-to-br from-indigo-500/5 to-violet-500/5" 
-            : "bg-gradient-to-br from-rose-500/5 to-pink-500/5"
-          }`}
-        animate={{
-          opacity: (isLanguage ? clickedLanguageIndex === index : clickedProgrammingIndex === index) ? 1 : 0
-        }}
-      />
-    </motion.div>
-  );
-
   return (
-    <motion.section
-      ref={ref}
-      className="scroll-offset py-24 pt-16 px-8 relative"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }} 
-      animate={isInView ? "visible" : "hidden"}
-      variants={containerVariants}
-    >
-      <div className="max-w-7xl mx-auto">
+    <section className="py-16 px-6">
+      <div className="max-w-6xl mx-auto relative">
+        {/* Background decorative elements */}
+        <div className="absolute -top-20 -left-20 w-64 h-64 bg-rose-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
+        <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-4000"></div>
+        
+        {/* Section Header with enhanced animations */}
         <motion.div
-          className="text-center mb-4"
-          variants={itemVariants}
+          className="text-center mb-16 relative"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
         >
           <motion.h2 
-            className={`text-3xl font-bold inline ${theme === "dark" ? "text-indigo-400" : "text-rose-500"}`}
-            initial={{ opacity: 0, filter: "blur(8px)" }}
-            animate={isInView ? { opacity: 1, filter: "blur(0px)" } : {}}
-            transition={{ duration: 1, delay: 0.5 }}
+            className={`text-4xl font-bold mb-5 ${
+              theme === "light" 
+                ? "bg-gradient-to-r from-rose-600 to-indigo-600 text-transparent bg-clip-text" 
+                : "bg-gradient-to-r from-rose-400 to-indigo-400 text-transparent bg-clip-text"
+            }`}
+            variants={headerVariants}
           >
             {currentLanguage.skills.title}
           </motion.h2>
-        </motion.div>
-        <motion.p
-          className="text-base text-center mb-8"
-          variants={itemVariants}
-        >
-          {currentLanguage.skills.description}
-        </motion.p>
-
-        {/* Spoken Languages */}
-        <motion.div
-          className="mb-8"
-          variants={containerVariants}
-        >
-          <motion.h3
-            className={`text-2xl font-semibold mb-4 ${theme === "dark" ? "text-indigo-400" : "text-rose-500"}`}
-            variants={itemVariants}
+          
+          <motion.p 
+            className={`text-lg max-w-3xl mx-auto
+              ${theme === "light" ? "text-gray-700" : "text-gray-300"}`}
+            variants={headerVariants}
           >
-            {currentLanguage.skills.sections.spokenLanguages}
-          </motion.h3>
-          <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
-            variants={containerVariants}
-          >
-            {spokenLanguages.map((lang, index) => (
-              <motion.div
-                key={index}
-                custom={index}
-                variants={{
-                  hidden: { 
-                    opacity: 0, 
-                    y: 50,
-                    scale: 0.9
-                  },
-                  visible: i => ({ 
-                    opacity: 1, 
-                    y: 0,
-                    scale: 1,
-                    transition: { 
-                      duration: 0.8, 
-                      delay: i * 0.2,
-                      type: "spring", 
-                      damping: 12
-                    } 
-                  })
-                }}
-              >
-                <SkillTile item={lang} index={index} isLanguage={true} />
-              </motion.div>
-            ))}
-          </motion.div>
+            {currentLanguage.skills.description}
+          </motion.p>
         </motion.div>
 
-        {/* Programming Stack */}
-        <motion.div variants={containerVariants}>
-          <motion.h3
-            className={`text-2xl font-semibold mb-4 ${theme === "dark" ? "text-indigo-400" : "text-rose-500"}`}
-            variants={itemVariants}
+        {/* Languages Section */}
+        <div className="mb-20 relative">
+          <div className={`absolute left-7 top-7 h-0.5 w-16 ${
+            theme === "light" ? "bg-gradient-to-r from-rose-300 to-indigo-300" : "bg-gradient-to-r from-rose-600/30 to-indigo-600/30"
+          }`}></div>
+          
+          <motion.h3 
+            className={`text-2xl font-semibold mb-6 pl-32 ${
+              theme === "light" ? "text-gray-800" : "text-white"
+            }`}
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
           >
-            {currentLanguage.skills.sections.programmingStack}
+            {currentLanguage.skills.sections?.spokenLanguages || "Languages"}
           </motion.h3>
-          <motion.div
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
-            variants={containerVariants}
+          
+          <div 
+            className={`ml-16 grid grid-cols-1 md:grid-cols-3 gap-6 ${
+              theme === "light" 
+                ? "bg-gradient-to-br from-white to-gray-50/80 shadow-sm" 
+                : "bg-gradient-to-br from-gray-900/90 to-gray-800/70"
+            } backdrop-blur-sm p-8 rounded-2xl border ${
+              theme === "light" ? "border-gray-100" : "border-gray-800"
+            }`}
           >
-            {programmingLanguages.map((lang, index) => (
-              <motion.div
-                key={index}
-                custom={index}
-                variants={{
-                  hidden: { 
-                    opacity: 0, 
-                    y: 50,
-                    scale: 0.9
-                  },
-                  visible: i => ({ 
-                    opacity: 1, 
-                    y: 0,
-                    scale: 1,
-                    transition: { 
-                      duration: 0.8, 
-                      delay: i * 0.1,
-                      type: "spring", 
-                      damping: 12
-                    } 
-                  })
-                }}
-              >
-                <SkillTile item={lang} index={index} />
-              </motion.div>
+            {spokenLanguages.map((item, index) => (
+              <LanguageCard 
+                key={item.language}
+                language={item.language}
+                level={item.level}
+                emoji={item.emoji}
+                icon={item.icon}
+                index={index}
+              />
             ))}
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
+
+        {/* Skills domains */}
+        <div className="relative">
+          {/* AI & Data Science Section */}
+          <SkillDomain
+            title={currentLanguage.skills.domains.ai.title}
+            description={currentLanguage.skills.domains.ai.description}
+            technologies={aiDataScienceCategories}
+            iconUrl="https://img.icons8.com/fluency/48/artificial-intelligence.png"
+            achievements={currentLanguage.skills.domains.ai.achievements}
+          />
+          
+          {/* Full Stack Development Section */}
+          <SkillDomain
+            title={currentLanguage.skills.domains.fullstack.title}
+            description={currentLanguage.skills.domains.fullstack.description}
+            technologies={fullStackCategories}
+            iconUrl="https://img.icons8.com/fluency/48/web-design.png"
+            achievements={currentLanguage.skills.domains.fullstack.achievements}
+          />
+        </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

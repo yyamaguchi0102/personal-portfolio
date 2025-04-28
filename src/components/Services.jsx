@@ -217,7 +217,7 @@ const Services = () => {
 
   return (
     <motion.section
-      className="min-h-screen py-20 px-8 relative"
+      className="min-h-screen py-20 px-8 relative mt-10"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
@@ -606,7 +606,21 @@ const Services = () => {
                     {/* CTA Button with enhanced hover effect */}
                     <motion.a 
                       href="#contact"
-                      onClick={closeModal}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        closeModal();
+                        // This gives time for the modal to close before scrolling
+                        setTimeout(() => {
+                          const contactSection = document.getElementById('contact');
+                          const scrollContainer = document.querySelector('.scroll-container');
+                          if (contactSection && scrollContainer) {
+                            scrollContainer.scrollTo({
+                              top: contactSection.offsetTop - 50,
+                              behavior: 'smooth'
+                            });
+                          }
+                        }, 100);
+                      }}
                       className={`relative inline-block w-full py-3.5 px-6 text-center rounded-lg font-medium overflow-hidden
                         ${theme === "light" 
                           ? "bg-indigo-600 text-white hover:bg-indigo-700" 
@@ -645,6 +659,17 @@ const Services = () => {
         >
           <motion.a
             href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              const contactSection = document.getElementById('contact');
+              const scrollContainer = document.querySelector('.scroll-container');
+              if (contactSection && scrollContainer) {
+                scrollContainer.scrollTo({
+                  top: contactSection.offsetTop,
+                  behavior: 'smooth'
+                });
+              }
+            }}
             className={`inline-flex items-center px-6 py-3 rounded-full text-lg font-medium 
               ${theme === "light" 
                 ? "bg-rose-500 text-white hover:bg-rose-600" 

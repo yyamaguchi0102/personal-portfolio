@@ -41,6 +41,31 @@ export const languages = {
       sections: {
         spokenLanguages: "Spoken Languages",
         programmingStack: "Programming Stack"
+      },
+      domains: {
+        ai: {
+          title: "Data Science & AI",
+          description: "Developing machine learning models and performing complex data analysis using cutting-edge techniques",
+          achievements: [
+            "Developing highly scalable production-ready models for various deep learning and statistical use cases",
+            "Experience of working with Computer Vision and NLP projects including image classification and sentiment analysis",
+            "Complex quantitative modeling for dynamic forecasting and time series analysis",
+            "Built and deployed real-time recommendation systems used by thousands of users",
+            "Developed and optimized machine learning pipelines for data processing and model training with 98% accuracy"
+          ]
+        },
+        fullstack: {
+          title: "Full Stack Development",
+          description: "Building responsive web applications and mobile experiences with modern frameworks and technologies",
+          achievements: [
+            "Building responsive website frontends using React, Redux, and modern CSS frameworks",
+            "Developing mobile applications using Flutter, React Native and solo Android apps using Kotlin",
+            "Creating application backends in Node.js, Java Spring Boot, Express & Flask",
+            "Designed and implemented RESTful APIs with comprehensive documentation",
+            "Experience with CI/CD pipelines, containerization, and automated testing frameworks",
+            "Low-level programming for embedded systems and IoT devices using C and microcontrollers"
+          ]
+        }
       }
     },
     projects: {
@@ -202,6 +227,31 @@ export const languages = {
       sections: {
         spokenLanguages: "話せる言語",
         programmingStack: "プログラミングスタック"
+      },
+      domains: {
+        ai: {
+          title: "データサイエンス & AI",
+          description: "最先端の技術を用いた機械学習モデルの開発と複雑なデータ分析の実施",
+          achievements: [
+            "様々なディープラーニングと統計的ユースケースのための、スケーラブルなプロダクション対応モデルの開発",
+            "画像分類や感情分析を含むコンピュータビジョンとNLPプロジェクトの経験",
+            "動的予測と時系列分析のための複雑な定量的モデリング",
+            "数千人のユーザーが使用するリアルタイムレコメンデーションシステムの構築とデプロイ",
+            "98%の精度でのデータ処理とモデルトレーニングのための機械学習パイプラインの開発と最適化"
+          ]
+        },
+        fullstack: {
+          title: "フルスタック開発",
+          description: "最新のフレームワークと技術を使用した、レスポンシブなウェブアプリケーションとモバイル体験の構築",
+          achievements: [
+            "React、Redux、モダンCSSフレームワークを使用したレスポンシブなウェブサイトフロントエンドの構築",
+            "FlutterやReact Nativeを使用したモバイルアプリケーション およびKotlinを使用した単独のAndroidアプリの開発",
+            "Node.js、Java Spring Boot、Express、Flaskを使用したアプリケーションバックエンドの作成",
+            "包括的なドキュメントを備えたRESTful APIの設計と実装",
+            "CI/CDパイプライン、コンテナ化、自動テストフレームワークの経験",
+            "Cとマイクロコントローラーを使用した組み込みシステムとIoTデバイスのローレベルプログラミング"
+          ]
+        }
       }
     },
     projects: {
@@ -362,7 +412,32 @@ export const languages = {
       },
       sections: {
         spokenLanguages: "사용 가능 언어",
-        programmingStack: "기술 스택"
+        programmingStack: "기술 스택"
+      },
+      domains: {
+        ai: {
+          title: "데이터 사이언스 & AI",
+          description: "최첨단 기술을 사용하여 머신러닝 모델을 개발하고 복잡한 데이터 분석 수행",
+          achievements: [
+            "다양한 딥러닝 및 통계적 활용 사례를 위한 확장 가능한 프로덕션 준비 모델 개발",
+            "이미지 분류 및 감정 분석을 포함한 컴퓨터 비전 및 NLP 프로젝트 경험",
+            "동적 예측 및 시계열 분석을 위한 복잡한 정량적 모델링",
+            "수천 명의 사용자가 사용하는 실시간 추천 시스템 구축 및 배포",
+            "98% 정확도의 데이터 처리 및 모델 학습을 위한 머신러닝 파이프라인 개발 및 최적화"
+          ]
+        },
+        fullstack: {
+          title: "풀스택 개발",
+          description: "현대적인 프레임워크와 기술을 사용한 반응형 웹 애플리케이션 및 모바일 경험 구축",
+          achievements: [
+            "React, Redux 및 현대적 CSS 프레임워크를 사용한 반응형 웹사이트 프론트엔드 구축",
+            "Flutter, React Native를 사용한 모바일 애플리케이션 및 Kotlin을 사용한 독립 Android 앱 개발",
+            "Node.js, Java Spring Boot, Express & Flask를 사용한 애플리케이션 백엔드 구축",
+            "포괄적인 문서화가 포함된 RESTful API 설계 및 구현",
+            "CI/CD 파이프라인, 컨테이너화 및 자동 테스트 프레임워크 경험",
+            "C 및 마이크로컨트롤러를 사용한 임베디드 시스템 및 IoT 장치를 위한 로우레벨 프로그래밍"
+          ]
+        }
       }
     },
     projects: {

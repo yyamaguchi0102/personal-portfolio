@@ -62,8 +62,8 @@ const Header = () => {
   const navItems = [
     { id: 'home', name: currentLanguage.header.home, href: '#home' },
     { id: 'skills', name: currentLanguage.header.skills, href: '#skills' },
-    { id: 'services', name: currentLanguage.header.services, href: '#services' },
     { id: 'projects', name: currentLanguage.header.projects, href: '#projects' },
+    { id: 'services', name: currentLanguage.header.services, href: '#services' },
     { id: 'contact', name: currentLanguage.header.contact, href: '#contact' },
   ];
 
@@ -130,15 +130,30 @@ const Header = () => {
     
     const targetElement = document.getElementById(targetId);
     if (targetElement) {
-      // Get the target's position and adjust for header height
-      const headerHeight = 120; // Same as scroll-margin-top
-      const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+      // Get the scroll container
+      const scrollContainer = document.querySelector('.scroll-container');
       
-      // Scroll to the adjusted position
-      window.scrollTo({
-        top: targetPosition,
+      // Get the target's position relative to the scroll container
+      const targetPosition = targetElement.offsetTop;
+      
+      // Adjust the position based on the target section
+      let adjustedPosition = targetPosition;
+      if (targetId === 'services') {
+        adjustedPosition = targetPosition; // Slight adjustment for services
+      } else if (targetId === 'home') {
+        adjustedPosition = targetPosition - 20; // Adjustment for home
+      }
+      
+      // Scroll to the adjusted position with the scroll container
+      scrollContainer.scrollTo({
+        top: adjustedPosition,
         behavior: 'smooth'
       });
+      
+      // Close mobile menu if open
+      if (isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
     }
   };
 

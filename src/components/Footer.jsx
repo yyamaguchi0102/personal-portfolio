@@ -52,7 +52,7 @@ const Footer = () => {
     },
     {
       name: "Email",
-      href: "mailto:contact@yutaka-yamaguchi.com",
+      href: "mailto:yyamaguchi0102@gmail.com",
       icon: (
         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/>
@@ -147,7 +147,7 @@ const Footer = () => {
               Tokyo, Japan
             </p>
             <p className={`${theme === "light" ? "text-gray-600" : "text-gray-400"} mt-2`}>
-              contact@yutaka-yamaguchi.com
+              yyamaguchi0102@gmail.com
             </p>
             
             {/* Resume link */}

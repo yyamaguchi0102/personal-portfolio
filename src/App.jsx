@@ -280,10 +280,10 @@ const AppContent = () => {
   const { theme } = useTheme();
   const [isLoading, setIsLoading] = useState(true);
   const [pageMounted, setPageMounted] = useState(false);
-
+  
   useEffect(() => {
     setPageMounted(true);
-    
+     
     // Apply theme class for scrollbar styling
     if (theme === 'light') {
       document.body.classList.add('light-theme');
@@ -309,7 +309,7 @@ const AppContent = () => {
                 : "bg-gradient-to-br from-slate-900 via-gray-900 to-indigo-900"
               }`}
           />
-
+          
           {/* Global background elements - stay fixed on page */}
           <div className="fixed inset-0 overflow-hidden pointer-events-none z-1">
             <ParticleBackground theme={theme} />
@@ -319,7 +319,7 @@ const AppContent = () => {
               : "bg-gradient-to-b from-slate-900/0 via-slate-900/20 to-slate-900/50"} 
               pointer-events-none`}
             />
-            
+          
             {/* Noise texture overlay */}
             <div 
               className="absolute inset-0 bg-repeat opacity-5 pointer-events-none"
@@ -341,7 +341,7 @@ const AppContent = () => {
               </>
             )}
           </div>
-
+          
           {/* Mouse-following beam needs to be on top of sections */}
           <MouseFollowingBeam theme={theme} />
 
@@ -362,7 +362,7 @@ const AppContent = () => {
                 overflowY: 'auto',
                 overflowX: 'hidden',
                 scrollbarWidth: 'thin',
-                scrollPaddingTop: '120px',  
+                scrollPaddingTop: '130px',  
                 scrollbarColor: theme === 'light' 
                   ? '#f43f5e transparent' 
                   : '#6366f1 transparent'
@@ -374,14 +374,14 @@ const AppContent = () => {
               <div id="skills" className="scroll-section">
                 <Skills />
               </div>
+              <div id="projects" className="scroll-section">
+               <Projects />
+              </div>
               <div id="services" className="scroll-section">
                 <Services />
               </div>
-              <div id="projects" className="scroll-section">
-                <Projects />
-              </div>
               <div id="contact" className="scroll-section">
-                <Contact />
+               <Contact />
               </div>
               <Footer />
             </div>
@@ -391,6 +391,15 @@ const AppContent = () => {
       <style jsx global>{`
         section {
           scroll-margin-top: 120px; /* Increased from 6rem to 120px */
+        }
+        #contact {
+          scroll-margin-top: 100px; /* Specific offset for contact section */
+        }
+        #services {
+          scroll-margin-top: 130px; /* Additional offset for services section */
+        }
+        #home {
+          scroll-margin-top: 90px; /* Adjusted offset for home section */
         }
       `}</style>
     </div>

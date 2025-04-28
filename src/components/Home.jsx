@@ -98,9 +98,10 @@ const Home = () => {
 
   return (
     <section
-      className="relative min-h-screen flex items-center justify-center overflow-visible pt-28 pb-32"
+      className="relative flex items-center justify-center h-screen"
+      style={{ marginTop: "-60px" }}
     >
-      <div className="container mx-auto px-4 relative flex items-center justify-center min-h-[80vh]">
+      <div className="container mx-auto px-4 relative flex items-center justify-center">
         {/* Main content - centered with wider max-width */}
         <motion.div
           key={`home-content-${language}`} // Add key based on language to force remount
