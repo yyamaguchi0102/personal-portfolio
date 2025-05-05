@@ -98,7 +98,7 @@ const LanguageCard = ({ language, emoji, level, icon, index }) => {
     mouseX.set(0);
     mouseY.set(0);
   }
-  
+
   return (
     <motion.div
       className={`flex items-center p-4 rounded-xl overflow-hidden relative
@@ -141,7 +141,7 @@ const LanguageCard = ({ language, emoji, level, icon, index }) => {
           </h3>
           <span 
             className={`text-xs px-3 py-1 rounded-full
-              ${theme === "light" 
+            ${theme === "light" 
                 ? "bg-rose-100 text-rose-700" 
                 : "bg-indigo-900 text-indigo-300"
               }`}
@@ -183,11 +183,11 @@ const TechIcon = ({ icon, name }) => {
             : "bg-gray-800/90 shadow-md border border-gray-700"}`}
         whileHover={{ scale: 1.1, rotate: 360 }}
         transition={{ duration: 0.5 }}
-      >
-        <img 
+          >
+            <img 
           src={imgSrc} 
           alt={name}
-          className="w-6 h-6 object-contain" 
+              className="w-6 h-6 object-contain"
           onError={handleError}
         />
       </motion.div>
@@ -226,8 +226,8 @@ const SkillDomain = ({ title, description, technologies, iconUrl, achievements }
                 src={iconUrl} 
                 alt={title} 
                 className="w-7 h-7 object-contain" 
-              />
-            </div>
+            />
+          </div>
           )}
           <h3 className={`text-3xl font-bold ${
             theme === "light" ? "text-gray-800" : "text-white"
@@ -258,7 +258,7 @@ const SkillDomain = ({ title, description, technologies, iconUrl, achievements }
                   theme === "light" ? "text-amber-500" : "text-amber-400"
                 }`}>
                   ✦
-                </span>
+            </span>
                 <span className="text-base">{achievement}</span>
               </li>
             ))}
@@ -300,7 +300,7 @@ const SkillDomain = ({ title, description, technologies, iconUrl, achievements }
                   name={skill.name}
                 />
               ))}
-            </div>
+    </div>
           </div>
         ))}
       </div>
@@ -444,11 +444,11 @@ const Skills = () => {
         {/* Section Header with enhanced animations */}
         <motion.div
           className="text-center mb-16 relative"
-          initial="hidden"
+      initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <motion.h2 
+        <motion.h2 
             className={`text-4xl font-bold mb-5 ${
               theme === "light" 
                 ? "bg-gradient-to-r from-rose-600 to-indigo-600 text-transparent bg-clip-text" 
@@ -459,13 +459,13 @@ const Skills = () => {
             {currentLanguage.skills.title}
           </motion.h2>
           
-          <motion.p 
-            className={`text-lg max-w-3xl mx-auto
+        <motion.p
+            className={`text-lg max-w-7xl mx-auto
               ${theme === "light" ? "text-gray-700" : "text-gray-300"}`}
             variants={headerVariants}
-          >
-            {currentLanguage.skills.description}
-          </motion.p>
+        >
+          {currentLanguage.skills.description}
+        </motion.p>
         </motion.div>
 
         {/* Languages Section */}
@@ -506,8 +506,8 @@ const Skills = () => {
               />
             ))}
           </div>
-        </div>
-
+                  </div>
+                  
         {/* Skills domains */}
         <div className="relative">
           {/* AI & Data Science Section */}
@@ -527,7 +527,7 @@ const Skills = () => {
             iconUrl="https://img.icons8.com/fluency/48/web-design.png"
             achievements={currentLanguage.skills.domains.fullstack.achievements}
           />
-        </div>
+          </div>
       </div>
     </section>
   );

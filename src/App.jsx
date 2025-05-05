@@ -401,6 +401,12 @@ const AppContent = () => {
         #home {
           scroll-margin-top: 90px; /* Adjusted offset for home section */
         }
+        * {
+          z-index: auto;
+        }
+        .z-50, .z-[50], .z-[100] {
+          z-index: 50 !important;
+        }
       `}</style>
     </div>
   );

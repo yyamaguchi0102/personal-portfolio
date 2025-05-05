@@ -1,0 +1,25 @@
+<head>
+  <!-- Ensure cursor chaser is visible -->
+  <style>
+    /* Set a maximum z-index for all elements except our cursor chaser */
+    *:not(#root div[style*="z-index: 999999"]) {
+      z-index: 99999 !important;
+    }
+    
+    /* Debug styles */
+    .cursor-debug {
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: red;
+      color: white;
+      padding: 5px;
+      z-index: 999999;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Rest of the HTML content -->
+</body>
+</rewritten_file> 

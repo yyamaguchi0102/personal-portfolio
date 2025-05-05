@@ -1,4 +1,6 @@
-export const languages = {
+import { Languages } from './types/languages';
+
+export const languages: Languages = {
   en: {
     header: {
       home: "Home",
@@ -269,16 +271,16 @@ export const languages = {
           demo: "ライブデモ",
           repo: "GitHubリポジトリ",
           tech: ["React", "Tailwind CSS", "JavaScript"],
-          demoUrl: "#",
+          demoUrl: "", // add later
           repoUrl: "https://github.com/yyamaguchi0102/personal-portfolio",
         },
         {
           name: "Dr. Teragotchi",
-          description: "感情の健康状態を追跡するためのバーチャルペットコンパニオンアプリ。日記と対話を通じてペットの進化をゲーム化します。",
-          demo: "ライブデモ",
+          description: "",
+          demo: "ドキュメンテーション",
           repo: "GitHubリポジトリ",
-          tech: ["Python", "FastAPI", "Flutter", "Dart", "PostgreSQL"],
-          demoUrl: "",
+          tech: ["Python", "Scikit Learn", "NumPy", "Pandas", "Matplotlib"],
+          demoUrl: "", // add later
           repoUrl: "https://github.com/yyamaguchi0102/housing-price-prediction",
         },
         {
@@ -287,7 +289,7 @@ export const languages = {
           demo: "ライブデモ",
           repo: "GitHubリポジトリ",
           tech: ["Java", "SpringBoot", "React", "JavaScript", "Tailwind CSS", "TensorFlow"],
-          demoUrl: "#",
+          demoUrl: "https://docs.google.com/document/d/1ZUk4w8LS8LoEOf7R64r68EDDkIuuD8RNeJBdxPFnLzQ/edit?tab=t.0#heading=h.8s5u8xwyce8", // add later
           repoUrl: "https://github.com/yyamaguchi0102/todolist-springboot",
         },
         {
@@ -296,7 +298,7 @@ export const languages = {
           demo: "ドキュメンテーション",
           repo: "GitHubリポジトリ",
           tech: ["Python", "Scikit Learn", "NumPy", "Pandas", "Matplotlib"],
-          demoUrl: "https://docs.google.com/document/d/1ZUk4w8LS8LoEOf7R64r68EDDkIuuD8RNeJBdxPFnLzQ/edit?tab=t.0#heading=h.8s5u8xwyce8",
+          demoUrl: "", // add later
           repoUrl: "https://github.com/yyamaguchi0102/housing-price-prediction",
         },
       ],
@@ -455,17 +457,8 @@ export const languages = {
           demo: "라이브 데모",
           repo: "GitHub 저장소",
           tech: ["React", "Tailwind CSS", "JavaScript"],
-          demoUrl: "#",
+          demoUrl: "", // add later 
           repoUrl: "https://github.com/yyamaguchi0102/personal-portfolio",
-        },
-        {
-          name: "Dr. Teragotchi",
-          description: "대화를 통해 사용자의 감정적 웰빙을 추적하는 가상 반려동물 앱으로, 일기를 작성하고 상호작용에 따라 반려동물이 진화하는 게임화된 프로세스입니다.",
-          demo: "라이브 데모",
-          repo: "GitHub 저장소",
-          tech: ["Python", "FastAPI", "Flutter", "Dart", "PostgreSQL"],
-          demoUrl: "",
-          repoUrl: "https://github.com/yyamaguchi0102/housing-price-prediction",
         },
         {
           name: "ToDo 리스트 애플리케이션",
@@ -473,7 +466,7 @@ export const languages = {
           demo: "라이브 데모",
           repo: "GitHub 저장소",
           tech: ["Java", "SpringBoot", "React", "JavaScript", "Tailwind CSS", "TensorFlow"],
-          demoUrl: "#",
+          demoUrl: "", // add later 
           repoUrl: "https://github.com/yyamaguchi0102/todolist-springboot",
         },
         {
@@ -482,7 +475,7 @@ export const languages = {
           demo: "도큐멘테이션",
           repo: "GitHub 저장소",
           tech: ["Python", "Scikit Learn", "NumPy", "Pandas", "Matplotlib"],
-          demoUrl: "https://docs.google.com/document/d/1ZUk4w8LS8LoEOf7R64r68EDDkIuuD8RNeJBdxPFnLzQ/edit?tab=t.0#heading=h.8s5u8xwyce8",
+          demoUrl: "https://docs.google.com/document/d/1ZUk4w8LS8LoEOf7R64r68EDDkIuuD8RNeJBdxPFnLzQ/edit?tab=t.0#heading=h.8s5u8xwyce8", // add later
           repoUrl: "https://github.com/yyamaguchi0102/housing-price-prediction",
         },
       ],
