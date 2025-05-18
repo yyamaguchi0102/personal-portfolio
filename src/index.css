@@ -183,3 +183,5 @@ section {
   backdrop-filter: blur(12px);
 }
 
+/* Remove the overly aggressive filter-container class */
+

@@ -25,7 +25,7 @@ const LoadingScreen = ({ onComplete }) => {
   const [particles, setParticles] = useState([]);
   
   useEffect(() => {
-    const count = 30;
+    const count = 60; // Increased particle count for more visual impact
     const newParticles = Array.from({ length: count }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
@@ -45,16 +45,26 @@ const LoadingScreen = ({ onComplete }) => {
     setSelectedLanguage(lang);
     setLanguage(lang);
     
-    // Use a timeout to create a smooth transition
+    // Increased transition timing
     setTimeout(() => {
       setShowLanguagePrompt(false);
-      setShowMoodPrompt(true);
-    }, 300);
+      // Give more time for exit animation
+      setTimeout(() => {
+        setShowMoodPrompt(true);
+      }, 600); // Increased from 400 to 600
+    }, 200); // Increased from 100 to 200
   };
 
   const handleMoodSelection = (mood) => {
     setTheme(mood);
-    setTimeout(onComplete, 1000);
+    
+    // Add slide-out animation before completing
+    setShowMoodPrompt(false);
+    
+    // Wait for the exit animation to complete before calling onComplete
+    setTimeout(() => {
+      onComplete();
+    }, 800); // Increased from 500 to 800 to allow for the slide animation
   };
 
   // Button hover variants
@@ -81,7 +91,49 @@ const LoadingScreen = ({ onComplete }) => {
         stiffness: 200,
         damping: 20
       }
+    }),
+    exit: (i) => ({
+      opacity: 0,
+      y: -50,
+      x: -100,
+      scale: 0.8,
+      transition: {
+        delay: i * 0.1,
+        duration: 0.6,
+        ease: [0.4, 0.0, 0.2, 1]
+      }
     })
+  };
+
+  // Clean, simple transition variants
+  const transitionVariants = {
+    initial: { 
+      opacity: 0, 
+      scale: 0.8,
+      y: 50,
+      rotateY: 15
+    },
+    animate: { 
+      opacity: 1, 
+      scale: 1,
+      y: 0,
+      rotateY: 0,
+      transition: { 
+        duration: 1,
+        ease: [0.4, 0.0, 0.2, 1],
+        staggerChildren: 0.1
+      }
+    },
+    exit: { 
+      opacity: 0, 
+      scale: 1.05,
+      x: -100,
+      rotateY: -15,
+      transition: { 
+        duration: 0.6,
+        ease: [0.4, 0.0, 0.2, 1]
+      }
+    }
   };
 
   return (
@@ -100,12 +152,17 @@ const LoadingScreen = ({ onComplete }) => {
               top: `${particle.y}%`,
               filter: `blur(${particle.size > 3 ? '1px' : '0'})`,
             }}
+            initial={{ opacity: 0, scale: 0 }}
             animate={{
+              opacity: particle.opacity,
+              scale: 1,
               x: [0, particle.speedX * 100, 0],
               y: [0, particle.speedY * 100, 0],
               scale: [1, particle.size > 3 ? 1.2 : 1, 1],
             }}
             transition={{
+              opacity: { duration: 1, delay: particle.delay },
+              scale: { duration: 1, delay: particle.delay },
               duration: particle.duration,
               repeat: Infinity,
               repeatType: "reverse",
@@ -120,13 +177,18 @@ const LoadingScreen = ({ onComplete }) => {
       <div className="absolute inset-0">
         <motion.div 
           className="absolute w-[700px] h-[700px] rounded-full blur-3xl opacity-10 bg-indigo-500 -top-64 -right-64"
+          initial={{ opacity: 0, scale: 0.8 }}
           animate={{ 
+            opacity: 0.1,
+            scale: 1,
             y: [0, 50, -30, 0],
             x: [0, -30, 20, 0],
             scale: [1, 1.1, 0.9, 1],
             rotate: [0, 5, -5, 0],
           }}
           transition={{ 
+            opacity: { duration: 1.5 },
+            scale: { duration: 1.5 },
             duration: 20, 
             repeat: Infinity,
             repeatType: "loop",
@@ -135,13 +197,18 @@ const LoadingScreen = ({ onComplete }) => {
         />
         <motion.div 
           className="absolute w-[700px] h-[700px] rounded-full blur-3xl opacity-10 bg-violet-500 -bottom-64 -left-64"
+          initial={{ opacity: 0, scale: 0.8 }}
           animate={{ 
+            opacity: 0.1,
+            scale: 1,
             y: [0, -50, 30, 0],
             x: [0, 30, -20, 0],
             scale: [1, 0.9, 1.1, 1],
             rotate: [0, -5, 5, 0],
           }}
           transition={{ 
+            opacity: { duration: 1.5, delay: 0.5 },
+            scale: { duration: 1.5, delay: 0.5 },
             duration: 25, 
             repeat: Infinity,
             repeatType: "loop",
@@ -155,22 +222,24 @@ const LoadingScreen = ({ onComplete }) => {
         {showLanguagePrompt ? (
           <motion.div 
             key="language-prompt"
-            className="text-center z-10 px-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5 }}
+            className="text-center z-10 px-6 w-full"
+            variants={transitionVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
           >
             {/* Language Selection */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.9, y: 30 }}
               animate={{ 
                 opacity: 1, 
                 scale: 1,
+                y: 0,
                 transition: { 
                   type: "spring",
                   stiffness: 300,
-                  damping: 25
+                  damping: 25,
+                  delay: 0.3
                 }
               }}
             >
@@ -202,7 +271,7 @@ const LoadingScreen = ({ onComplete }) => {
               className="flex flex-wrap justify-center gap-6 mt-8"
               variants={{
                 hidden: { opacity: 0 },
-                visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+                visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.3 } }
               }}
               initial="hidden"
               animate="visible"
@@ -309,19 +378,14 @@ const LoadingScreen = ({ onComplete }) => {
               </motion.button>
             </motion.div>
           </motion.div>
-        ) : (
+        ) : showMoodPrompt ? (
           <motion.div 
             key="mood-prompt"
-            className="text-center z-10 px-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ 
-              duration: 0.6, 
-              type: "spring",
-              stiffness: 150,
-              damping: 20
-            }}
+            className="text-center z-10 px-6 w-full"
+            variants={transitionVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
           >
             {/* Theme Selection */}
             <motion.h1 
@@ -362,10 +426,18 @@ const LoadingScreen = ({ onComplete }) => {
                     staggerChildren: 0.2,
                     delayChildren: 0.3
                   } 
+                },
+                exit: {
+                  opacity: 0,
+                  transition: {
+                    staggerChildren: 0.1,
+                    staggerDirection: -1
+                  }
                 }
               }}
               initial="hidden"
               animate="visible"
+              exit="exit"
             >
               <motion.div
                 variants={cardVariants}
@@ -447,7 +519,8 @@ const LoadingScreen = ({ onComplete }) => {
                       transition={{ 
                         duration: 6, 
                         repeat: Infinity,
-                        repeatType: "loop" 
+                        repeatType: "loop",
+                        delay: 0.3
                       }}
                     >
                       🌙
@@ -458,7 +531,7 @@ const LoadingScreen = ({ onComplete }) => {
               </motion.div>
             </motion.div>
           </motion.div>
-        )}
+        ) : null}
       </AnimatePresence>
     </div>
   );

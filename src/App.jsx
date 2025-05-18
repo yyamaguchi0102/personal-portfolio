@@ -15,6 +15,9 @@ import Footer from "./components/Footer";
 import { motion, useScroll, useSpring } from "framer-motion";
 import './index.css';
 
+// Completely remove the global style targeting projects filter container
+// No longer needed as we rebuilt the Projects component
+
 // Scroll progress indicator component
 const ScrollProgress = () => {
   const { theme } = useTheme();
@@ -413,10 +416,22 @@ const AppContent = () => {
 };
 
 const App = () => {
+  const [loading, setLoading] = useState(false);
+  
+  useEffect(() => {
+    // Empty useEffect - we're only relying on the LoadingScreen in AppContent now
+  }, []);
+
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <AppContent />
+        {loading ? (
+          <LoadingScreen />
+        ) : (
+          <div className="relative">
+            <AppContent />
+          </div>
+        )}
       </LanguageProvider>
     </ThemeProvider>
   );
