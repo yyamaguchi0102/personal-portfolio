@@ -67,6 +67,13 @@ const LoadingScreen = ({ onComplete }) => {
     }, 800); // Increased from 500 to 800 to allow for the slide animation
   };
 
+  const handleBackToLanguage = () => {
+    setShowMoodPrompt(false);
+    setTimeout(() => {
+      setShowLanguagePrompt(true);
+    }, 600);
+  };
+
   // Button hover variants
   const buttonVariants = {
     initial: { scale: 1 },
@@ -217,6 +224,23 @@ const LoadingScreen = ({ onComplete }) => {
           }}
         />
       </div>
+
+      {/* Back Button - Moved outside AnimatePresence */}
+      {showMoodPrompt && (
+        <motion.button
+          onClick={handleBackToLanguage}
+          className="fixed top-[45%] left-[20%] px-4 py-2 bg-white/5 backdrop-blur-sm rounded-xl border border-white/20 shadow-lg hover:bg-white/10 transition-all duration-300 flex items-center space-x-2 z-50"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.3 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <span>←</span>
+          <span>{currentLanguageText.loadingScreen.back || "Back"}</span>
+        </motion.button>
+      )}
 
       <AnimatePresence mode="wait">
         {showLanguagePrompt ? (

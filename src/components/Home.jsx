@@ -3,7 +3,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 import { useTheme } from "../contexts/ThemeContext";
 import { Typewriter } from "react-simple-typewriter";
 import { motion, useAnimation, AnimatePresence, useSpring } from "framer-motion";
-import { languages } from "../languages.js";
+import { languages } from "../languages.ts";
 import ReactDOM from "react-dom";
 
 const FloatingElement = ({ children, delay = 0, duration = 4, y = 15 }) => {

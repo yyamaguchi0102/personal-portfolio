@@ -45,28 +45,55 @@ export const languages: Languages = {
         programmingStack: "Programming Stack"
       },
       domains: {
-        ai: {
-          title: "Data Science & AI",
-          description: "Developing machine learning models and performing complex data analysis using cutting-edge techniques",
+        frontend: {
+          title: "Frontend Development",
+          description: "Building responsive and interactive user interfaces with modern web technologies.",
           achievements: [
-            "Developing highly scalable production-ready models for various deep learning and statistical use cases",
-            "Experience of working with Computer Vision and NLP projects including image classification and sentiment analysis",
-            "Complex quantitative modeling for dynamic forecasting and time series analysis",
-            "Built and deployed real-time recommendation systems used by thousands of users",
-            "Developed and optimized machine learning pipelines for data processing and model training with 98% accuracy"
+            "Developed responsive web applications using React and Next.js",
+            "Implemented complex UI components with TypeScript and Tailwind CSS",
+            "Created reusable component libraries for consistent design systems"
           ]
         },
-        fullstack: {
-          title: "Full Stack Development",
-          description: "Building responsive web applications and mobile experiences with modern frameworks and technologies",
+        backend: {
+          title: "Backend Development",
+          description: "Designing and implementing robust server-side applications and APIs.",
           achievements: [
-            "Building responsive website frontends using React, Redux, and modern CSS frameworks",
-            "Developing mobile applications using Flutter, React Native and solo Android apps using Kotlin",
-            "Creating application backends in Node.js, Java Spring Boot, Express & Flask",
-            "Designed and implemented RESTful APIs with comprehensive documentation",
-            "Experience with CI/CD pipelines, containerization, and automated testing frameworks",
-            "Low-level programming for embedded systems and IoT devices using C and microcontrollers"
+            "Built RESTful APIs using Spring Boot and Node.js",
+            "Implemented GraphQL services for efficient data fetching",
+            "Developed microservices architecture with FastAPI and Django"
           ]
+        },
+        devops: {
+          title: "DevOps & Cloud",
+          description: "Managing infrastructure and deployment pipelines for scalable applications.",
+          achievements: [
+            "Set up CI/CD pipelines using GitHub Actions",
+            "Deployed applications on AWS and Vercel",
+            "Containerized applications using Docker"
+          ]
+        },
+        ai: {
+          title: "AI & Data Science",
+          description: "Developing machine learning models and data analysis solutions.",
+          achievements: [
+            "Built and deployed machine learning models using TensorFlow and PyTorch",
+            "Implemented data processing pipelines with Python",
+            "Created predictive models for business analytics"
+          ]
+        },
+        databases: {
+          title: "Databases",
+          description: "Designing and optimizing database systems for efficient data storage and retrieval.",
+          achievements: [
+            "Designed and implemented database schemas for various applications",
+            "Optimized database queries for better performance",
+            "Implemented data migration strategies"
+          ]
+        },
+        other: {
+          title: "Other Tools & Technologies",
+          description: "",
+          achievements: []
         }
       }
     },
@@ -87,6 +114,7 @@ export const languages: Languages = {
           tech: ["React", "Tailwind CSS", "JavaScript"],
           demoUrl: "#",
           repoUrl: "https://github.com/yyamaguchi0102/personal-portfolio",
+          category: "app"
         },
         {
           name: "Dr. Teragotchi",
@@ -95,7 +123,8 @@ export const languages: Languages = {
           repo: "GitHub Repo",
           tech: ["Python", "FastAPI", "Flutter", "Dart", "PostgreSQL"],
           demoUrl: "", // add later
-          repoUrl: "https://github.com/yyamaguchi0102/housing-price-prediction",
+          repoUrl: "https://github.com/orgs/DrTheragotchi/repositories",
+          category: "app"
         },
         {
           name: "To-Do List Application",
@@ -105,6 +134,7 @@ export const languages: Languages = {
           tech: ["Java", "SpringBoot", "React", "JavaScript", "Tailwind CSS", "TensorFlow"],
           demoUrl: "#",
           repoUrl: "https://github.com/yyamaguchi0102/todolist-springboot",
+          category: "app"
         },
         {
           name: "Housing Price Prediction Model",
@@ -114,6 +144,7 @@ export const languages: Languages = {
           tech: ["Python", "Scikit Learn", "NumPy", "Pandas", "Matplotlib"],
           demoUrl: "https://docs.google.com/document/d/1ZUk4w8LS8LoEOf7R64r68EDDkIuuD8RNeJBdxPFnLzQ/edit?tab=t.0#heading=h.8s5u8xwyce8",
           repoUrl: "https://github.com/yyamaguchi0102/housing-price-prediction",
+          category: "ml"
         },
       ],
     },
@@ -177,6 +208,7 @@ export const languages: Languages = {
       moodPrompt: "Select A Theme",
       moodBright: "Bright",
       moodDark: "Dark",
+      back: "Back"
     },
     footer: {
       description: "Full-stack software developer and translator experienced in building modern web applications. Passionate about creating elegant solutions to complex problems.",
@@ -216,7 +248,7 @@ export const languages: Languages = {
     skills: {
       title: "スキル",
       description:
-        "私は複雑な課題を細かいタスクに分解し、大規模プロジェクトにおいて信頼性が高く、保守性のあるコードを作成するスキルを持っています。新しい技術や挑戦に対して常に好奇心を持ち、自分のスキルを向上させることを楽しんでいます。また、日本語、英語、韓国語という3つの言語を駆使して、文化的にもプロフェッショナルな場面でも柔軟に対応することができます。このような技術的な能力と言語的な専門知識を活かし、チーム間やアイデア間の橋渡しをしながら、効果的なコミュニケーションと協力を実現することを目指しています。",
+        "大規模プロジェクトにおける堅牢で保守性の高いコードを作成するために、複雑な問題を管理可能なタスクに分解することに長けています。技術的な能力に加えて、日本語、英語、韓国語の言語的専門知識を持ち、多様な文化的・専門的な環境をナビゲートすることができます。この技術的・言語的スキルのユニークな組み合わせにより、チームとアイデアの間のギャップを埋め、効果的なコミュニケーションとコラボレーションを実現します。",
         languages: {
           english: "英語",
           japanese: "日本語",
@@ -231,28 +263,55 @@ export const languages: Languages = {
         programmingStack: "プログラミングスタック"
       },
       domains: {
-        ai: {
-          title: "データサイエンス & AI",
-          description: "最先端の技術を用いた機械学習モデルの開発と複雑なデータ分析の実施",
+        frontend: {
+          title: "フロントエンド開発",
+          description: "モダンなWeb技術を使用したレスポンシブでインタラクティブなユーザーインターフェースの構築。",
           achievements: [
-            "様々なディープラーニングと統計的ユースケースのための、スケーラブルなプロダクション対応モデルの開発",
-            "画像分類や感情分析を含むコンピュータビジョンとNLPプロジェクトの経験",
-            "動的予測と時系列分析のための複雑な定量的モデリング",
-            "数千人のユーザーが使用するリアルタイムレコメンデーションシステムの構築とデプロイ",
-            "98%の精度でのデータ処理とモデルトレーニングのための機械学習パイプラインの開発と最適化"
+            "ReactとNext.jsを使用したレスポンシブWebアプリケーションの開発",
+            "TypeScriptとTailwind CSSを使用した複雑なUIコンポーネントの実装",
+            "一貫性のあるデザインシステムのための再利用可能なコンポーネントライブラリの作成"
           ]
         },
-        fullstack: {
-          title: "フルスタック開発",
-          description: "最新のフレームワークと技術を使用した、レスポンシブなウェブアプリケーションとモバイル体験の構築",
+        backend: {
+          title: "バックエンド開発",
+          description: "堅牢なサーバーサイドアプリケーションとAPIの設計と実装。",
           achievements: [
-            "React、Redux、モダンCSSフレームワークを使用したレスポンシブなウェブサイトフロントエンドの構築",
-            "FlutterやReact Nativeを使用したモバイルアプリケーション およびKotlinを使用した単独のAndroidアプリの開発",
-            "Node.js、Java Spring Boot、Express、Flaskを使用したアプリケーションバックエンドの作成",
-            "包括的なドキュメントを備えたRESTful APIの設計と実装",
-            "CI/CDパイプライン、コンテナ化、自動テストフレームワークの経験",
-            "Cとマイクロコントローラーを使用した組み込みシステムとIoTデバイスのローレベルプログラミング"
+            "Spring BootとNode.jsを使用したRESTful APIの構築",
+            "効率的なデータ取得のためのGraphQLサービスの実装",
+            "FastAPIとDjangoを使用したマイクロサービスアーキテクチャの開発"
           ]
+        },
+        devops: {
+          title: "DevOps & クラウド",
+          description: "スケーラブルなアプリケーションのためのインフラストラクチャとデプロイメントパイプラインの管理。",
+          achievements: [
+            "GitHub Actionsを使用したCI/CDパイプラインの構築",
+            "AWSとVercelへのアプリケーションのデプロイ",
+            "Dockerを使用したアプリケーションのコンテナ化"
+          ]
+        },
+        ai: {
+          title: "AI & データサイエンス",
+          description: "機械学習モデルとデータ分析ソリューションの開発。",
+          achievements: [
+            "TensorFlowとPyTorchを使用した機械学習モデルの構築とデプロイ",
+            "Pythonを使用したデータ処理パイプラインの実装",
+            "ビジネス分析のための予測モデルの作成"
+          ]
+        },
+        databases: {
+          title: "データベース",
+          description: "効率的なデータストレージと取得のためのデータベースシステムの設計と最適化。",
+          achievements: [
+            "様々なアプリケーションのためのデータベーススキーマの設計と実装",
+            "パフォーマンス向上のためのデータベースクエリの最適化",
+            "データ移行戦略の実装"
+          ]
+        },
+        other: {
+          title: "その他のツールと技術",
+          description: "",
+          achievements: []
         }
       }
     },
@@ -273,15 +332,17 @@ export const languages: Languages = {
           tech: ["React", "Tailwind CSS", "JavaScript"],
           demoUrl: "", // add later
           repoUrl: "https://github.com/yyamaguchi0102/personal-portfolio",
+          category: "app"
         },
         {
           name: "Dr. Teragotchi",
-          description: "",
+          description: "会話を通じて感情の健康をサポートするバーチャルペットアプリです。日記の作成とペットとの交流による進化で、楽しみながら感情管理ができます。",
           demo: "ドキュメンテーション",
           repo: "GitHubリポジトリ",
           tech: ["Python", "Scikit Learn", "NumPy", "Pandas", "Matplotlib"],
           demoUrl: "", // add later
-          repoUrl: "https://github.com/yyamaguchi0102/housing-price-prediction",
+          repoUrl: "https://github.com/orgs/DrTheragotchi/repositories",
+          category: "app"
         },
         {
           name: "ToDoリストアプリ",
@@ -291,6 +352,7 @@ export const languages: Languages = {
           tech: ["Java", "SpringBoot", "React", "JavaScript", "Tailwind CSS", "TensorFlow"],
           demoUrl: "https://docs.google.com/document/d/1ZUk4w8LS8LoEOf7R64r68EDDkIuuD8RNeJBdxPFnLzQ/edit?tab=t.0#heading=h.8s5u8xwyce8", // add later
           repoUrl: "https://github.com/yyamaguchi0102/todolist-springboot",
+          category: "app"
         },
         {
           name: "不動産物価予想AI",
@@ -300,6 +362,7 @@ export const languages: Languages = {
           tech: ["Python", "Scikit Learn", "NumPy", "Pandas", "Matplotlib"],
           demoUrl: "", // add later
           repoUrl: "https://github.com/yyamaguchi0102/housing-price-prediction",
+          category: "ml"
         },
       ],
     },
@@ -363,6 +426,7 @@ export const languages: Languages = {
       moodPrompt: "テーマを選択してください",
       moodBright: "明るい",
       moodDark: "暗い",
+      back: "戻る"
     },
     footer: {
       description: "モダンウェブアプリケーションの構築に経験豊富なフルスタックソフトウェア開発者および翻訳者。複雑な問題に対するエレガントなソリューションの創造に情熱を持っています。",
@@ -402,43 +466,70 @@ export const languages: Languages = {
     skills: {
       title: "기술",
       description:
-        "저는 복잡한 문제를 관리 가능한 작업으로 분해하여 대규모 프로젝트에서 견고하고 유지보수 가능한 코드를 작성하는 데 뛰어납니다. 새로운 기술에 대한 호기심과 도전을 통해 끊임없이 제 기술을 향상시키고 있습니다. 또한, 일본어, 영어, 한국어에 대한 언어 능력을 통해 다양한 문화적, 전문적 환경에서 유연하게 대응할 수 있습니다. 이러한 기술 및 언어 능력을 바탕으로 팀 간 또는 아이디어 간의 격차를 해소하고 효과적인 커뮤니케이션과 협업을 실현할 수 있습니다.",
+        "대규모 프로젝트에서 견고하고 유지보수가 용이한 코드를 작성하기 위해 복잡한 문제를 관리 가능한 작업으로 분해하는 데 탁월합니다. 기술적 능력 외에도 일본어, 영어, 한국어에 대한 언어적 전문성을 보유하고 있어 다양한 문화적, 전문적 환경을 탐색할 수 있습니다. 이러한 기술적, 언어적 기술의 독특한 조합을 통해 팀과 아이디어 사이의 격차를 해소하고 효과적인 의사소통과 협업을 가능하게 합니다.",
       languages: {
         english: "영어",
         japanese: "일본어",
         korean: "한국어",
-        },
+      },
       proficiency: {
-        native: "모국어",
+        native: "원어민",
         fluent: "유창함",
       },
       sections: {
-        spokenLanguages: "사용 가능 언어",
-        programmingStack: "기술 스택"
+        spokenLanguages: "구사 가능한 언어",
+        programmingStack: "프로그래밍 스택"
       },
       domains: {
-        ai: {
-          title: "데이터 사이언스 & AI",
-          description: "최첨단 기술을 사용하여 머신러닝 모델을 개발하고 복잡한 데이터 분석 수행",
+        frontend: {
+          title: "프론트엔드 개발",
+          description: "최신 웹 기술을 활용하여 반응형이고 인터랙티브한 사용자 인터페이스를 구축합니다.",
           achievements: [
-            "다양한 딥러닝 및 통계적 활용 사례를 위한 확장 가능한 프로덕션 준비 모델 개발",
-            "이미지 분류 및 감정 분석을 포함한 컴퓨터 비전 및 NLP 프로젝트 경험",
-            "동적 예측 및 시계열 분석을 위한 복잡한 정량적 모델링",
-            "수천 명의 사용자가 사용하는 실시간 추천 시스템 구축 및 배포",
-            "98% 정확도의 데이터 처리 및 모델 학습을 위한 머신러닝 파이프라인 개발 및 최적화"
+            "React와 Next.js를 사용한 반응형 웹 애플리케이션 개발",
+            "TypeScript와 Tailwind CSS로 복잡한 UI 컴포넌트 구현",
+            "일관된 디자인 시스템을 위한 재사용 가능한 컴포넌트 라이브러리 제작"
           ]
         },
-        fullstack: {
-          title: "풀스택 개발",
-          description: "현대적인 프레임워크와 기술을 사용한 반응형 웹 애플리케이션 및 모바일 경험 구축",
+        backend: {
+          title: "백엔드 개발",
+          description: "견고한 서버 사이드 애플리케이션과 API를 설계 및 구현합니다.",
           achievements: [
-            "React, Redux 및 현대적 CSS 프레임워크를 사용한 반응형 웹사이트 프론트엔드 구축",
-            "Flutter, React Native를 사용한 모바일 애플리케이션 및 Kotlin을 사용한 독립 Android 앱 개발",
-            "Node.js, Java Spring Boot, Express & Flask를 사용한 애플리케이션 백엔드 구축",
-            "포괄적인 문서화가 포함된 RESTful API 설계 및 구현",
-            "CI/CD 파이프라인, 컨테이너화 및 자동 테스트 프레임워크 경험",
-            "C 및 마이크로컨트롤러를 사용한 임베디드 시스템 및 IoT 장치를 위한 로우레벨 프로그래밍"
+            "Spring Boot와 Node.js로 RESTful API 구축",
+            "효율적인 데이터 처리를 위한 GraphQL 서비스 구현",
+            "FastAPI와 Django를 활용한 마이크로서비스 아키텍처 개발"
           ]
+        },
+        devops: {
+          title: "DevOps & 클라우드",
+          description: "확장 가능한 애플리케이션을 위한 인프라 및 배포 파이프라인을 관리합니다.",
+          achievements: [
+            "GitHub Actions로 CI/CD 파이프라인 구축",
+            "AWS와 Vercel에 애플리케이션 배포",
+            "Docker를 사용한 애플리케이션 컨테이너화"
+          ]
+        },
+        ai: {
+          title: "AI & 데이터 사이언스",
+          description: "머신러닝 모델과 데이터 분석 솔루션을 개발합니다.",
+          achievements: [
+            "TensorFlow와 PyTorch로 머신러닝 모델 구축 및 배포",
+            "Python을 활용한 데이터 처리 파이프라인 구현",
+            "비즈니스 분석을 위한 예측 모델 제작"
+          ]
+        },
+        databases: {
+          title: "데이터베이스",
+          description: "효율적인 데이터 저장과 검색을 위한 데이터베이스 시스템을 설계하고 최적화합니다.",
+          achievements: [
+            "다양한 애플리케이션을 위한 데이터베이스 스키마 설계 및 구현",
+            "성능 향상을 위한 데이터베이스 쿼리 최적화",
+            "데이터 마이그레이션 전략 구현"
+          ]
+        },
+        other: {
+          title: "기타 도구 및 기술",
+          description: "",
+          achievements: []
         }
       }
     },
@@ -457,8 +548,19 @@ export const languages: Languages = {
           demo: "라이브 데모",
           repo: "GitHub 저장소",
           tech: ["React", "Tailwind CSS", "JavaScript"],
-          demoUrl: "", // add later 
+          demoUrl: "#",
           repoUrl: "https://github.com/yyamaguchi0102/personal-portfolio",
+          category: "app"
+        },
+        {
+          name: "Dr. Teragotchi",
+          description: "감정 웰빙을 추적하고 대화를 통해 사용자의 정서적 건강을 돕는 가상 반려동물 앱입니다. 일기 작성과 상호작용에 따른 반려동물의 진화를 통해 과정을 게임화했습니다.",
+          demo: "도큐멘테이션",
+          repo: "GitHub 저장소",
+          tech: ["Python", "Scikit Learn", "NumPy", "Pandas", "Matplotlib"],
+          demoUrl: "", // add later
+          repoUrl: "https://github.com/orgs/DrTheragotchi/repositories",
+          category: "app"
         },
         {
           name: "ToDo 리스트 애플리케이션",
@@ -466,8 +568,9 @@ export const languages: Languages = {
           demo: "라이브 데모",
           repo: "GitHub 저장소",
           tech: ["Java", "SpringBoot", "React", "JavaScript", "Tailwind CSS", "TensorFlow"],
-          demoUrl: "", // add later 
+          demoUrl: "#",
           repoUrl: "https://github.com/yyamaguchi0102/todolist-springboot",
+          category: "app"
         },
         {
           name: "부동산 가격 예측 모델",
@@ -475,8 +578,9 @@ export const languages: Languages = {
           demo: "도큐멘테이션",
           repo: "GitHub 저장소",
           tech: ["Python", "Scikit Learn", "NumPy", "Pandas", "Matplotlib"],
-          demoUrl: "https://docs.google.com/document/d/1ZUk4w8LS8LoEOf7R64r68EDDkIuuD8RNeJBdxPFnLzQ/edit?tab=t.0#heading=h.8s5u8xwyce8", // add later
+          demoUrl: "https://docs.google.com/document/d/1ZUk4w8LS8LoEOf7R64r68EDDkIuuD8RNeJBdxPFnLzQ/edit?tab=t.0#heading=h.8s5u8xwyce8",
           repoUrl: "https://github.com/yyamaguchi0102/housing-price-prediction",
+          category: "ml"
         },
       ],
     },
@@ -540,6 +644,7 @@ export const languages: Languages = {
       moodPrompt: "테마를 선택하세요",
       moodBright: "라이트모드",
       moodDark: "다크모드",
+      back: "뒤로"
     },
     footer: {
       description: "현대적인 웹 애플리케이션 구축에 경험이 풍부한 풀스택 소프트웨어 개발자 및 번역가. 복잡한 문제에 우아한 솔루션을 만드는 데 열정이 있습니다.",

@@ -7,7 +7,7 @@ export interface LanguageContent {
     contact: string;
     resume: string;
   };
-  home: {
+home: { 
     name: string;
     typewriter: string[];
     intro: string;
@@ -40,12 +40,32 @@ export interface LanguageContent {
       programmingStack: string;
     };
     domains: {
+      frontend: {
+        title: string;
+        description: string;
+        achievements: string[];
+      };
+      backend: {
+        title: string;
+        description: string;
+        achievements: string[];
+      };
+      devops: {
+        title: string;
+        description: string;
+        achievements: string[];
+      };
       ai: {
         title: string;
         description: string;
         achievements: string[];
       };
-      fullstack: {
+      databases: {
+        title: string;
+        description: string;
+        achievements: string[];
+      };
+      other: {
         title: string;
         description: string;
         achievements: string[];
@@ -71,6 +91,7 @@ export interface LanguageContent {
       categories?: string[];
       type?: string;
       image?: string;
+      category: 'ml' | 'app' | 'both';
     }>;
   };
   services: {
@@ -123,6 +144,7 @@ export interface LanguageContent {
     moodPrompt: string;
     moodBright: string;
     moodDark: string;
+    back: string;
   };
   footer: {
     description: string;
@@ -140,4 +162,37 @@ export interface Languages {
   ko: LanguageContent;
 }
 
-export type LanguageKey = 'en' | 'jp' | 'ko'; 
+export type LanguageKey = 'en' | 'jp' | 'ko';
+
+export type SkillDomain = {
+  frontend: {
+    title: string;
+    description: string;
+    achievements: string[];
+  };
+  backend: {
+    title: string;
+    description: string;
+    achievements: string[];
+  };
+  devops: {
+    title: string;
+    description: string;
+    achievements: string[];
+  };
+  ai: {
+    title: string;
+    description: string;
+    achievements: string[];
+  };
+  databases: {
+    title: string;
+    description: string;
+    achievements: string[];
+  };
+  other: {
+    title: string;
+    description: string;
+    achievements: string[];
+  };
+}; 

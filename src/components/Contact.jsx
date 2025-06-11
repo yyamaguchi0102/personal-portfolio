@@ -2,7 +2,7 @@ import React from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import { motion } from "framer-motion";
-import { languages } from "../languages.js";
+import { languages } from "../languages.ts";
 
 const Contact = () => {
   const { theme } = useTheme();
@@ -21,6 +21,7 @@ const Contact = () => {
 
   return (
     <motion.section
+      key={language}
       className="py-24 px-8 w-full mx-auto max-w-7xl flex flex-col items-center justify-center"
       initial="hidden"
       whileInView="visible"

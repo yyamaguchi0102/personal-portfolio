@@ -2,7 +2,7 @@ import React from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import { motion } from "framer-motion";
-import { languages } from "../languages.js";
+import { languages } from "../languages.ts";
 
 const Footer = () => {
   const { theme } = useTheme();

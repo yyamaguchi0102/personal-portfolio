@@ -3,7 +3,7 @@ import { useTheme } from "../contexts/ThemeContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import ResumeButton from "./ResumeButton";
 import { motion, AnimatePresence } from "framer-motion";
-import { languages } from "../languages.js";
+import { languages } from "../languages.ts";
 
 // Define the navigation items with subtle hover animation
 const NavItem = ({ name, href, onClick, isActive, isMobileMenuOpen }) => {

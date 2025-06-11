@@ -1,8 +1,9 @@
-import React, { useState, useRef } from "react";
-import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion";
+import React, { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence, useMotionValue, useTransform, useAnimation } from "framer-motion";
 import { useTheme } from "../contexts/ThemeContext";
 import { useLanguage } from "../contexts/LanguageContext";
-import { languages } from "../languages.js";
+import { languages } from "../languages.ts";
+import { icons } from "../constants/icons";
 
 // Skill Tag Component with 3D hover effect
 const SkillTag = ({ name, icon, delay, index }) => {
@@ -287,9 +288,7 @@ const SkillDomain = ({ title, description, technologies, iconUrl, achievements }
               </div>
               <h4 className={`text-xl font-semibold ${
                 theme === "light" ? "text-gray-700" : "text-gray-200"
-              }`}>
-                {category.title}
-              </h4>
+              }`}>{category.label}</h4>
             </div>
             
             <div className="flex flex-wrap mx-auto">
@@ -308,118 +307,113 @@ const SkillDomain = ({ title, description, technologies, iconUrl, achievements }
   );
 };
 
+// --- New Skill Categories ---
+const skillCategories = [
+  {
+    title: "frontend",
+    label: "Frontend",
+    icon: icons.frontend,
+    skills: [
+      { name: "React", icon: icons.react },
+      { name: "Next.js", icon: icons.nextjs },
+      { name: "TypeScript", icon: icons.typescript },
+      { name: "JavaScript", icon: icons.javascript },
+      { name: "Tailwind CSS", icon: icons.tailwind },
+      { name: "HTML5", icon: icons.html5 },
+    ]
+  },
+  {
+    title: "backend",
+    label: "Backend",
+    icon: icons.backend,
+    skills: [
+      { name: "Java", icon: icons.java },
+      { name: "Spring Boot", icon: icons.spring },
+      { name: "Node.js", icon: icons.nodejs },
+      { name: "FastAPI", icon: icons.fastapi },
+      { name: "Django", icon: icons.django },
+      { name: "GraphQL", icon: icons.graphql },
+    ]
+  },
+  {
+    title: "devops",
+    label: "DevOps",
+    icon: icons.devops,
+    skills: [
+      { name: "Docker", icon: icons.docker },
+      { name: "AWS", icon: icons.aws },
+      { name: "Vercel", icon: icons.vercel },
+      { name: "GitHub Actions", icon: icons.github },
+    ]
+  },
+  {
+    title: "ai",
+    label: "AI",
+    icon: icons.ai,
+    skills: [
+      { name: "Python", icon: icons.python },
+      { name: "TensorFlow", icon: icons.tensorflow },
+      { name: "PyTorch", icon: icons.pytorch },
+      { name: "scikit-learn", icon: icons.scikit },
+    ]
+  },
+  {
+    title: "databases",
+    label: "Databases",
+    icon: icons.databases,
+    skills: [
+      { name: "PostgreSQL", icon: icons.postgresql },
+      { name: "MySQL", icon: icons.mysql },
+      { name: "MongoDB", icon: icons.mongodb },
+      { name: "SQLite", icon: icons.sqlite },
+    ]
+  },
+  {
+    title: "other",
+    label: "Other",
+    icon: icons.tools,
+    skills: [
+      { name: "Git", icon: icons.git },
+      { name: "Figma", icon: icons.figma },
+      { name: "Linux", icon: icons.linux },
+    ]
+  }
+];
+
 const Skills = () => {
   const { theme } = useTheme();
   const { language } = useLanguage();
   const currentLanguage = languages[language];
+  const controls = useAnimation();
   
-  // AI & Data Science categories
-  const aiDataScienceCategories = [
-    {
-      title: "Python & Libraries",
-      icon: "https://img.icons8.com/color/48/python.png",
-      skills: [
-        { name: "Python", icon: "https://img.icons8.com/color/48/python.png" },
-        { name: "TensorFlow", icon: "https://img.icons8.com/color/48/tensorflow.png" },
-        { name: "PyTorch", icon: "https://img.icons8.com/color/48/pytorch.png" },
-        { name: "NumPy", icon: "https://img.icons8.com/color/48/numpy.png" },
-        { name: "Pandas", icon: "https://img.icons8.com/color/48/pandas.png" },
-      ]
-    },
-    {
-      title: "Machine Learning",
-      icon: "https://img.icons8.com/color/48/brain.png",
-      skills: [
-        { name: "Computer Vision", icon: "https://img.icons8.com/color/48/cctv.png" },
-        { name: "NLP", icon: "https://img.icons8.com/color/48/chatbot.png" },
-        { name: "Time Series", icon: "https://img.icons8.com/color/48/combo-chart.png" },
-        { name: "Recommendations", icon: "https://img.icons8.com/color/48/rating.png" },
-        { name: "Scikit-Learn", icon: "https://img.icons8.com/color/48/analytics.png" },
-      ]
-    },
-    {
-      title: "Data Tools",
-      icon: "https://img.icons8.com/color/48/data-configuration.png",
-      skills: [
-        { name: "SQL", icon: "https://img.icons8.com/color/48/sql.png" },
-        { name: "Jupyter", icon: "https://img.icons8.com/color/48/jupyter.png" },
-        { name: "Matplotlib", icon: "https://img.icons8.com/color/48/line-chart.png" },
-        { name: "Spark", icon: "https://img.icons8.com/color/48/apache-spark.png" },
-      ]
-    }
-  ];
+  // Reset animations when language changes
+  useEffect(() => {
+    controls.start({
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8 }
+    });
+  }, [controls, language]);
 
-  // Full Stack Development categories
-  const fullStackCategories = [
-    {
-      title: "Frontend",
-      icon: "https://img.icons8.com/color/48/web-design.png",
-      skills: [
-        { name: "JavaScript", icon: "https://img.icons8.com/color/48/javascript.png" },
-        { name: "TypeScript", icon: "https://img.icons8.com/color/48/typescript.png" },
-        { name: "React", icon: "https://img.icons8.com/color/48/react-native.png" },
-        { name: "Angular", icon: "https://img.icons8.com/color/48/angularjs.png" },
-        { name: "HTML5", icon: "https://img.icons8.com/color/48/html-5.png" },
-        { name: "CSS3", icon: "https://img.icons8.com/color/48/css3.png" },
-      ]
-    },
-    {
-      title: "Backend",
-      icon: "https://img.icons8.com/color/48/backend-development.png",
-      skills: [
-        { name: "Node.js", icon: "https://img.icons8.com/color/48/nodejs.png" },
-        { name: "Java", icon: "https://img.icons8.com/color/48/java-coffee-cup-logo.png" },
-        { name: "Spring Boot", icon: "https://img.icons8.com/color/48/spring-logo.png" },
-        { name: "Flask", icon: "https://img.icons8.com/color/48/flask.png" },
-        { name: "FastAPI", icon: "https://img.icons8.com/color/48/fastapi.png" },
-        { name: "Django", icon: "https://img.icons8.com/color/48/django.png" },
-      ]
-    },
-    {
-      title: "Mobile & Low Level",
-      icon: "https://img.icons8.com/color/48/touchscreen-smartphone.png",
-      skills: [
-        { name: "Flutter", icon: "https://img.icons8.com/color/48/flutter.png" },
-        { name: "Dart", icon: "https://img.icons8.com/color/48/dart.png" },
-        { name: "Kotlin", icon: "https://img.icons8.com/color/48/kotlin.png" },
-        { name: "Swift", icon: "https://img.icons8.com/color/48/swift.png" },
-        { name: "C", icon: "https://img.icons8.com/color/48/c-programming.png" },
-        { name: "Embedded", icon: "https://img.icons8.com/color/48/electronics.png" },
-      ]
-    },
-    {
-      title: "Databases & DevOps",
-      icon: "https://img.icons8.com/color/48/database.png",
-      skills: [
-        { name: "PostgreSQL", icon: "https://img.icons8.com/color/48/postgresql.png" },
-        { name: "MongoDB", icon: "https://img.icons8.com/color/48/mongodb.png" },
-        { name: "MySQL", icon: "https://img.icons8.com/color/48/mysql-logo.png" },
-        { name: "Redis", icon: "https://img.icons8.com/color/48/redis.png" },
-        { name: "Docker", icon: "https://img.icons8.com/color/48/docker.png" },
-        { name: "AWS", icon: "https://img.icons8.com/color/48/amazon-web-services.png" },
-      ]
-    }
-  ];
-  
   // Languages
   const spokenLanguages = [
     { 
       language: currentLanguage.skills.languages.japanese, 
       level: currentLanguage.skills.proficiency.native, 
       emoji: "🇯🇵",
-      icon: "https://img.icons8.com/color/48/japan.png"
+      icon: icons.japan
     },
     { 
       language: currentLanguage.skills.languages.english, 
       level: currentLanguage.skills.proficiency.native, 
       emoji: "🇺🇸",
-      icon: "https://img.icons8.com/color/48/usa.png"
+      icon: icons.usa
     },
     { 
       language: currentLanguage.skills.languages.korean, 
       level: currentLanguage.skills.proficiency.fluent, 
       emoji: "🇰🇷",
-      icon: "https://img.icons8.com/color/48/south-korea.png"
+      icon: icons.korea
     }
   ];
 
@@ -443,29 +437,27 @@ const Skills = () => {
         
         {/* Section Header with enhanced animations */}
         <motion.div
+          key={`skills-header-${language}`}
           className="text-center mb-16 relative"
-      initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: -20 }}
+          animate={controls}
         >
-        <motion.h2 
+          <motion.h2 
             className={`text-4xl font-bold mb-5 ${
               theme === "light" 
-                ? "bg-gradient-to-r from-rose-600 to-indigo-600 text-transparent bg-clip-text" 
-                : "bg-gradient-to-r from-rose-400 to-indigo-400 text-transparent bg-clip-text"
+                ? "bg-gradient-to-r from-rose-600 to-pink-600 text-transparent bg-clip-text" 
+                : "bg-gradient-to-r from-indigo-400 to-purple-400 text-transparent bg-clip-text"
             }`}
-            variants={headerVariants}
           >
             {currentLanguage.skills.title}
           </motion.h2>
           
-        <motion.p
+          <motion.p
             className={`text-lg max-w-7xl mx-auto
               ${theme === "light" ? "text-gray-700" : "text-gray-300"}`}
-            variants={headerVariants}
-        >
-          {currentLanguage.skills.description}
-        </motion.p>
+          >
+            {currentLanguage.skills.description}
+          </motion.p>
         </motion.div>
 
         {/* Languages Section */}
@@ -506,28 +498,21 @@ const Skills = () => {
               />
             ))}
           </div>
-                  </div>
-                  
+        </div>
+        
         {/* Skills domains */}
         <div className="relative">
-          {/* AI & Data Science Section */}
-          <SkillDomain
-            title={currentLanguage.skills.domains.ai.title}
-            description={currentLanguage.skills.domains.ai.description}
-            technologies={aiDataScienceCategories}
-            iconUrl="https://img.icons8.com/fluency/48/artificial-intelligence.png"
-            achievements={currentLanguage.skills.domains.ai.achievements}
-          />
-          
-          {/* Full Stack Development Section */}
-          <SkillDomain
-            title={currentLanguage.skills.domains.fullstack.title}
-            description={currentLanguage.skills.domains.fullstack.description}
-            technologies={fullStackCategories}
-            iconUrl="https://img.icons8.com/fluency/48/web-design.png"
-            achievements={currentLanguage.skills.domains.fullstack.achievements}
-          />
-          </div>
+          {skillCategories.map((category, i) => (
+            <SkillDomain
+              key={category.title}
+              title={currentLanguage.skills.domains[category.title].title}
+              description={currentLanguage.skills.domains[category.title].description}
+              technologies={[category]}
+              iconUrl={category.icon} 
+              achievements={currentLanguage.skills.domains[category.title].achievements}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

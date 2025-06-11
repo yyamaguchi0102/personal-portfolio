@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import { useLanguage } from "../contexts/LanguageContext";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { FaChalkboardTeacher, FaLanguage, FaTrumpet } from 'react-icons/fa';
 import { MdOutlineClose } from 'react-icons/md';
 import ReactDOM from "react-dom";
+import { languages } from "../languages";
 
 // Modal Portal to render content to document.body
 const Portal = ({ children }) => {
@@ -13,10 +14,21 @@ const Portal = ({ children }) => {
 
 const Services = () => {
   const { theme } = useTheme();
-  const { language, text } = useLanguage();
+  const { language } = useLanguage();
+  const currentLanguage = languages[language];
+  const controls = useAnimation();
   
   const [hoveredCard, setHoveredCard] = useState(null);
   const [activeModal, setActiveModal] = useState(null);
+
+  // Reset animations when language changes
+  useEffect(() => {
+    controls.start({
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8 }
+    });
+  }, [controls, language]);
 
   // Manage scroll lock when modal is open
   useEffect(() => {
@@ -174,7 +186,7 @@ const Services = () => {
   };
 
   // Ensure services exists with a fallback empty array
-  const services = text?.services?.items || [];
+  const services = currentLanguage.services.items || [];
 
   // Map service name to icon key for details lookup
   const getServiceIconKey = (serviceName) => {
@@ -258,33 +270,37 @@ const Services = () => {
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
-        <motion.div className="text-center mb-16" variants={headerVariants}>
+        <motion.div
+          key={`services-header-${language}`}
+          className="text-center mb-16 relative"
+          initial={{ opacity: 0, y: -20 }}
+          animate={controls}
+        >
           <motion.h2 
-            className={`text-4xl font-bold mb-4 inline-block
-              ${theme === "light" ? "text-rose-600" : "text-indigo-400"}`}
-            variants={headerVariants}
+            className={`text-4xl font-bold mb-5 ${
+              theme === "light" 
+                ? "bg-gradient-to-r from-rose-600 to-pink-600 text-transparent bg-clip-text" 
+                : "bg-gradient-to-r from-indigo-400 to-purple-400 text-transparent bg-clip-text"
+            }`}
           >
-            {text?.services?.title}
-            <motion.div 
-              className={`h-1 mt-1 ${theme === "light" ? "bg-rose-500" : "bg-indigo-500"}`}
-              initial={{ width: 0 }}
-              whileInView={{ width: "100%" }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-            />
+            {currentLanguage.services.title}
           </motion.h2>
           
-          <motion.p 
-            className={`text-lg max-w-2xl mx-auto
+          <motion.p
+            className={`text-lg max-w-7xl mx-auto
               ${theme === "light" ? "text-gray-700" : "text-gray-300"}`}
-            variants={headerVariants}
           >
-            {text?.services?.description}
+            {currentLanguage.services.description}
           </motion.p>
         </motion.div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <motion.div 
+          key={`services-cards-${language}`}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={controls}
+        >
           {services.map((service, index) => (
             <motion.div 
               key={index}
@@ -345,14 +361,14 @@ const Services = () => {
                 whileHover={{ x: 5 }}
                 onClick={() => openServiceModal(index)}
               >
-                {text?.services?.learnMore}
+                {currentLanguage.services.learnMore}
                 <svg className="w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
               </motion.button>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
         
         {/* Service Detail Modals */}
         <AnimatePresence>
@@ -483,10 +499,10 @@ const Services = () => {
                       <h4 className={`text-lg font-semibold mb-4 ${
                         theme === "light" ? "text-slate-800" : "text-white"
                       }`}>
-                        {text?.services?.whatIncluded}
+                        {currentLanguage.services.whatIncluded}
                       </h4>
                       <div className="space-y-3">
-                        {text?.services?.details[getServiceIconKey(services[activeModal].name)] && (
+                        {currentLanguage.services.details[getServiceIconKey(services[activeModal].name)] && (
                           <>
                             <motion.div 
                               className={`flex items-start p-3 rounded-lg ${
@@ -501,7 +517,7 @@ const Services = () => {
                                 {featureIcons.checkmark}
                               </span>
                               <span className={theme === "light" ? "text-slate-700" : "text-slate-200"}>
-                                {text?.services?.details[getServiceIconKey(services[activeModal].name)].point1}
+                                {currentLanguage.services.details[getServiceIconKey(services[activeModal].name)].point1}
                               </span>
                             </motion.div>
                             
@@ -518,7 +534,7 @@ const Services = () => {
                                 {featureIcons.checkmark}
                               </span>
                               <span className={theme === "light" ? "text-slate-700" : "text-slate-200"}>
-                                {text?.services?.details[getServiceIconKey(services[activeModal].name)].point2}
+                                {currentLanguage.services.details[getServiceIconKey(services[activeModal].name)].point2}
                               </span>
                             </motion.div>
                             
@@ -535,7 +551,7 @@ const Services = () => {
                                 {featureIcons.checkmark}
                               </span>
                               <span className={theme === "light" ? "text-slate-700" : "text-slate-200"}>
-                                {text?.services?.details[getServiceIconKey(services[activeModal].name)].point3}
+                                {currentLanguage.services.details[getServiceIconKey(services[activeModal].name)].point3}
                               </span>
                             </motion.div>
                           </>
@@ -568,10 +584,10 @@ const Services = () => {
                           theme === "light" ? "text-slate-800" : "text-white"
                         }`}>
                           {featureIcons.price}
-                          <span className="ml-2">{text?.services?.pricing}</span>
+                          <span className="ml-2">{currentLanguage.services.pricing}</span>
                         </h4>
                         <p className={`relative z-10 ${theme === "light" ? "text-slate-600" : "text-slate-300"}`}>
-                          {text?.services?.details[getServiceIconKey(services[activeModal].name)]?.pricing}
+                          {currentLanguage.services.details[getServiceIconKey(services[activeModal].name)]?.pricing}
                         </p>
                       </motion.div>
                       
@@ -595,10 +611,10 @@ const Services = () => {
                           theme === "light" ? "text-slate-800" : "text-white"
                         }`}>
                           {featureIcons.time}
-                          <span className="ml-2">{text?.services?.availability}</span>
+                          <span className="ml-2">{currentLanguage.services.availability}</span>
                         </h4>
                         <p className={`relative z-10 ${theme === "light" ? "text-slate-600" : "text-slate-300"}`}>
-                          {text?.services?.details[getServiceIconKey(services[activeModal].name)]?.availability}
+                          {currentLanguage.services.details[getServiceIconKey(services[activeModal].name)]?.availability}
                         </p>
                       </motion.div>
                     </motion.div>
@@ -640,7 +656,7 @@ const Services = () => {
                         }}
                         transition={{ duration: 1.5, repeat: Infinity }}
                       />
-                      <span className="relative z-10">{text?.services?.getStarted}</span>
+                      <span className="relative z-10">{currentLanguage.services.getStarted}</span>
                     </motion.a>
                   </motion.div>
                 </motion.div>
@@ -678,7 +694,7 @@ const Services = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
           >
-            {text?.services?.contactButton}
+            {currentLanguage.services.contactButton}
             <svg className="w-5 h-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
             </svg>
